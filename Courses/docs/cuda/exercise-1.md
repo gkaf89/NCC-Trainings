@@ -1,4 +1,4 @@
-
+/
 Now our first exercise would be to print out the hello world from GPU.
 To do that, we need to do the following things:
 
@@ -7,26 +7,30 @@ To do that, we need to do the following things:
  - It should be called using function qualifier **`__global__`**
  - Calling the device function on the main program:
  - C/C++ example, **`c_function()`**
- - CUDA example, **`cuda functio<<<1,1>>>()`** (just using 1 thread)
+ - CUDA example, **`cuda_function<<<1,1>>>()`** (just using 1 thread)
  - **`<<< >>>`**, specify the threads blocks within the bracket
  - Make sure to synchronize the threads
- - **`syncthreads()`** synchronizes all the threads within a thread block
+ - **`__syncthreads()`** synchronizes all the threads within a thread block
  - **`CudaDeviceSynchronize()`** synchronizes a kernel call in host
  - Most of the CUDA APIs are synchronized calls by default (but sometimes
    it is good to call explicit synchronized calls to avoid errors
    in the computation)
+
+### Solutions and Questions
+
 
 ??? Example "Examples: Hello World"
 
     === "Serial-version"
 
         ```c
-        #include<studio.h>
+        //-*-C++-*-
+        #include<stdio.h>
         #include<cuda.h>
         
         void c_function()
         {
-          printf{"Hello World!\n"};
+          printf("Hello World!\n");
         }
         
         int main()
@@ -40,14 +44,14 @@ To do that, we need to do the following things:
     === "CUDA-version"
 
         ```c
+        //-*-C++-*-
         #include<studio.h>
         #include<cuda.h>
         
         // device function will be executed on device (GPU) 
-        __global__
-        void cuda_function()
+        __global__ void cuda_function()
         {
-          printf{"Hello World from GPU!\n"};
+          printf("Hello World from GPU!\n");
           
           // synchronize all the threads
           __syncthreads();
@@ -65,20 +69,48 @@ To do that, we need to do the following things:
         }
         ```
 
+??? "Compilation and Output"
+
+    === "Serial-version"
+        ```
+        // compilation
+        $ gcc Hello-world.c -o Hello-World-CPU
+        
+        // execution 
+        $ ./Hello-World-CPU
+        
+        // output
+        $ Hello World from CPU!
+        ```
+        
+    === "CUDA-version"
+        ```c
+        // compilation
+        $ nvcc -arch=compute_70 Hello-world.cu -o Hello-World-GPU
+        
+        // execution
+        $ ./Hello-World-GPU
+        
+        // output
+        $ Hello World from GPU!
+        ```
 
 ??? Question
 
-    Right now, you are printing just one `Hello World from GPU`,
-    but what if you would like to print more `Hello World from GPU`? How can you do that?
+    Right now, you are printing just one **`Hello World from GPU`**,
+    but what if you would like to print more **`Hello World from GPU`**? How can you do that?
 
 
     === "Question"
 
         ```c
-        #include<studio.h>
+        //-*-C++-*-
+        #include<stdio.h>
+        #include<cuda.h>
+        
         __global__ void cuda_function()
         {
-          printf{"Hello World from GPU!\n"};
+          printf("Hello World from GPU!\n");
           __syncthreads();
         }
 
@@ -94,10 +126,13 @@ To do that, we need to do the following things:
     === "Answer"
   
         ```c
-        #include<studio.h>
+        //-*-C++-*-
+        #include<stdio.h>
+        #include<cuda.h>
+        
         __global__ void cuda_function()
         {
-          printf{"Hello World from GPU!\n"};
+          printf("Hello World from GPU!\n");
           __syncthreads();
         }
 

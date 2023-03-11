@@ -9,8 +9,8 @@ nav:
           - Hello World: 'cuda/exercise-1.md'
           - Vector Addition: 'cuda/exercise-2.md'
           - Matrix Multiplication: 'cuda/exercise-3.md'
-          - Shared Memory: 'cuda/exercise-5.md'
-          - Unified Memory: 'cuda/exercise-4.md'
+          - Shared Memory: 'cuda/exercise-4.md'
+          - Unified Memory: 'cuda/exercise-5.md'
     - Bootcamp:
       - AI:
         - Introduction: 'ai/introduction.md'

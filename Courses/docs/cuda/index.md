@@ -1,5 +1,11 @@
 # Introduction to GPU programming using CUDA
 
+<figure markdown>
+![](/figures/Training_CUDA.png) 
+<figcaption></figcaption>
+</figure>
+
+
 Participants from this course will learn GPU programming using the CUDA programming model, such as synchronisation, memory allocation and device and host calls. Furthermore, understanding the GPU architecture and how parallel threads blocks are used to parallelise the computational task. Moreover, GPU is an accelerator; hence, there must be a good understanding of memory management between the GPU and CPU, which will also be discussed in detail. Finally, participants will also learn to use the CUDA programming model to accelerate linear algebra (routines) and iterative solvers on the GPU. Participants will learn theories first and implement the CUDA programming model with mentors’ guidance later in the hands-on tutorial part.
 
 ### Learning outcomes 

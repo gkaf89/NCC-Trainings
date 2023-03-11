@@ -7,25 +7,34 @@
 
 
 <figure markdown>
-![](/figures/vector_add-external.png) 
-<figcaption>b</figcaption>
+![](/figures/vector_add-external.png){ align=middle}
+<figcaption></figcaption>
 </figure>
 
-  ```c
-  // Allocate host memory
-  a = (float*)malloc(sizeof(float) * N);
-  b = (float*)malloc(sizeof(float) * N);
-  c = (float*)malloc(sizeof(float) * N);
+ - Allocating the CPU memory for a, b, and out vector
+```c
+// Initialize the memory on the host
+float *a, *b, *out;
 
-  // Allocate device memory
-  cudaMalloc((void**)&d_a, sizeof(float) * N);
-  cudaMalloc((void**)&d_b, sizeof(float) * N);
-  cudaMalloc((void**)&d_out, sizeof(float) * N);
-  ```
+// Allocate host memory
+a   = (float*)malloc(sizeof(float) * N);
+b   = (float*)malloc(sizeof(float) * N);
+out   = (float*)malloc(sizeof(float) * N);
+```
+
+ - Allocating the GPU memory for d_a, d_b, and d_out matrix
+```c
+// Initialize the memory on the device
+float *d_a, *d_b, *d_out;
+
+// Allocate device memory
+cudaMalloc((void**)&d_a, sizeof(float) * N);
+cudaMalloc((void**)&d_b, sizeof(float) * N);
+cudaMalloc((void**)&d_out, sizeof(float) * N);
+```
 
  - Now we need to fill the values for the
     array a and b. 
-
 ```c
 // Initialize host arrays
 for(int i = 0; i < N; i++)
@@ -36,7 +45,6 @@ for(int i = 0; i < N; i++)
 ```
 
  - Transfer initialized value from CPU to GPU
-
 ```c
 // Transfer data from host to device memory
 cudaMemcpy(d_a, a, sizeof(float) * N, cudaMemcpyHostToDevice);
@@ -44,7 +52,6 @@ cudaMemcpy(d_b, b, sizeof(float) * N, cudaMemcpyHostToDevice);
 ```
 
  - Creating a 2D thread block
- 
 ```c
 // Thread organization 
 dim3 dimGrid(1, 1, 1);    
@@ -52,44 +59,74 @@ dim3 dimBlock(16, 16, 1);
 ```
 
  - Calling the kernel function
-
 ```c
 // execute the CUDA kernel function 
 vector_add<<<dimGrid, dimBlock>>>(d_a, d_b, d_out, N);
 ```
 
- - Copy back computed value from GPU to CPU
+ - Vector addition kernel function call definition
 
+ -  ??? "vector addtion fuction call"
+
+        === "serial"
+            ```c
+            // CPU function that adds two vector 
+            float * Vector_Add(float *a, float *b, float *out, int n) 
+            {
+              for(int i = 0; i < n; i ++)
+                {
+                  out[i] = a[i] + b[i];
+                }
+              return out;
+            }
+            ```
+        
+        === "cuda"
+            ```c
+            // GPU function that adds two vectors 
+            __global__ void vector_add(float *a, float *b, 
+                   float *out, int n) 
+            {
+              int i = blockIdx.x * blockDim.x * blockDim.y + 
+                threadIdx.y * blockDim.x + threadIdx.x;   
+              // Allow the   threads only within the size of N
+              if(i < n)
+                {
+                  out[i] = a[i] + b[i];
+                }
+  
+              // Synchronice all the threads 
+              __syncthreads();
+            }
+            ```
+
+<figure markdown>
+![](/figures/vector_add-external-modified.svg) 
+<figcaption></figcaption>
+</figure>
+
+ - Copy back computed value from GPU to CPU
 ```c
 // Transfer data back to host memory
 cudaMemcpy(out, d_out, sizeof(float) * N, cudaMemcpyDeviceToHost);
 ```
 
- - Vector addition function call
-
-<figure markdown>
-![](/figures/vector_add-external-modified.svg) 
-<figcaption>b</figcaption>
-</figure>
-
+ - Deallocate the host and device memory
 ```c
-// GPU function that adds two vectors 
-__global__ void vector_add(float *a, float *b, 
-       float *out, int n) 
-{
+// Deallocate device memory
+cudaFree(d_a);
+cudaFree(d_b);
+cudaFree(d_out);
 
-  int i = blockIdx.x * blockDim.x * blockDim.y + 
-    threadIdx.y * blockDim.x + threadIdx.x;   
-  // Allow the   threads only within the size of N
-  if(i < n)
-    {
-      out[i] = a[i] + b[i];
-    }
-
-  // Synchronice all the threads 
-  __syncthreads();
-}
+// Deallocate host memory
+free(a); 
+free(b); 
+free(out);
 ```
+
+
+### Solutions and Questions
+
 
 ??? example "Examples: Vector Addition"
 
@@ -258,13 +295,39 @@ __global__ void vector_add(float *a, float *b,
         }
         ```
 
+??? "Compilation and Output"
+
+    === "Serial-version"
+        ```
+        // compilation
+        $ gcc Vector-addition.c -o Vector-Addition-CPU
+        
+        // execution 
+        $ ./Vector-Addition-CPU
+        
+        // output
+        $ Hello World from CPU!
+        ```
+        
+    === "CUDA-version"
+        ```c
+        // compilation
+        $ nvcc -arch=compute_70 Vector-addition.cu -o Vector-Addition-GPU
+        
+        // execution
+        $ ./Vector-Addition-GPU
+        
+        // output
+        $ Hello World from GPU!
+        ```
+
 
 ??? Question "Questions"
 
-    - What happens if you remove the `__syncthreads();` from the `__global__ void vector_add(float *a, float *b, 
-       float *out, int n` function.
-    - Can you remove the if condition `if(i < n)` from the `__global__ void vector_add(float *a, float *b,
-       float *out, int n` function. If so how can you do that?
-    - Here we do not use the `cudaDeviceSynchronize()` in the main application, can you figure out why we
+    - What happens if you remove the **`__syncthreads();`** from the **`__global__ void vector_add(float *a, float *b, 
+       float *out, int n)`** function.
+    - Can you remove the if condition **`if(i < n)`** from the **`__global__ void vector_add(float *a, float *b,
+       float *out, int n)`** function. If so how can you do that?
+    - Here we do not use the **`cudaDeviceSynchronize()`** in the main application, can you figure out why we
         do not need to use it. 
     - Can you create a different kinds of threads block for larger number of array?
