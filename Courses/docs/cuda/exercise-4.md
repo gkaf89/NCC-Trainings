@@ -1,22 +1,12 @@
 
- - Just one memory allocation is enough [`cudaMallocManaged`](https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__MEMORY.html#group__CUDART__MEMORY_1gd228014f19cc0975ebe3e0dd2af6dd1b)
-
-<figure markdown>
-![](/figures/unified-memory.svg)
-<figcaption></figcaption>
-</figure>
+	cudaFuncSetCacheConfig(dkernel, cudaFuncCachePreferL1);
+	//cudaFuncSetCacheConfig(dkernel, cudaFuncCachePreferShared);
 
 
-|Without unified memory|With unified memory|
-|----------------------|-------------------|
-|Allocate the host memory|~~Allocate the host memory~~|
-|Allocate the device memory|Allocate the device memory|
-|Initialize the host value|Initialize the host value|
-|Transfer the host value to the device memory location|~~Transfer the host value to the device memory location~~|
-|Do the computation using the CUDA kernel|Do the computation using the CUDA kernel|
-|Transfer the data from the device to host|~~Transfer the data from the device to host~~|
-|Free device memory|Free device memory|
-|Free host memor|~~Free host memory~~|
+	cudaFuncCachePreferNone: no preference for shared memory or L1 (default)
+	cudaFuncCachePreferShared: prefer larger shared memory and smaller L1 cache
+	cudaFuncCachePreferL1: prefer larger L1 cache and smaller shared memory
+	cudaFuncCachePreferEqual: prefer equal size L1 cache and shared memory
 
 
 ??? example "Examples: Unified Memory - Vector Addition"

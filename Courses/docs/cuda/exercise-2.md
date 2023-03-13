@@ -68,7 +68,7 @@ vector_add<<<dimGrid, dimBlock>>>(d_a, d_b, d_out, N);
 
  -  ??? "vector addtion fuction call"
 
-        === "serial"
+        === "Serial-version"
             ```c
             // CPU function that adds two vector 
             float * Vector_Add(float *a, float *b, float *out, int n) 
@@ -81,7 +81,7 @@ vector_add<<<dimGrid, dimBlock>>>(d_a, d_b, d_out, N);
             }
             ```
         
-        === "cuda"
+        === "CUDA-version"
             ```c
             // GPU function that adds two vectors 
             __global__ void vector_add(float *a, float *b, 
@@ -201,6 +201,92 @@ free(out);
         }
         ```
 
+    === "CUDA-template"
+    
+        ```c  
+        //-*-C++-*-
+        #include <stdio.h>
+        #include <stdlib.h>
+        #include <math.h>
+        #include <assert.h>
+        #include <time.h>
+        #include <cuda.h>
+
+        #define N 256
+        #define MAX_ERR 1e-6
+
+
+        // GPU function that adds two vectors 
+        __global__ void vector_add(float *a, float *b, 
+        float *out, int n) 
+        {     
+          // allign your thread id indexes 
+          int i = ........
+            
+          // Allow the   threads only within the size of N
+          if------
+            {
+              out[i] = a[i] + b[i];
+            }
+
+          // Synchronice all the threads 
+
+        }
+
+        int main()
+        {
+          // Initialize the memory on the host
+          float *a, *b, *out;
+
+          // Allocate host memory
+          a   = (float*)......
+           
+          // Initialize the memory on the device
+          float *d_a, *d_b, *d_out;
+
+          // Allocate device memory
+          cudaMalloc((void**)&d_a,......
+  
+          // Initialize host arrays
+          for(int i = 0; i < N; i++)
+            {
+              a[i] = ....
+              b[i] = ....
+            }
+
+          // Transfer data from host to device memory
+          cudaMemcpy.....
+          
+          // Thread organization 
+          dim3 dimGrid....  
+          dim3 dimBlock....
+
+          // execute the CUDA kernel function 
+          vector_add<<< >>>....
+
+          // Transfer data back to host memory
+          cudaMemcpy....
+      
+          // Verification
+          for(int i = 0; i < N; i++)
+             {
+               assert(fabs(out[i] - a[i] - b[i]) < MAX_ERR);
+             }
+
+          printf("out[0] = %f\n", out[0]);
+          printf("PASSED\n");
+    
+          // Deallocate device memory
+          cudaFree...
+
+
+          // Deallocate host memory
+          free..
+
+          return 0;
+        }
+        ```
+        
     === "CUDA-version"
     
         ```c  

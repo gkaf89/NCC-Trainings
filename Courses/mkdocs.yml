@@ -11,6 +11,7 @@ nav:
           - Matrix Multiplication: 'cuda/exercise-3.md'
           - Shared Memory: 'cuda/exercise-4.md'
           - Unified Memory: 'cuda/exercise-5.md'
+          - Profilig and Performance: 'cuda/profiling.md'
     - Bootcamp:
       - AI:
         - Introduction: 'ai/introduction.md'
@@ -135,6 +136,8 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
+  - pymdownx.arithmatex:
+      generic: true
 
 
 
@@ -159,3 +162,7 @@ extra_javascript:
   # https://squidfunk.github.io/mkdocs-material/reference/data-tables/#sortable-tables
   - https://cdnjs.cloudflare.com/ajax/libs/tablesort/5.2.1/tablesort.min.js
   - javascripts/tables.js
+
+  - javascripts/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js

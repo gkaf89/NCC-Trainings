@@ -59,7 +59,6 @@ To do that, we need to do the following things:
    
         int main()
         {
-        
           // call the kernel function 
           cuda_function<<<1,1>>>();
           
@@ -116,7 +115,7 @@ To do that, we need to do the following things:
 
         int main()
         {
-        // define your thread block here
+          // define your thread block here
           cuda_function<<<>>>();
           cudaDeviceSynchronize();
           return 0;
@@ -138,6 +137,7 @@ To do that, we need to do the following things:
 
         int main()
         {
+          // define your thread block here
           cuda_function<<<10,1>>>();
           cudaDeviceSynchronize();
           return 0;
