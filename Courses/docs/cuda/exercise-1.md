@@ -25,6 +25,8 @@ To do that, we need to do the following things:
 
         ```c
         //-*-C++-*-
+	// Hello-world.c
+
         #include<stdio.h>
         #include<cuda.h>
         
@@ -45,6 +47,8 @@ To do that, we need to do the following things:
 
         ```c
         //-*-C++-*-
+	// Hello-world.cu
+	
         #include<studio.h>
         #include<cuda.h>
         

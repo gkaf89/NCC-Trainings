@@ -6,6 +6,8 @@
 - 2.1 For exmaple the below example shows the user of `u100490` 
   ```
   $ ssh u100490@login.lxp.lu -p 8822
+  ### or
+  $ ssh meluxina 
   ```
 #### 3. Once you have logged in
 - 3.1 Once you have logged in, you will be in a default home directory 

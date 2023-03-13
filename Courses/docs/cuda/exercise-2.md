@@ -212,7 +212,7 @@ free(out);
         #include <time.h>
         #include <cuda.h>
 
-        #define N 256
+        #define N 5120
         #define MAX_ERR 1e-6
 
 
@@ -298,7 +298,7 @@ free(out);
         #include <time.h>
         #include <cuda.h>
 
-        #define N 256
+        #define N 5120
         #define MAX_ERR 1e-6
 
 
@@ -349,8 +349,8 @@ free(out);
           cudaMemcpy(d_b, b, sizeof(float) * N, cudaMemcpyHostToDevice);
     
           // Thread organization 
-          dim3 dimGrid(1, 1, 1);    
-          dim3 dimBlock(16, 16, 1); 
+          dim3 dimGrid(ceil(N/32), ceil(N/32), 1);
+          dim3 dimBlock(32, 32, 1); 
 
           // execute the CUDA kernel function 
           vector_add<<<dimGrid, dimBlock>>>(d_a, d_b, d_out, N);
@@ -392,7 +392,9 @@ free(out);
         $ ./Vector-Addition-CPU
         
         // output
-        $ Hello World from CPU!
+        $ ./Vector-addition-CPU 
+        out[0] = 3.000000
+        PASSED
         ```
         
     === "CUDA-version"
@@ -404,7 +406,9 @@ free(out);
         $ ./Vector-Addition-GPU
         
         // output
-        $ Hello World from GPU!
+        $ ./Vector-addition-GPU
+        out[0] = 3.000000
+        PASSED
         ```
 
 
