@@ -135,6 +135,8 @@ free(out);
     
         ```c  
         //-*-C++-*-
+        // Vector-addition.c
+        
         #include <stdio.h>
         #include <stdlib.h>
         #include <math.h>
@@ -205,6 +207,7 @@ free(out);
     
         ```c  
         //-*-C++-*-
+        
         #include <stdio.h>
         #include <stdlib.h>
         #include <math.h>
@@ -291,6 +294,8 @@ free(out);
     
         ```c  
         //-*-C++-*-
+        // Vector-addition.cu
+        
         #include <stdio.h>
         #include <stdlib.h>
         #include <math.h>

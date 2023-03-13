@@ -29,9 +29,29 @@
   ### or 
   [u100490@login02 p200117]$ mkdir u100490  
   ```
+#### 5. Now it is time to move into your home directory
+- 5.1 For example, with user home directory `u100490` 
+  ```
+  [u100490@login02 p200117]$cd u100490
+  ```
 
-#### 5. Untill now you are in in the login node, now it is time to reserve the GPU compute node:
-- 5.1 We will do the excercises in interactive mode
+#### 6. Now it is time to copy the folder which has examples and source files to your home directory
+- 6.1 For example, with user home directory `u100490`
+  ```
+  [u100490@login03 u100490]$ cp -r /project/home/p200117/CUDA .
+  [u100490@login03 u100490]$ cd CUDA/
+  [u100490@login03 CUDA]$ pwd
+  /project/home/p200117/u100490/CUDA
+  [u100490@login03 CUDA]$ ls -lthr
+  total 20K
+  -rw-r-----. 1 u100490 p200117   51 Mar 13 15:50 module.sh
+  drwxr-s---. 2 u100490 p200117 4.0K Mar 13 15:50 Vector-addition
+  drwxr-s---. 2 u100490 p200117 4.0K Mar 13 15:50 Unified-memory
+  ...
+  ...
+  ```
+#### 7. Untill now you are in in the login node, now it is time to reserve the GPU compute node:
+- 7.1 We will do the excercises in interactive mode
   ```
   $ salloc -A p200117 --res gpudev -q dev -N 1 -t 02:00:00
   ```
@@ -45,11 +65,13 @@
       salloc: Waiting for resource configuration
       salloc: Nodes mel2131 are ready for job
       ```
-
-#### 6. Finally we need to load the compiler to test the GPU CUDA codes
- - 6.1 We need a Nvidia HPC SDK compiler for compiling and testing CUDA code
+      
+#### 8. Finally we need to load the compiler to test the GPU CUDA codes
+ - 8.1 We need a Nvidia HPC SDK compiler for compiling and testing CUDA code
  ```
  $ module load OpenMPI/4.1.4-NVHPC-22.7-CUDA-11.7.0
+ ### or
+ $ source module.sh
  ```
 
 - ??? "check if the module is loaded properly"

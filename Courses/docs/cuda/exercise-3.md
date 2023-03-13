@@ -133,6 +133,8 @@ free(c);
     === "Serial-version"
         ```c
         //-*-C++-*-
+        // Matrix-multiplication.c
+        
         #include<iostream>
         
         using namespace std;
@@ -199,14 +201,113 @@ free(c);
         }
         ```
 
+    === "CUDA-template"
+
+        ```c
+        //-*-C++-*-
+        
+        #include<iostream>
+        
+        using namespace std;
+        
+        __global__ void matrix_mul(float* d_a, float* d_b, 
+        float* d_c, int width)
+        {
+
+          // create a 2d threads block
+          int row = ..................
+          int col = ....................
+
+          // only allow the threads that are needed for the computation 
+          if (................................)
+            {
+              float single_entry = 0;
+              // each thread computes one 
+              // element of the block sub-matrix
+              for (int i = 0; i < width; ++i) 
+                {
+                  single_entry += d_a[row*width+i]*d_b[i*width+col];
+                }
+              d_c[row*width+col] = single_entry;
+            }
+        }
+
+        int main()
+        {
+  
+          cout << "Programme assumes that matrix size is N*N "<<endl;
+          cout << "Please enter the N size number "<< endl;
+          int N = 0;
+          cin >> N;
+
+          // Initialize the memory on the host
+          float *a, *b, *c;       
+  
+          // Initialize the memory on the device
+          float *d_a, *d_b, *d_c; 
+  
+          // Allocate host memory
+          a   = (float*)malloc(sizeof(float) * (N*N));
+          ...
+          ...
+          
+          // Initialize host matrix
+          for(int i = 0; i < (N*N); i++)
+            {
+              a[i] = 2.0f;
+              b[i] = 2.0f;
+            }
+  
+          // Allocate device memory
+          cudaMalloc((void**)&d_a, sizeof(float) * (N*N));
+          ...
+          ...
+          
+          // Transfer data from host to device memory
+          cudaMemcpy(.........................);
+          cudaMemcpy(.........................);
+  
+          // Thread organization
+          int blockSize = ..............;
+          dim3 dimBlock(......................);
+          dim3 dimGrid(.......................);
+  
+          // Device fuction call 
+          matrix_mul<<<dimGrid,dimBlock>>>(d_a, d_b, d_c, N);
+
+          // Transfer data back to host memory
+          cudaMemcpy(c, d_c, sizeof(float) * (N*N), cudaMemcpyDeviceToHost);
+
+          // Verification
+          for(int i = 0; i < N; i++)
+            {
+              for(int j = 0; j < N; j++)
+                {
+                cout << c[j] <<" ";
+                }
+              cout << " " <<endl;
+            }
+  
+          // Deallocate device memory
+          cudaFree...
+  
+          // Deallocate host memory
+          free...
+
+          return 0;
+        }
+        ```
+        
     === "CUDA-version"
 
         ```c
         //-*-C++-*-
+        // Matrix-multiplication.cu
+        
         #include<iostream>
-	
+        
         using namespace std;
-	
+        
         __global__ void matrix_mul(float* d_a, float* d_b, 
         float* d_c, int width)
         {
@@ -321,7 +422,7 @@ free(c);
         
         // output
         $ Hello World from GPU!
-
+        ```
 
 ??? Question "Questions"
 
