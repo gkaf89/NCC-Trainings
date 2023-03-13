@@ -1,4 +1,3 @@
-/
 Now our first exercise would be to print out the hello world from GPU.
 To do that, we need to do the following things:
 
@@ -16,7 +15,7 @@ To do that, we need to do the following things:
    it is good to call explicit synchronized calls to avoid errors
    in the computation)
 
-### Solutions and Questions
+### Questions and Solutions
 
 
 ??? Example "Examples: Hello World"

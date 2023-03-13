@@ -125,7 +125,7 @@ free(out);
 ```
 
 
-### Solutions and Questions
+### Questions and Solutions
 
 
 ??? example "Examples: Vector Addition"

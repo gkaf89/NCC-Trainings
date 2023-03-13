@@ -123,8 +123,7 @@ free(b);
 free(c);
 ```
 
-
-### Solutions and Questions
+### Questions and Solutions
 
 
 ??? example "Examples: Matrix Multiplication" 
