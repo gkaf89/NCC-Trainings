@@ -21,10 +21,9 @@ To do that, we need to do the following things:
 ??? Example "Examples: Hello World"
 
     === "Serial-version"
-
         ```c
         //-*-C++-*-
-	// Hello-world.c
+        // Hello-world.c
 
         #include<stdio.h>
         #include<cuda.h>
@@ -43,11 +42,10 @@ To do that, we need to do the following things:
 
 
     === "CUDA-version"
-
         ```c
         //-*-C++-*-
-	// Hello-world.cu
-	
+        // Hello-world.cu
+        
         #include<studio.h>
         #include<cuda.h>
         

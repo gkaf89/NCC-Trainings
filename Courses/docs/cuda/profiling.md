@@ -1,3 +1,56 @@
+### Time measuremen
+
+In CUDA, the execution time can be measure by using the cuda events.
+CUDA API events shall be created using `cudaEvent_t`, for example, `cudaEvent_t start, stop;`.
+And thereafter it can be initiated by `cudaEventCreate(&start)` for strat and similary for stop,
+it can be created as `cudaEventCreate(&stop)`. 
+
+??? "CUDA API"
+    ```
+    cudaEvent_t start, stop;
+    cudaEventCreate(&start);
+    cudaEventCreate(&stop);
+    cudaEventRecord(start,0);
+    ```
+
+And it can be initialized to measure the timing as `cudaEventRecord(start,0)` and `cudaEventRecord(stop,0)`.
+Then the timings cab be measured as float, for example, `cudaEventElapsedTime(&time, start, stop)`.
+Finally, all the events should be destroyed using `cudaEventDestroy`, for example, `cudaEventDestroy(start)` and `cudaEventDestroy(start)`.
+
+??? "CUDA API"
+    ```
+    cudaEventRecord(stop);
+    cudaEventSynchronize(stop);
+    float time;
+    cudaEventElapsedTime(&time, start, stop);
+    cudaEventDestroy(start);
+    cudaEventDestroy(stop);
+    ```
+
+
+The following example shows how to measure your GPU kernal call in CUDA application:
+
+??? example "Example"
+    ```
+    cudaEvent_t start, stop;
+    cudaEventCreate(&start);
+    cudaEventCreate(&stop);
+    cudaEventRecord(start);
+
+    // Device fuction call 
+    matrix_mul<<<Grid_dim, Block_dim>>>(d_a, d_b, d_c, N);
+ 
+    //use CUDA api to stop the measuring time
+    cudaEventRecord(stop);
+    cudaEventSynchronize(stop);
+    float time;
+    cudaEventElapsedTime(&time, start, stop);
+    cudaEventDestroy(start);
+    cudaEventDestroy(stop);
+
+    cout << " time taken for the GPU kernel" << time << endl;
+    ```
+
 ### [^^Nvidia system-wide performance analysis^^](https://docs.nvidia.com/cuda/profiler-users-guide/index.html#migrating-to-nsight-tools-from-visual-profiler-and-nvprof)
 
 [Nvidia profiling](https://docs.nvidia.com/cuda/profiler-users-guide/) tools help to analyse the code when it is being spent on
@@ -195,7 +248,7 @@ Max.\ warps\ per\ SM}$
 ??? Question "Questions"
 
      - Occupancy: can you change **`numBlocks`** and **`blockSize`** in Occupancy.cu code
-     and check how it affects or predicts the occupancy of the given Nvidia microarchitecture.
-     - Prifling: run your **`Matrix-multiplication.cu`** and **`Vector-addition.cu`** code and observe what you notice?
+     and check how it affects or predicts the occupancy of the given Nvidia microarchitecture?
+     - Profling: run your **`Matrix-multiplication.cu`** and **`Vector-addition.cu`** code and observe what you notice?
      for example, how to improve the occupancy? Or maximum GPU utilization?
-
+     - Timing: using CUDA events API can you measure your GPU kernel execution, and compare how fast is your GPU computation compared to CPU computation?

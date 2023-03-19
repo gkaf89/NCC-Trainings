@@ -9,226 +9,352 @@
 	cudaFuncCachePreferEqual: prefer equal size L1 cache and shared memory
 
 
-??? example "Examples: Unified Memory - Vector Addition"
+<figure markdown>
+![](/figures/matrix-multiplication-with-shared-memory.png){align=middle}
+<figcaption></figcaption>
+</figure>
 
 
-    === "Without Unified Memory"
+??? example "Example: Shared Memory - Matrix Multiplication"
+
+
+    === "Matrix-multiplication-shared-template"
 
         ```c
+        // Matrix-multiplication-shared-template.cu
         //-*-C++-*-
-        #include <stdio.h>
-        #include <stdlib.h>
-        #include <math.h>
-        #include <assert.h>
-        #include <time.h>
-        
-        #define N 256
-        #define MAX_ERR 1e-6
+        #include<iostream>
+        #include<cuda.h>
 
+        // block size for the matrix 
+        #define BLOCK_SIZE 16
 
-        // GPU function that adds two vectors 
-        __global__ void vector_add(float *a, float *b, 
-                float *out, int n) 
-        {
+        using namespace std;
 
-          int i = blockIdx.x * blockDim.x * blockDim.y + 
-           threadIdx.y * blockDim.x + threadIdx.x;   
-          // Allow the   threads only within the size of N
-          if(i < n)
+        // Devicae call (matrix multiplication)
+        __global__ void matrix_mul(const float *d_a, const float *d_b, 
+                 float *d_c, int width)
+         {
+          // Shared memory allocation for the block matrix  
+          __shared__ int a_block[BLOCK_SIZE][BLOCK_SIZE];
+          ...
+
+          // Indexing for the block matrix
+          int tx = threadIdx.x;
+          ...
+
+          // Indexing global matrix to block matrix 
+          int row = threadIdx.x+blockDim.x*blockIdx.x;
+          ...
+
+          // Allow threads only for size of rows and columns (we assume square matrix)
+          if ((row < width) && (col< width))
             {
-              out[i] = a[i] + b[i];
+              // Save temporary value for the particular index
+              float temp = 0;
+              for(int i = 0; i < width / BLOCK_SIZE; ++i)
+                {
+                  // Allign the global matrix to block matrix 
+                  a_block[ty][tx] = d_a[row * width + (i * BLOCK_SIZE + tx)];
+                  b_block[ty][tx] = d_b[(i * BLOCK_SIZE + ty) * width + col];
+
+                  // Make sure all the threads are synchronized
+                  ....
+
+                  // Multiply the block matrix 
+                  for(int j = 0; j < BLOCK_SIZE; ++j)
+                    {
+                      temp += a_block[ty][j] * b_block[j][tx];    
+                    }
+                  // Make sure all the threads are synchronized
+                  ...
+               }
+              // Save block matrix entry to global matrix 
+              ...
             }
-
-          // Synchronice all the threads 
-          __syncthreads();
         }
- 
+
+        // Host call (matix multiplication)
+        float * cpu_matrix_mul(float *h_a, float *h_b, float *h_c, int width)   
+        {                                                                 
+          for(int row = 0; row < width ; ++row)                           
+            {                                                             
+              for(int col = 0; col < width ; ++col)                       
+                {                                                         
+                  float temp = 0;                                       
+                  for(int i = 0; i < width ; ++i)                         
+                    {                                                     
+                      temp += h_a[row*width+i] * h_b[i*width+col];      
+                    }                                                     
+                  h_c[row*width+col] = temp;                            
+                }                                                         
+            }   
+          return h_c;           
+        }
+
+
         int main()
-        {
-          // Initialize the memory on the host
-          float *a, *b, *out; 
+        {  
+         cout << "Programme assumes that matrix size is N*N "<<endl;
+         cout << "Matrix dimensions are assumed to be multiples of BLOCK_SIZE=16" << endl;
+         cout << "Please enter the N size number "<< endl;
+         int N=0;
+         cin >> N;
 
-          // Allocate host memory
-          a = (float*)malloc(sizeof(float) * N);
-          b = (float*)malloc(sizeof(float) * N);
-          c = (float*)malloc(sizeof(float) * N);
-
-          // Initialize the memory on the device
-          float *d_a, *d_b, *d_out;
-
-          // Allocate device memory
-          cudaMalloc((void**)&d_a, sizeof(float) * N);
-          cudaMalloc((void**)&d_b, sizeof(float) * N);
-          cudaMalloc((void**)&d_out, sizeof(float) * N); 
-
-          // Initialize host arrays
-          for(int i = 0; i < N; i++)
+         // Initialize the memory on the host
+         float *a, *b, *c, *host_check;       
+  
+         // Initialize the memory on the device
+         float *d_a, *d_b, *d_c; 
+  
+         // Allocate host memory
+         a   = (float*)malloc(sizeof(float) * (N*N));
+         b   = (float*)malloc(sizeof(float) * (N*N));
+         c   = (float*)malloc(sizeof(float) * (N*N));
+         host_check = (float*)malloc(sizeof(float) * (N*N));
+  
+         // Initialize host arrays
+         for(int i = 0; i < (N*N); i++)
             {
-              a[i] = 1.0f;
+              a[i] = 2.0f;
               b[i] = 2.0f;
             }
+  
+         // Allocate device memory
+         cudaMalloc((void**)&d_a, sizeof(float) * (N*N));
+         cudaMalloc((void**)&d_b, sizeof(float) * (N*N));
+         cudaMalloc((void**)&d_c, sizeof(float) * (N*N));
+  
+         // Transfer data from host to device memory
+         cudaMemcpy(d_a, a, sizeof(float) * (N*N), cudaMemcpyHostToDevice);
+         cudaMemcpy(d_b, b, sizeof(float) * (N*N), cudaMemcpyHostToDevice);
+         cudaMemcpy(d_c, c, sizeof(float) * (N*N), cudaMemcpyHostToDevice);
+  
+         // Thread organization
+         dim3 Block_dim(BLOCK_SIZE, BLOCK_SIZE, 1);                
+         ...
+ 
+         // Device fuction call 
+         matrix_mul<<<Grid_dim, Block_dim>>>(d_a, d_b, d_c, N);
+  
+         // Transfer data back to host memory
+         cudaMemcpy(c, d_c, sizeof(float) * (N*N), cudaMemcpyDeviceToHost);
 
-          // Transfer data from host to device memory
-          cudaMemcpy(d_a, a, sizeof(float) * N, cudaMemcpyHostToDevice);
-          cudaMemcpy(d_b, b, sizeof(float) * N, cudaMemcpyHostToDevice);
+         // Cpu computation for verification 
+         cpu_matrix_mul(a,b,host_check,N);
 
-          // Thread organization 
-          dim3 dimGrid(1, 1, 1);    
-          dim3 dimBlock(16, 16, 1); 
-
-          // execute the CUDA kernel function 
-          vector_add<<<dimGrid, dimBlock>>>(d_a, d_b, d_out, N);
-
-          // Transfer data back to host memory
-          cudaMemcpy(out, d_out, sizeof(float) * N, cudaMemcpyDeviceToHost);
-
-          // Verification
-          for(int i = 0; i < N; i++)
-             {
-               assert(fabs(out[i] - a[i] - b[i]) < MAX_ERR);
-             }
-
-          printf("out[0] = %f\n", out[0]);
-          printf("PASSED\n");
-
+         // Verification
+         bool flag=1;
+         for(int i = 0; i < N; i++)
+           {
+            for(int j = 0; j < N; j++)
+              {
+               if(c[j*N+i]!= host_check[j*N+i])
+                 {
+                  flag=0;
+                  break;
+                 }
+              }
+           }
+          if (flag==0)
+            {
+            cout <<"But,two matrices are not equal" << endl;
+            cout <<"Matrix dimensions are assumed to be multiples of BLOCK_SIZE=16" << endl;
+            }
+            else
+            cout << "Two matrices are equal" << endl;
+  
           // Deallocate device memory
           cudaFree(d_a);
           cudaFree(d_b);
-          cudaFree(d_out);
-
+          cudaFree(d_c);
+  
           // Deallocate host memory
           free(a); 
           free(b); 
-          free(out);
+          free(c);
+          free(host_check);
   
-          return 0;
+         return 0;
         }
         ```
 
-    === "With Unified Memory"
+    === "Matrix-multiplication-shared.cu"
    
         ```c
+        // Matrix-multiplication-shared.cu
         //-*-C++-*-
-        #include <stdio.h>
-        #include <stdlib.h>
-        #include <math.h>
-        #include <assert.h>
-        #include <time.h>
-
-        #define N 256
-        #define MAX_ERR 1e-6
-
-
-        // GPU function that adds two vectors 
-        __global__ void vector_add(float *a, float *b, 
-                                   float *out, int n) 
+        #include<iostream>
+        #include<cuda.h>
+        
+        // block size for the matrix 
+        #define BLOCK_SIZE 16
+        
+        using namespace std;
+        
+        // Device call (matrix multiplication)
+        __global__ void matrix_mul(const float *d_a, const float *d_b, 
+        float *d_c, int width)
         {
-          int i = blockIdx.x * blockDim.x * blockDim.y + 
-            threadIdx.y * blockDim.x + threadIdx.x;   
-          // Allow the   threads only within the size of N
-          if(i < n)
-            {
-              out[i] = a[i] + b[i];
-            }
+          // Shared memory allocation for the block matrix  
+          __shared__ int a_block[BLOCK_SIZE][BLOCK_SIZE];
+          __shared__ int b_block[BLOCK_SIZE][BLOCK_SIZE];
 
-          // Synchronice all the threads 
-          __syncthreads();
+          // Indexing for the block matrix
+          int tx = threadIdx.x;
+          int ty = threadIdx.y;
+
+          // Indexing global matrix to block matrix 
+          int row = threadIdx.x+blockDim.x*blockIdx.x;
+          int col = threadIdx.y+blockDim.y*blockIdx.y;
+
+          // Allow threads only for size of rows and columns (we assume square matrix)
+          if ((row < width) && (col< width))
+            {
+              // Save temporary value for the particular index
+              float temp = 0;
+              for(int i = 0; i < width / BLOCK_SIZE; ++i)
+                 {
+                  // Allign the global matrix to block matrix 
+                  a_block[ty][tx] = d_a[row * width + (i * BLOCK_SIZE + tx)];
+                  b_block[ty][tx] = d_b[(i * BLOCK_SIZE + ty) * width + col];
+
+                  // Make sure all the threads are synchronized
+                  __syncthreads(); 
+
+                  // Multiply the block matrix
+                  for(int j = 0; j < BLOCK_SIZE; ++j)
+                    {
+                      temp += a_block[ty][j] * b_block[j][tx];    
+                    }
+                    __syncthreads();
+                 }
+              // Save block matrix entry to global matrix 
+              d_c[row*width+col] = temp;
+            }
         }
 
+        // Host call (matix multiplication)
+        float * cpu_matrix_mul(float *h_a, float *h_b, float *h_c, int width)   
+        {                                                                 
+          for(int row = 0; row < width ; ++row)                           
+            {                                                             
+              for(int col = 0; col < width ; ++col)                       
+                {                                                         
+                  float single_entry = 0;                                       
+                  for(int i = 0; i < width ; ++i)                         
+                    {                                                     
+                      single_entry += h_a[row*width+i] * h_b[i*width+col];      
+                    }                                                     
+                  h_c[row*width+col] = single_entry;                            
+                }                                                         
+            }   
+          return h_c;           
+        }
+
+
         int main()
-        {
-          /*
-          // Initialize the memory on the host
-          float *a, *b, *out;
-    
-          // Allocate host memory
-          a = (float*)malloc(sizeof(float) * N);
-          b = (float*)malloc(sizeof(float) * N);
-          c = (float*)malloc(sizeof(float) * N);
-          */
-   
-          // Initialize the memory on the device
-          float *d_a, *d_b, *d_out;
+         {  
+           cout << "Programme assumes that matrix size is N*N "<<endl;
+           cout << "Matrix dimensions are assumed to be multiples of BLOCK_SIZE=16" << endl;
+           cout << "Please enter the N size number "<< endl;
+           int N=0;
+           cin >> N;
 
+           // Initialize the memory on the host
+           float *a, *b, *c, *host_check;       
+  
+           // Initialize the memory on the device
+           float *d_a, *d_b, *d_c; 
+  
+           // Allocate host memory
+           a   = (float*)malloc(sizeof(float) * (N*N));
+           b   = (float*)malloc(sizeof(float) * (N*N));
+           c   = (float*)malloc(sizeof(float) * (N*N));
+           host_check = (float*)malloc(sizeof(float) * (N*N));
+  
+           // Initialize host arrays
+           for(int i = 0; i < (N*N); i++)
+            {
+              a[i] = 2.0f;
+              b[i] = 2.0f;
+            }
+  
           // Allocate device memory
-          cudaMallocManaged(&d_a, sizeof(float) * N);
-          cudaMallocManaged(&d_b, sizeof(float) * N);
-          cudaMallocManaged(&d_out, sizeof(float) * N); 
+          cudaMalloc((void**)&d_a, sizeof(float) * (N*N));
+          cudaMalloc((void**)&d_b, sizeof(float) * (N*N));
+          cudaMalloc((void**)&d_c, sizeof(float) * (N*N));
   
-         // Initialize host arrays
-         for(int i = 0; i < N; i++)
-           {
-             d_a[i] = 1.0f;
-             d_b[i] = 2.0f;
-           }
-
-         /*
-         // Transfer data from host to device memory
-         cudaMemcpy(d_a, a, sizeof(float) * N, cudaMemcpyHostToDevice);
-         cudaMemcpy(d_b, b, sizeof(float) * N, cudaMemcpyHostToDevice);
-         */
-
-         // Thread organization 
-         dim3 dimGrid(1, 1, 1);    
-         dim3 dimBlock(16, 16, 1); 
-
-         // execute the CUDA kernel function 
-         vector_add<<<dimGrid, dimBlock>>>(d_a, d_b, d_out, N);
-         cudaDeviceSynchronize();
-         /*
-         // Transfer data back to host memory
-         cudaMemcpy(out, d_out, sizeof(float) * N, cudaMemcpyDeviceToHost);
-         */
+          // Transfer data from host to device memory
+          cudaMemcpy(d_a, a, sizeof(float) * (N*N), cudaMemcpyHostToDevice);
+          cudaMemcpy(d_b, b, sizeof(float) * (N*N), cudaMemcpyHostToDevice);
+          cudaMemcpy(d_c, c, sizeof(float) * (N*N), cudaMemcpyHostToDevice);
   
-         // Verification
-         for(int i = 0; i < N; i++)
-           {
-             assert(fabs(d_out[i] - d_a[i] - d_b[i]) < MAX_ERR);
-           }
+          // Thread organization
+          dim3 Block_dim(BLOCK_SIZE, BLOCK_SIZE, 1);                
+          dim3 Grid_dim(ceil(N/BLOCK_SIZE), ceil(N/BLOCK_SIZE), 1);
+ 
+          // Device fuction call 
+          matrix_mul<<<Grid_dim, Block_dim>>>(d_a, d_b, d_c, N);
+  
+          // Transfer data back to host memory
+          cudaMemcpy(c, d_c, sizeof(float) * (N*N), cudaMemcpyDeviceToHost);
 
-         printf("out[0] = %f\n", d_out[0]);
-         printf("PASSED\n");
-    
-         // Deallocate device memory
-         cudaFree(d_a);
-         cudaFree(d_b);
-         cudaFree(d_out);
+          // cpu computation for verification 
+          cpu_matrix_mul(a,b,host_check,N);
 
-         /*
-         // Deallocate host memory
-         free(a); 
-         free(b); 
-         free(out);
-         */
+          // Verification
+          bool flag=1;
+          for(int i = 0; i < N; i++)
+            {
+             for(int j = 0; j < N; j++)
+               {
+                 if(c[j*N+i]!= host_check[j*N+i])
+                   {
+                     flag=0;
+                     break;
+                   }
+               }
+            }
+          if (flag==0)
+            {
+              cout <<"But,two matrices are not equal" << endl;
+              cout <<"Matrix dimensions are assumed to be multiples of BLOCK_SIZE=16" << endl;
+            }
+          else
+            cout << "Two matrices are equal" << endl;
+  
+          // Deallocate device memory
+          cudaFree(d_a);
+          cudaFree(d_b);
+          cudaFree(d_c);
+      
+          // Deallocate host memory
+          free(a); 
+          free(b); 
+          free(c);
+          free(host_check);
   
          return 0;
         }
         ```
 
 ??? "Compilation and Output"
-
-    === "Serial-version"
-        ```
-        // compilation
-        $ gcc Vector-addition.c -o Vector-Addition-CPU
-        
-        // execution 
-        $ ./Vector-Addition-CPU
-        
-        // output
-        $ Hello World from CPU!
-        ```
         
     === "CUDA-version"
         ```c
         // compilation
-        $ nvcc -arch=compute_70 Vector-addition.cu -o Vector-Addition-GPU
+        $ nvcc -arch=sm_70 Matrix-multiplication-shared.cu -o Matrix-multiplication-shared
         
         // execution
-        $ ./Vector-Addition-GPU
+        $ ./Matrix-multiplication-shared
+        Programme assumes that matrix size is N*N 
+        Matrix dimensions are assumed to be multiples of BLOCK_SIZE=16
+        Please enter the N size number
+        $ 256
         
         // output
-        $ Hello World from GPU!
+        $ Two matrices are equal
         ```
 
 

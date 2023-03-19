@@ -207,7 +207,8 @@ free(out);
     
         ```c  
         //-*-C++-*-
-        
+        // Vector-addition-template.cu
+	
         #include <stdio.h>
         #include <stdlib.h>
         #include <math.h>

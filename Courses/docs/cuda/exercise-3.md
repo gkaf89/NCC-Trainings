@@ -66,12 +66,12 @@ matrix_mul<<<dimGrid,dimBlock>>>(d_a, d_b, d_c, N);
                 {
                   for(int col = 0; col < width ; ++col)
                     {
-                      float single_entry = 0;
+                      float temp = 0;
                       for(int i = 0; i < width ; ++i)
                         {
-                          single_entry += h_a[row*width+i] * h_b[i*width+col];
+                          temp += h_a[row*width+i] * h_b[i*width+col];
                         }
-                      h_c[row*width+col] = single_entry;
+                      h_c[row*width+col] = temp;
                     }
                 }
               return h_c;
@@ -87,14 +87,14 @@ matrix_mul<<<dimGrid,dimBlock>>>(d_a, d_b, d_c, N);
     
               if ((row < width) && (col < width)) 
                 {
-                  float single_entry = 0;
+                  float temp = 0;
                   // each thread computes one 
                   // element of the block sub-matrix
                   for (int i = 0; i < width; ++i) 
                     {
-                      single_entry += d_a[row*width+i]*d_b[i*width+col];
+                      temp += d_a[row*width+i]*d_b[i*width+col];
                     }
-                  d_c[row*width+col] = single_entry;
+                  d_c[row*width+col] = temp;
                 }
             }
             ```
@@ -135,6 +135,7 @@ free(c);
         // Matrix-multiplication.c
         
         #include<iostream>
+        #include<cuda.h>
         
         using namespace std;
         
@@ -144,12 +145,12 @@ free(c);
             {                                                             
               for(int col = 0; col < width ; ++col)                       
                 {                                                         
-                  float single_entry = 0;                                       
+                  float temp = 0;                                       
                   for(int i = 0; i < width ; ++i)                         
                     {                                                     
-                      single_entry += h_a[row*width+i] * h_b[i*width+col];      
+                      temp += h_a[row*width+i] * h_b[i*width+col];      
                     }                                                     
-                  h_c[row*width+col] = single_entry;                            
+                  h_c[row*width+col] = temp;                            
                 }                                                         
             }   
           return h_c;           
@@ -204,8 +205,10 @@ free(c);
 
         ```c
         //-*-C++-*-
+        // Matrix-multiplication-template.cu
         
         #include<iostream>
+        #include<cuda.h>
         
         using namespace std;
         
@@ -220,15 +223,33 @@ free(c);
           // only allow the threads that are needed for the computation 
           if (................................)
             {
-              float single_entry = 0;
+              float temp = 0;
               // each thread computes one 
               // element of the block sub-matrix
               for (int i = 0; i < width; ++i) 
                 {
-                  single_entry += d_a[row*width+i]*d_b[i*width+col];
+                  temp += d_a[row*width+i]*d_b[i*width+col];
                 }
-              d_c[row*width+col] = single_entry;
+              d_c[row*width+col] = temp;
             }
+        }
+
+        // Host call (matix multiplication)
+        float * cpu_matrix_mul(float *h_a, float *h_b, float *h_c, int width)   
+        {                                                                 
+          for(int row = 0; row < width ; ++row)                           
+            {                                                             
+              for(int col = 0; col < width ; ++col)                       
+                {                                                         
+                  float single_entry = 0;                                       
+                  for(int i = 0; i < width ; ++i)                         
+                    {                                                     
+                      single_entry += h_a[row*width+i] * h_b[i*width+col];      
+                    }                                                     
+                  h_c[row*width+col] = single_entry;                            
+                }                                                         
+            }   
+          return h_c;           
         }
 
         int main()
@@ -240,7 +261,7 @@ free(c);
           cin >> N;
 
           // Initialize the memory on the host
-          float *a, *b, *c;       
+          float *a, *b, *c, *host_check;       
   
           // Initialize the memory on the device
           float *d_a, *d_b, *d_c; 
@@ -277,15 +298,28 @@ free(c);
           // Transfer data back to host memory
           cudaMemcpy(c, d_c, sizeof(float) * (N*N), cudaMemcpyDeviceToHost);
 
+          // CPU computation for verification 
+          cpu_matrix_mul(a,b,host_check,N);
+
           // Verification
+          bool flag=1;
           for(int i = 0; i < N; i++)
             {
-              for(int j = 0; j < N; j++)
-                {
-                cout << c[j] <<" ";
-                }
-              cout << " " <<endl;
+             for(int j = 0; j < N; j++)
+               {
+                 if(c[j*N+i]!= host_check[j*N+i])
+                   {
+                     flag=0;
+                     break;
+                   }
+               }
             }
+          if (flag==0)
+            {
+              cout <<"Two matrices are not equal" << endl;
+            }
+          else
+            cout << "Two matrices are equal" << endl;
   
           // Deallocate device memory
           cudaFree...
@@ -304,6 +338,7 @@ free(c);
         // Matrix-multiplication.cu
         
         #include<iostream>
+        #include<cuda.h>
         
         using namespace std;
         
@@ -316,16 +351,35 @@ free(c);
     
           if ((row < width) && (col < width)) 
             {
-              float single_entry = 0;
+              float temp = 0;
               // each thread computes one 
               // element of the block sub-matrix
               for (int i = 0; i < width; ++i) 
                 {
-                  single_entry += d_a[row*width+i]*d_b[i*width+col];
+                  temp += d_a[row*width+i]*d_b[i*width+col];
                 }
-              d_c[row*width+col] = single_entry;
+              d_c[row*width+col] = temp;
             }
         }
+
+        // Host call (matix multiplication)
+        float * cpu_matrix_mul(float *h_a, float *h_b, float *h_c, int width)   
+        {                                                                 
+          for(int row = 0; row < width ; ++row)                           
+            {                                                             
+              for(int col = 0; col < width ; ++col)                       
+                {                                                         
+                  float single_entry = 0;                                       
+                  for(int i = 0; i < width ; ++i)                         
+                    {                                                     
+                      single_entry += h_a[row*width+i] * h_b[i*width+col];      
+                    }                                                     
+                  h_c[row*width+col] = single_entry;                            
+                }                                                         
+            }   
+          return h_c;           
+        }
+
 
         int main()
         {
@@ -336,7 +390,7 @@ free(c);
           cin >> N;
 
           // Initialize the memory on the host
-          float *a, *b, *c;       
+          float *a, *b, *c, *host_check;       
   
           // Initialize the memory on the device
           float *d_a, *d_b, *d_c; 
@@ -345,6 +399,7 @@ free(c);
           a   = (float*)malloc(sizeof(float) * (N*N));
           b   = (float*)malloc(sizeof(float) * (N*N));
           c   = (float*)malloc(sizeof(float) * (N*N));
+          host_check = (float*)malloc(sizeof(float) * (N*N));
   
           // Initialize host matrix
           for(int i = 0; i < (N*N); i++)
@@ -373,15 +428,28 @@ free(c);
           // Transfer data back to host memory
           cudaMemcpy(c, d_c, sizeof(float) * (N*N), cudaMemcpyDeviceToHost);
 
+          // cpu computation for verification 
+          cpu_matrix_mul(a,b,host_check,N);
+
           // Verification
+          bool flag=1;
           for(int i = 0; i < N; i++)
             {
-              for(int j = 0; j < N; j++)
-                {
-                cout << c[j] <<" ";
-                }
-              cout << " " <<endl;
+             for(int j = 0; j < N; j++)
+               {
+                 if(c[j*N+i]!= host_check[j*N+i])
+                   {
+                     flag=0;
+                     break;
+                   }
+               }
             }
+          if (flag==0)
+            {
+              cout <<"Two matrices are not equal" << endl;
+            }
+          else
+            cout << "Two matrices are equal" << endl;
   
           // Deallocate device memory
           cudaFree(d_a);
@@ -392,6 +460,7 @@ free(c);
           free(a); 
           free(b); 
           free(c);
+          free(host_check);
 
           return 0;
         }
@@ -408,7 +477,15 @@ free(c);
         $ ./Matrix-Multiplication-CPU
         
         // output
-        $ Hello World from CPU!
+        $ g++ Matrix-multiplication.cc -o Matrix-multiplication
+        $ ./Matrix-multiplication
+        Programme assumes that matrix size is N*N 
+        Please enter the N size number 
+        4
+        16 16 16 16 
+        16 16 16 16  
+        16 16 16 16  
+        16 16 16 16 
         ```
         
     === "CUDA-version"
@@ -418,9 +495,12 @@ free(c);
         
         // execution
         $ ./Matrix-Multiplication-GPU
+        Programme assumes that matrix size is N*N 
+        Please enter the N size number
+        $ 256
         
         // output
-        $ Hello World from GPU!
+        $ Two matrices are equal
         ```
 
 ??? Question "Questions"
