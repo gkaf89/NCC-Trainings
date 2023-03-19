@@ -328,7 +328,7 @@
 ??? "Compilation and Output"
 
     === "Without-unified-memory.cu"
-        ```
+        ```c
         // compilation
         $ nvcc -arch=compute_70 Without-unified-memory.cu -o Without-Unified-Memory
         

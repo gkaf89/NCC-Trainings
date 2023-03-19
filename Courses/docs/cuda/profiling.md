@@ -1,4 +1,4 @@
-### Time measuremen
+### Time measurement
 
 In CUDA, the execution time can be measure by using the cuda events.
 CUDA API events shall be created using `cudaEvent_t`, for example, `cudaEvent_t start, stop;`.

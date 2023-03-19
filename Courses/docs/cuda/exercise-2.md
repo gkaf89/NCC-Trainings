@@ -390,7 +390,7 @@ free(out);
 ??? "Compilation and Output"
 
     === "Serial-version"
-        ```
+        ```c
         // compilation
         $ gcc Vector-addition.c -o Vector-Addition-CPU
         

@@ -469,7 +469,7 @@ free(c);
 ??? "Compilation and Output"
 
     === "Serial-version"
-        ```
+        ```c
         // compilation
         $ gcc Matrix-multiplication.c -o Matrix-Multiplication-CPU
         

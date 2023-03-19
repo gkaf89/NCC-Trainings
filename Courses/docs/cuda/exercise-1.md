@@ -72,7 +72,7 @@ To do that, we need to do the following things:
 ??? "Compilation and Output"
 
     === "Serial-version"
-        ```
+        ```c
         // compilation
         $ gcc Hello-world.c -o Hello-World-CPU
         
