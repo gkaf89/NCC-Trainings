@@ -22,7 +22,7 @@
   /project/home/p200117
   ```
   
-#### 4. And please create your own working folder under the project directory.
+#### 4. And please create your own working folder under the project directory
 - 4.1 For example, here it is user with `u100490`:
   ```
   [u100490@login02 p200117]$ mkdir $USER
@@ -50,14 +50,14 @@
   ...
   ...
   ```
-#### 7. Untill now you are in in the login node, now it is time to reserve the GPU compute node:
-- 7.1 We will do the excercises in interactive mode
+#### 7. Untill now you are in in the login node, now its time to do the dry run test
+- 7.1 Reserve the interactive mode for running/testing CUDA applications 
   ```
-  $ salloc -A p200117 --res gpudev -q dev -N 1 -t 02:00:00
+  $ salloc -A p200117 --res training_part1 --partition=gpu --qos default N 1 -t 01:00:00
   ```
 - ??? "check if your reservation is allocated"
       ```
-      [u100490@login03 ~]$ salloc -A p200117 --res gpudev -q dev -N 1 -t 02:00:00
+      [u100490@login03 ~]$ salloc -A p200117 --res training_part1 --partition=gpu --qos default N 1 -t 01:00:00
       salloc: Pending job allocation 296848
       salloc: job 296848 queued and waiting for resources
       salloc: job 296848 has been allocated resources
@@ -65,9 +65,18 @@
       salloc: Waiting for resource configuration
       salloc: Nodes mel2131 are ready for job
       ```
-      
-#### 8. Finally we need to load the compiler to test the GPU CUDA codes
- - 8.1 We need a Nvidia HPC SDK compiler for compiling and testing CUDA code
+
+
+#### 8. Now we need to check simple CUDA application, if that is going to work for you:
+ - 8.1 Go to folder `Dry-run-test`
+```
+[u100490@login03 CUDA]$ cd Dry-run-test/
+[u100490@login03 Dry-run-test]$ ls 
+Hello-world.cu  module.sh
+```
+
+#### 9. Finally we need to load the compiler to test the GPU CUDA codes
+ - 9.1 We need a Nvidia HPC SDK compiler for compiling and testing CUDA code
  ```
  $ module load OpenMPI/4.1.4-NVHPC-22.7-CUDA-11.7.0
  ### or
@@ -89,3 +98,58 @@
       Where:
           S:  Module is Sticky, requires --force to unload or purge
       ```
+
+
+#### 10. Please compile and test your CUDA application 
+ - For example, Dry-run-test
+ ```
+ // compilation
+ $ nvcc -arch=compute_70 Hello-world.cu -o Hello-World-GPU
+
+ // execution
+ $ ./Hello-World-GPU
+
+ // output
+ $ Hello World from GPU!
+   Hello World from GPU!
+   Hello World from GPU!
+   Hello World from GPU!
+ ```
+
+#### 11. Similary for the hands-on session, we need to do the node reservation:
+  ```
+  $ salloc -A p200117 --res training_part1 --partition=gpu --qos default N 1 -t 01:00:00
+  ```
+  
+- ??? "check if your reservation is allocated"
+      ```
+      [u100490@login03 ~]$ salloc -A p200117 --res training_part2 --partition=gpu --qos default N 1 -t 01:00:00
+      salloc: Pending job allocation 296848
+      salloc: job 296848 queued and waiting for resources
+      salloc: job 296848 has been allocated resources
+      salloc: Granted job allocation 296848
+      salloc: Waiting for resource configuration
+      salloc: Nodes mel2131 are ready for job
+      ```
+
+#### 12. We will continute with our Hands on exercise
+ - 12.1 For example `Hello World` example, we do the following steps:
+
+```
+[u100490@mel2063 CUDA]$ pwd
+/project/home/p200117/u100490/CUDA
+[u100490@mel2063 CUDA]$ ls
+[u100490@mel2063 CUDA]$ ls
+Dry-run-test  Matrix-multiplication  Profiling      Unified-memory
+Hello-world   module.sh              Shared-memory  Vector-addition
+[u100490@mel2063 CUDA]$ source module.sh
+[u100490@mel2063 CUDA]$ cd Hello-world
+// compilation
+[u100490@mel2063 CUDA]$ nvcc -arch=compute_70 Hello-world.cu -o Hello-World-GPU
+
+// execution
+[u100490@mel2063 CUDA]$ ./Hello-World-GPU
+
+// output
+[u100490@mel2063 CUDA]$ Hello World from GPU
+```

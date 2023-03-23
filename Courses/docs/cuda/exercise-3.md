@@ -159,7 +159,7 @@ free(c);
         int main()
         {
   
-          cout << "Programme assumes that matrix size is N*N "<<endl;
+          cout << "Programme assumes that matrix (square matrix )size is N*N "<<endl;
           cout << "Please enter the N size number "<< endl;
           int N = 0;
           cin >> N;
@@ -255,7 +255,7 @@ free(c);
         int main()
         {
   
-          cout << "Programme assumes that matrix size is N*N "<<endl;
+          cout << "Programme assumes that matrix (square matrix) size is N*N "<<endl;
           cout << "Please enter the N size number "<< endl;
           int N = 0;
           cin >> N;
@@ -384,7 +384,7 @@ free(c);
         int main()
         {
   
-          cout << "Programme assumes that matrix size is N*N "<<endl;
+          cout << "Programme assumes that matrix (square matrix) size is N*N "<<endl;
           cout << "Please enter the N size number "<< endl;
           int N = 0;
           cin >> N;
@@ -479,7 +479,7 @@ free(c);
         // output
         $ g++ Matrix-multiplication.cc -o Matrix-multiplication
         $ ./Matrix-multiplication
-        Programme assumes that matrix size is N*N 
+        Programme assumes that matrix (square matrix) size is N*N 
         Please enter the N size number 
         4
         16 16 16 16 
@@ -495,7 +495,7 @@ free(c);
         
         // execution
         $ ./Matrix-Multiplication-GPU
-        Programme assumes that matrix size is N*N 
+        Programme assumes that matrix (square matrix) size is N*N 
         Please enter the N size number
         $ 256
         
