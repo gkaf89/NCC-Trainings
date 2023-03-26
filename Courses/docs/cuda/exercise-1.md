@@ -15,7 +15,7 @@ To do that, we need to do the following things:
    it is good to call explicit synchronized calls to avoid errors
    in the computation)
 
-### Questions and Solutions
+### <u>Questions and Solutions</u>
 
 
 ??? Example "Examples: Hello World"

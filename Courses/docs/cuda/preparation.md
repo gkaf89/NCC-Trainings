@@ -3,7 +3,7 @@
 - 1.2 [Please take a look if you are using Linux/Mac](https://docs.lxp.lu/first-steps/connecting/)
 
 #### 2. Use your username to connect to MeluXina
-- 2.1 For exmaple the below example shows the user of `u100490` 
+- 2.1 For example the below example shows the user of `u100490` 
   ```
   $ ssh u100490@login.lxp.lu -p 8822
   ### or
@@ -15,7 +15,7 @@
   [u100490@login02 ~]$ pwd
   /home/users/u100490
   ```
-- 3.2 After that go to project directory (Nvidia Bootcamp activites).
+- 3.2 After that, go to the project directory.
   ```
   [u100490@login02 ~]$ cd /project/home/p200117
   [u100490@login02 p200117]$ pwd
@@ -23,7 +23,7 @@
   ```
   
 #### 4. And please create your own working folder under the project directory
-- 4.1 For example, here it is user with `u100490`:
+- 4.1 For example, here is the user with `u100490`:
   ```
   [u100490@login02 p200117]$ mkdir $USER
   ### or 
@@ -50,8 +50,8 @@
   ...
   ...
   ```
-#### 7. Untill now you are in in the login node, now its time to do the dry run test
-- 7.1 Reserve the interactive mode for running/testing CUDA applications 
+#### 7. Until now you are in the login node, now its time to do the dry run test
+- 7.1 Reserve the interactive node for running/testing CUDA applications 
   ```
   $ salloc -A p200117 --res training_part1 --partition=gpu --qos default N 1 -t 01:00:00
   ```
@@ -65,7 +65,12 @@
       salloc: Waiting for resource configuration
       salloc: Nodes mel2131 are ready for job
       ```
-
+ - 7.2 You can also check if you got the interactive node for your computations, for example, here with the user `u100490`:
+ ```
+ [u100490@mel2131 ~]$ squeue -u u100490
+             JOBID PARTITION     NAME     USER    ACCOUNT    STATE       TIME   TIME_LIMIT  NODES NODELIST(REASON)
+            304381       gpu interact  u100490    p200117  RUNNING       0:37     01:00:00      1 mel2131
+ ```
 
 #### 8. Now we need to check simple CUDA application, if that is going to work for you:
  - 8.1 Go to folder `Dry-run-test`
@@ -75,7 +80,7 @@
 Hello-world.cu  module.sh
 ```
 
-#### 9. Finally we need to load the compiler to test the GPU CUDA codes
+#### 9. Finally, we need to load the compiler to test the GPU CUDA codes
  - 9.1 We need a Nvidia HPC SDK compiler for compiling and testing CUDA code
  ```
  $ module load OpenMPI/4.1.4-NVHPC-22.7-CUDA-11.7.0
@@ -116,7 +121,7 @@ Hello-world.cu  module.sh
    Hello World from GPU!
  ```
 
-#### 11. Similary for the hands-on session, we need to do the node reservation:
+#### 11. Similarly for the hands-on session, we need to do the node reservation:
   ```
   $ salloc -A p200117 --res training_part1 --partition=gpu --qos default N 1 -t 01:00:00
   ```
@@ -132,7 +137,7 @@ Hello-world.cu  module.sh
       salloc: Nodes mel2131 are ready for job
       ```
 
-#### 12. We will continute with our Hands on exercise
+#### 12. We will continue with our Hands on exercise
  - 12.1 For example `Hello World` example, we do the following steps:
 
 ```

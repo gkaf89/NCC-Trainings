@@ -1,8 +1,8 @@
 ### Time measurement
 
-In CUDA, the execution time can be measure by using the cuda events.
+In CUDA, the execution time can be measured by using the cuda events.
 CUDA API events shall be created using `cudaEvent_t`, for example, `cudaEvent_t start, stop;`.
-And thereafter it can be initiated by `cudaEventCreate(&start)` for strat and similary for stop,
+And thereafter, it can be initiated by `cudaEventCreate(&start)` for start and similarly for stop,
 it can be created as `cudaEventCreate(&stop)`. 
 
 ??? "CUDA API"
@@ -13,8 +13,8 @@ it can be created as `cudaEventCreate(&stop)`.
     cudaEventRecord(start,0);
     ```
 
-And it can be initialized to measure the timing as `cudaEventRecord(start,0)` and `cudaEventRecord(stop,0)`.
-Then the timings cab be measured as float, for example, `cudaEventElapsedTime(&time, start, stop)`.
+And it can be initialised to measure the timing as `cudaEventRecord(start,0)` and `cudaEventRecord(stop,0)`.
+Then the timings can be measured as float, for example, `cudaEventElapsedTime(&time, start, stop)`.
 Finally, all the events should be destroyed using `cudaEventDestroy`, for example, `cudaEventDestroy(start)` and `cudaEventDestroy(start)`.
 
 ??? "CUDA API"
@@ -28,7 +28,7 @@ Finally, all the events should be destroyed using `cudaEventDestroy`, for exampl
     ```
 
 
-The following example shows how to measure your GPU kernal call in CUDA application:
+The following example shows how to measure your GPU kernel call in a CUDA application:
 
 ??? example "Example"
     ```
@@ -37,10 +37,10 @@ The following example shows how to measure your GPU kernal call in CUDA applicat
     cudaEventCreate(&stop);
     cudaEventRecord(start);
 
-    // Device fuction call 
+    // Device function call 
     matrix_mul<<<Grid_dim, Block_dim>>>(d_a, d_b, d_c, N);
  
-    //use CUDA api to stop the measuring time
+    //use CUDA API to stop the measuring time
     cudaEventRecord(stop);
     cudaEventSynchronize(stop);
     float time;
@@ -60,7 +60,7 @@ This will help the programmer optimise the code performance on the given archite
 For this, Nvidia offers three kinds of profiling options, they are:
 
 - [Nsight Compute](https://docs.nvidia.com/nsight-compute/index.html):
-CUDA application interactive [kernel profiler](https://docs.nvidia.com/nsight-compute/ProfilingGuide/index.html): This will give traces and events of the kernal calls, this further provides both [visual profiler-GUI](https://docs.nvidia.com/nsight-compute/NsightCompute/index.html) and [Command Line Interface (CLI)](https://docs.nvidia.com/nsight-compute/NsightComputeCli/index.html) profiling options. **`ncu -o profile Application.exe`** command will create output file **`profile.ncu-rep`** which can be opened using **`ncu-ui`**. 
+CUDA application interactive [kernel profiler](https://docs.nvidia.com/nsight-compute/ProfilingGuide/index.html): This will give traces and events of the kernel calls; this further provides both [visual profile-GUI](https://docs.nvidia.com/nsight-compute/NsightCompute/index.html) and [Command Line Interface (CLI)](https://docs.nvidia.com/nsight-compute/NsightComputeCli/index.html) profiling options. **`ncu -o profile Application.exe`** command will create an output file **`profile.ncu-rep`** which can be opened using **`ncu-ui`**. 
 
  -  ??? example
     ```
@@ -126,8 +126,8 @@ CUDA application interactive [kernel profiler](https://docs.nvidia.com/nsight-co
 Graphics application frame debugger and profiler: This is quite useful for analysing the profiling results through GUI. 
 
 - [Nsight Systems](https://developer.nvidia.com/nsight-systems):
-System-wide performance analysis tool: It is needed when we try to do heterogenous computation profiling,
-for example, mixing MPI and OpenM with CUDA. This will profile the system-wide application, that is, both CPU and GPU.
+System-wide performance analysis tool: It is needed when we try to do heterogeneous computation profiling,
+for example, mixing MPI and OpenMP with CUDA. This will profile the system-wide application, that is, both CPU and GPU.
 To learn more about the command line options, please use **`$ nsys profile --help`**
 
  -  ??? example
@@ -173,7 +173,7 @@ To learn more about the command line options, please use **`$ nsys profile --hel
        /m100/home/userexternal/ekrishna/Teaching/report1.sqlite
     ```
 
-### [^^Occupancy^^](https://docs.nvidia.com/nsight-compute/NsightCompute/index.html#occupancy-calculator)
+### [<u>Occupancy</u>](https://docs.nvidia.com/nsight-compute/NsightCompute/index.html#occupancy-calculator)
 
 The CUDA Occupancy Calculator allows you to compute the multiprocessor occupancy of a Nvidia GPU microarchitecture by a given CUDA kernel.
 The multiprocessor occupancy is the ratio of active warps to the maximum number of warps supported on a multiprocessor of the GPU.
@@ -249,6 +249,6 @@ Max.\ warps\ per\ SM}$
 
      - Occupancy: can you change **`numBlocks`** and **`blockSize`** in Occupancy.cu code
      and check how it affects or predicts the occupancy of the given Nvidia microarchitecture?
-     - Profling: run your **`Matrix-multiplication.cu`** and **`Vector-addition.cu`** code and observe what you notice?
-     for example, how to improve the occupancy? Or maximum GPU utilization?
+     - Profiling: run your **`Matrix-multiplication.cu`** and **`Vector-addition.cu`** code and observe what you notice?
+     for example, how to improve the occupancy? Or maximise a GPU utilization?
      - Timing: using CUDA events API can you measure your GPU kernel execution, and compare how fast is your GPU computation compared to CPU computation?

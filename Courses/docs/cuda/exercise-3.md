@@ -1,10 +1,13 @@
+We will now look into the basic matrix multiplication.
+
 <figure markdown>
 ![](/figures/mat.png){align=center width=500}
 <figcaption>b</figcaption>
 </figure>
 
-
- - Allocating the CPU memory for A, B, and C matrix
+ - Allocating the CPU memory for A, B, and C matrix.
+   Here we notice that the matrix is stored in a
+   1D array because we want to consider the same function concept for CPU and GPU.
 ```c
 // Initialize the memory on the host
 float *a, *b, *c;
@@ -53,10 +56,10 @@ dim3 dimGrid(ceil(N/float(blockSize)),ceil(N/float(blockSize)),1);
 
  - Calling the kernel function
 ```c
-// Device fuction call
+// Device function call
 matrix_mul<<<dimGrid,dimBlock>>>(d_a, d_b, d_c, N);
 ```
- -  ??? "matrix multiplication fuction call"
+ -  ??? "matrix multiplication function call"
 
         === "serial"
             ```c
@@ -99,12 +102,9 @@ matrix_mul<<<dimGrid,dimBlock>>>(d_a, d_b, d_c, N);
             }
             ```
 
- - Transfer back (copy back to ) the computed c matrix to host from GPU
-```c
-// Transfer data back to host memory
-cudaMemcpy(c, d_c, sizeof(float) * (N*N), cudaMemcpyDeviceToHost);
-```
- - Copy back computed value from GPU to CPU
+ - Copy back computed value from GPU to CPU;
+   transfer the data back to GPU (from device to host).
+   Here is the c matrix that contains the product of the two matrices.
 ```c
 // Transfer data back to host memory
 cudaMemcpy(c, d_c, sizeof(float) * (N*N), cudaMemcpyDeviceToHost);
@@ -123,7 +123,7 @@ free(b);
 free(c);
 ```
 
-### Questions and Solutions
+### <u>Questions and Solutions</u>
 
 
 ??? example "Examples: Matrix Multiplication" 
@@ -179,7 +179,7 @@ free(c);
               b[i] = 2.0f;
             }
    
-          // Device fuction call 
+          // Device function call 
           matrix_mul(a, b, c, N);
 
           // Verification
@@ -234,7 +234,7 @@ free(c);
             }
         }
 
-        // Host call (matix multiplication)
+        // Host call (matrix multiplication)
         float * cpu_matrix_mul(float *h_a, float *h_b, float *h_c, int width)   
         {                                                                 
           for(int row = 0; row < width ; ++row)                           
@@ -292,7 +292,7 @@ free(c);
           dim3 dimBlock(......................);
           dim3 dimGrid(.......................);
   
-          // Device fuction call 
+          // Device function call 
           matrix_mul<<<dimGrid,dimBlock>>>(d_a, d_b, d_c, N);
 
           // Transfer data back to host memory
@@ -362,7 +362,7 @@ free(c);
             }
         }
 
-        // Host call (matix multiplication)
+        // Host call (matrix multiplication)
         float * cpu_matrix_mul(float *h_a, float *h_b, float *h_c, int width)   
         {                                                                 
           for(int row = 0; row < width ; ++row)                           
@@ -422,7 +422,7 @@ free(c);
           dim3 dimBlock(blockSize,blockSize,1);
           dim3 dimGrid(ceil(N/float(blockSize)),ceil(N/float(blockSize)),1);
   
-          // Device fuction call 
+          // Device function call 
           matrix_mul<<<dimGrid,dimBlock>>>(d_a, d_b, d_c, N);
 
           // Transfer data back to host memory
@@ -505,10 +505,15 @@ free(c);
 
 ??? Question "Questions"
 
-    - What happens if you remove the **`__syncthreads();`** from the **`__global__ void vector_add(float *a, float *b, 
-       float *out, int n)`** function.
-    - Can you remove the if condition **`if(i < n)`** from the **`__global__ void vector_add(float *a, float *b,
-       float *out, int n)`** function. If so how can you do that?
-    - Here we do not use the **`cudaDeviceSynchronize()`** in the main application, can you figure out why we
-        do not need to use it. 
-    - Can you create a different kinds of threads block for larger number of array?
+    - Right now, we are using the 1D array to represent the matrix. However, you can also do it with the 2D matrix.
+    Can you try with 2D array matrix multiplication with 2D thread block?
+    - Can you get the correct soltion if you remove the **`if ((row < width) && (col < width))`**
+    condition from the **`__global__ void matrix_mul(float* d_a, float* d_b, float* d_c, int width)`** function?
+    - Please try with different thread blocks and different matrix sizes.
+    ```
+    // Thread organization
+    int blockSize = 32;
+    dim3 dimBlock(blockSize,blockSize,1);
+    dim3 dimGrid(ceil(N/float(blockSize)),ceil(N/float(blockSize)),1);
+    ```
+

@@ -1,18 +1,39 @@
+In this example, we try shared memory matrix multiplication.
+This is achieved by blocking the global matrix into a small block matrix (tiled matrix)
+that can fit into the shared memory of the Nvidia GPU.
+Shared memory from the GPUs, which has a good bandwidth within the GPUs compared to access to the global memory.
 
-	cudaFuncSetCacheConfig(dkernel, cudaFuncCachePreferL1);
-	//cudaFuncSetCacheConfig(dkernel, cudaFuncCachePreferShared);
-
-
-	cudaFuncCachePreferNone: no preference for shared memory or L1 (default)
-	cudaFuncCachePreferShared: prefer larger shared memory and smaller L1 cache
-	cudaFuncCachePreferL1: prefer larger L1 cache and smaller shared memory
-	cudaFuncCachePreferEqual: prefer equal size L1 cache and shared memory
-
+ - This is very similar to the previous example; however, we just need to allocate the small block matrix into shared memory.
+ The below example shows the blocking size for a and b matrix respectively for gobal A and B matrix. 
+```
+  // Shared memory allocation for the block matrix  
+  __shared__ int a_block[BLOCK_SIZE][BLOCK_SIZE];
+  __shared__ int b_block[BLOCK_SIZE][BLOCK_SIZE];
+```
 
 <figure markdown>
 ![](/figures/matrix-multiplication-with-shared-memory.png){align=middle}
 <figcaption></figcaption>
 </figure>
+
+ - Then we need to iterate elements within the block size and, finally with the global index. 
+These can be achieved with CUDA threads. 
+
+ - You can also increase the shared memory or L1 cache size by using `cudaFuncSetCacheConfig`. For more information about
+ CUDA API, please refer to [cudaFuncSetCacheConfig](https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__EXECUTION.html#group__CUDART__EXECUTION_1g6699ca1943ac2655effa0d571b2f4f15).
+??? "Tips"
+    ```
+    cudaFuncSetCacheConfig(kernel, cudaFuncCachePreferL1);
+    //cudaFuncSetCacheConfig(kernel, cudaFuncCachePreferShared);
+
+    cudaFuncCachePreferNone: no preference for shared memory or L1 (default)
+    cudaFuncCachePreferShared: prefer larger shared memory and smaller L1 cache
+    cudaFuncCachePreferL1: prefer larger L1 cache and smaller shared memory
+    cudaFuncCachePreferEqual: prefer equal size L1 cache and shared memory
+    ```
+
+
+### <u>Questions and Solutions</u>
 
 
 ??? example "Example: Shared Memory - Matrix Multiplication"
@@ -31,7 +52,7 @@
 
         using namespace std;
 
-        // Devicae call (matrix multiplication)
+        // Device call (matrix multiplication)
         __global__ void matrix_mul(const float *d_a, const float *d_b, 
                  float *d_c, int width)
          {
@@ -74,7 +95,7 @@
             }
         }
 
-        // Host call (matix multiplication)
+        // Host call (matrix multiplication)
         float * cpu_matrix_mul(float *h_a, float *h_b, float *h_c, int width)   
         {                                                                 
           for(int row = 0; row < width ; ++row)                           
@@ -134,7 +155,7 @@
          dim3 Block_dim(BLOCK_SIZE, BLOCK_SIZE, 1);                
          ...
  
-         // Device fuction call 
+         // Device function call 
          matrix_mul<<<Grid_dim, Block_dim>>>(d_a, d_b, d_c, N);
   
          // Transfer data back to host memory
@@ -294,7 +315,7 @@
           dim3 Block_dim(BLOCK_SIZE, BLOCK_SIZE, 1);                
           dim3 Grid_dim(ceil(N/BLOCK_SIZE), ceil(N/BLOCK_SIZE), 1);
  
-          // Device fuction call 
+          // Device function call 
           matrix_mul<<<Grid_dim, Block_dim>>>(d_a, d_b, d_c, N);
   
           // Transfer data back to host memory
@@ -360,10 +381,6 @@
 
 ??? Question "Questions"
 
-    - What happens if you remove the **`__syncthreads();`** from the **`__global__ void vector_add(float *a, float *b, 
-       float *out, int n)`** function.
-    - Can you remove the if condition **`if(i < n)`** from the **`__global__ void vector_add(float *a, float *b,
-       float *out, int n)`** function. If so how can you do that?
-    - Here we do not use the **`cudaDeviceSynchronize()`** in the main application, can you figure out why we
-        do not need to use it. 
-    - Can you create a different kinds of threads block for larger number of array?
+    - Could you resize the **`BLOCK_SIZE`** number and check the solution's correctness?
+    - Can you also create a different kind of thread block and matrix size and check the solution's correctness?
+    - Please try with `cudaFuncSetCacheConfig` and check if you can successfully execute the application. 

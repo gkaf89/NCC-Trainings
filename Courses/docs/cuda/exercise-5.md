@@ -18,10 +18,10 @@
 |Do the computation using the CUDA kernel|Do the computation using the CUDA kernel|
 |Transfer the data from the device to host|~~Transfer the data from the device to host~~|
 |Free device memory|Free device memory|
-|Free host memor|~~Free host memory~~|
+|Free host memory|~~Free host memory~~|
 
 
-### Questions and Solutions
+### <u>Questions and Solutions</u>
 
 
 ??? example "Examples: Unified Memory - Vector Addition"
@@ -358,10 +358,7 @@
 
 ??? Question "Questions"
 
-    - What happens if you remove the **`__syncthreads();`** from the **`__global__ void vector_add(float *a, float *b, 
-       float *out, int n)`** function.
-    - Can you remove the if condition **`if(i < n)`** from the **`__global__ void vector_add(float *a, float *b,
-       float *out, int n)`** function. If so how can you do that?
-    - Here we do not use the **`cudaDeviceSynchronize()`** in the main application, can you figure out why we
-        do not need to use it. 
-    - Can you create a different kinds of threads block for larger number of array?
+    - Here in this example, we have used **`cudaDeviceSynchronize()`**; can you remove **`cudaDeviceSynchronize()`**
+      and still get a correct solution? if not, why (think)?
+    - Please try with different thread blocks and array sizes. 
+

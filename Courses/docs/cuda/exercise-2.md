@@ -1,9 +1,10 @@
 
- - Memory allocation on both CPU and GPU. Because, as have discussed before,
-   GPU is accelerator, and it can not be act host machine. So therefore, the computation
-   has to be initiated via CPU. That means, we need to fist inititalise the data on the host,
+ - Memory allocation on both CPU and GPU. Because as discussed before,
+   GPU is an accelerator and can not act as a host machine
+   .So therefore, the computation
+   has to be initiated via CPU. That means, we need to first initialise the data on the host,
    that is CPU. At the same time, we also need to initialise the memory allocation on the GPU.
-   Because, we need to transfer the data from CPU to GPU.
+   Because, we need to transfer the data from a CPU to GPU.
 
 
 <figure markdown>
@@ -34,7 +35,7 @@ cudaMalloc((void**)&d_out, sizeof(float) * N);
 ```
 
  - Now we need to fill the values for the
-    array a and b. 
+    arrays a and b. 
 ```c
 // Initialize host arrays
 for(int i = 0; i < N; i++)
@@ -66,7 +67,7 @@ vector_add<<<dimGrid, dimBlock>>>(d_a, d_b, d_out, N);
 
  - Vector addition kernel function call definition
 
- -  ??? "vector addtion fuction call"
+ -  ??? "vector addition function call"
 
         === "Serial-version"
             ```c
@@ -95,7 +96,7 @@ vector_add<<<dimGrid, dimBlock>>>(d_a, d_b, d_out, N);
                   out[i] = a[i] + b[i];
                 }
   
-              // Synchronice all the threads 
+              // Synchronize all the threads 
               __syncthreads();
             }
             ```
@@ -124,9 +125,7 @@ free(b);
 free(out);
 ```
 
-
-### Questions and Solutions
-
+### <u>Questions and Solutions</u>
 
 ??? example "Examples: Vector Addition"
 
@@ -176,7 +175,7 @@ free(out);
           // Start measuring time
           clock_t start = clock();
 
-          // Executing CPU funtion 
+          // Executing CPU function 
           Vector_Add(a, b, out, N);
 
           // Stop measuring time and calculate the elapsed time
@@ -233,7 +232,7 @@ free(out);
               out[i] = a[i] + b[i];
             }
 
-          // Synchronice all the threads 
+          // Synchronize all the threads 
 
         }
 
