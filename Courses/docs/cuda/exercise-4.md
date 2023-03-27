@@ -3,6 +3,13 @@ This is achieved by blocking the global matrix into a small block matrix (tiled 
 that can fit into the shared memory of the Nvidia GPU.
 Shared memory from the GPUs, which has a good bandwidth within the GPUs compared to access to the global memory.
 
+
+![](../figures/memory.png){align=middle  width="450"}
+![](../figures/memory-1.png){align=middle  width="350"}
+
+
+
+
  - This is very similar to the previous example; however, we just need to allocate the small block matrix into shared memory.
  The below example shows the blocking size for a and b matrix respectively for gobal A and B matrix. 
 ```
@@ -11,16 +18,19 @@ Shared memory from the GPUs, which has a good bandwidth within the GPUs compared
   __shared__ int b_block[BLOCK_SIZE][BLOCK_SIZE];
 ```
 
+![](../figures/memory-hierarchy-in-gpus-1.png){align=middle}
+
+ - Then we need to iterate elements within the block size and, finally with the global index. 
+These can be achieved with CUDA threads. 
+
 <figure markdown>
 ![](../figures/matrix-multiplication-with-shared-memory.png){align=middle}
 <figcaption></figcaption>
 </figure>
 
- - Then we need to iterate elements within the block size and, finally with the global index. 
-These can be achieved with CUDA threads. 
-
  - You can also increase the shared memory or L1 cache size by using `cudaFuncSetCacheConfig`. For more information about
  CUDA API, please refer to [cudaFuncSetCacheConfig](https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__EXECUTION.html#group__CUDART__EXECUTION_1g6699ca1943ac2655effa0d571b2f4f15).
+
 ??? "Tips"
     ```
     cudaFuncSetCacheConfig(kernel, cudaFuncCachePreferL1);
@@ -32,7 +42,16 @@ These can be achieved with CUDA threads.
     cudaFuncCachePreferEqual: prefer equal size L1 cache and shared memory
     ```
 
-
+ - Different Nvidia GPUs provides different configuration, for example, [Ampere GA102 GPU Architecture, will support the following configuration:](https://www.nvidia.com/content/PDF/nvidia-ampere-ga-102-gpu-architecture-whitepaper-v2.pdf)
+       ```
+       128 KB L1 + 0 KB Shared Memory
+       120 KB L1 + 8 KB Shared Memory
+       112 KB L1 + 16 KB Shared Memory
+       96 KB L1 + 32 KB Shared Memory
+       64 KB L1 + 64 KB Shared Memory
+       28 KB L1 + 100 KB Shared Memory
+       ```
+    
 ### <u>Questions and Solutions</u>
 
 
