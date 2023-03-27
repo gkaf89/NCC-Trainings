@@ -1,6 +1,7 @@
 # NCC Supercomputing Luxembourg
-![](../figures/LUX.png){ align=left width="300"}
-[Luxinnovation](https://www.luxinnovation.lu/), the [University of Luxembourg](https://hpc.uni.lu/) and [LuxProvide](https://luxprovide.lu/) are jointly managing the [Luxembourg National Competence Centre in High-Performance Computing (HPC)](https://www.luxinnovation.lu/national-competence-centre-in-hpc/). Its mission is to promote the use of HPC linked to computing, data analytics and artificial intelligence and to support stakeholders such as industry – including SMEs and startups – academia and public administration to navigate the national and european HPC ecosystem. 
+
+![](figures/LUX.png){align=left  width="250"}
+[Luxinnovation](https://www.luxinnovation.lu/), the [University of Luxembourg](https://hpc.uni.lu/) and [LuxProvide](https://luxprovide.lu/) are jointly managing the [National Competence Centre Supercomputing in Luxembourg](https://www.luxinnovation.lu/national-competence-centre-in-hpc/). Its mission is to promote the use of HPC linked to computing, data analytics and artificial intelligence and to support stakeholders such as industry – including SMEs and startups – academia and public administration to navigate the national and european HPC ecosystem. 
 
 Luxembourg has a unique HPC infrastructure that is open to companies as well as to researchers.
 
@@ -12,11 +13,8 @@ Visit our webisite: [National Competence Centre Supercomputing Luxembourg](https
 
 ## MeluXina: open for commercial use
 
-<figure markdown>
-![](../figures/meluxina.jpeg){ width="900" } 
-<figcaption></figcaption>
-</figure>
 
+<p align="center"><img src="figures/meluxina.jpeg" width="900px"/></p>
 
 Inaugurated recently in June 2021, MeluXina is open for commercial use. It has received top marks by ranking organisation TOP500, which places it 1st in the EU and 4th in the world for its energy efficiency.
 
@@ -26,10 +24,7 @@ Unlike most HPC systems that are pure research infrastructures, 65% of MeluXina�
 
 ## HPC Thursdays webinar series
 
-<figure markdown>
-![](../figures/hpc_thursday.jpg) 
-<figcaption></figcaption>
-</figure>
+<p align="center"><img src="figures/hpc_thursday.jpg" width="900px"/></p>
 
 
 The “HPC Thursdays” webinar series provides an understanding of the benefits of using a supercomputer. It also looks at what a supercomputer is, how it works, and the skills needed to use one. Each webinar presents concrete examples of applications in different domains to help participants understand the value added of using a supercomputer, and to inspire future users in order to boost their innovation activities.
