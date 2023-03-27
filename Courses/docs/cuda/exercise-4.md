@@ -40,6 +40,17 @@ These can be achieved with CUDA threads.
     cudaFuncCachePreferShared: prefer larger shared memory and smaller L1 cache
     cudaFuncCachePreferL1: prefer larger L1 cache and smaller shared memory
     cudaFuncCachePreferEqual: prefer equal size L1 cache and shared memory
+
+    // simple example usage increasing more shared memory 
+    #include<stdio.h>
+    int main()
+    {
+      // example of increasing the shared memory 
+      cudaDeviceSetCacheConfig(My_Kernel, cudaFuncCachePreferShared);
+      My_Kernel<<<>>>();
+      cudaDeviceSynchronize(); 
+      return 0;
+    }
     ```
 
  - Different Nvidia GPUs provides different configuration, for example, [Ampere GA102 GPU Architecture, will support the following configuration:](https://www.nvidia.com/content/PDF/nvidia-ampere-ga-102-gpu-architecture-whitepaper-v2.pdf)
