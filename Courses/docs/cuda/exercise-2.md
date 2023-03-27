@@ -8,7 +8,7 @@
 
 
 <figure markdown>
-![](/figures/vector_add-external.png){ align=middle}
+![](../figures/vector_add-external.png){ align=middle}
 <figcaption></figcaption>
 </figure>
 
