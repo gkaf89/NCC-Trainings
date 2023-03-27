@@ -123,12 +123,12 @@ Hello-world.cu  module.sh
 
 #### 11. Similarly for the hands-on session, we need to do the node reservation:
   ```
-  $ salloc -A p200117 --res training_part1 --partition=gpu --qos default N 1 -t 01:00:00
+  $ salloc -A p200117 --res training_part1 --partition=gpu --qos default N 1 -t 02:30:00
   ```
   
 - ??? "check if your reservation is allocated"
       ```
-      [u100490@login03 ~]$ salloc -A p200117 --res training_part2 --partition=gpu --qos default N 1 -t 01:00:00
+      [u100490@login03 ~]$ salloc -A p200117 --res training_part2 --partition=gpu --qos default N 1 -t 02:30:00
       salloc: Pending job allocation 296848
       salloc: job 296848 queued and waiting for resources
       salloc: job 296848 has been allocated resources
@@ -138,7 +138,7 @@ Hello-world.cu  module.sh
       ```
 
 #### 12. We will continue with our Hands on exercise
- - 12.1 For example `Hello World` example, we do the following steps:
+ - 12.1 For example, `Hello World` example, we do the following steps:
 
 ```
 [u100490@mel2063 CUDA]$ pwd

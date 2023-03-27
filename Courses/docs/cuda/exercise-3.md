@@ -1,4 +1,5 @@
 We will now look into the basic matrix multiplication.
+In this example, we will perform the matrix multiplication. Matrix multiplication involves a nested loop. Again, most of the time, we might end up doing computation with a nested loop. Therefore, studying this example would be good practice for solving the nested loop in the future. 
 
 <figure markdown>
 ![](../figures/mat.png){align=center width=500}
@@ -29,7 +30,7 @@ cudaMalloc((void**)&d_b, sizeof(float) * (N*N));
 cudaMalloc((void**)&d_c, sizeof(float) * (N*N));
 ```
 
- - Now we need to fill the values for the matrix a and b.
+ - Now we need to fill the values for the matrix A and B.
 ```c
 // Initialize host matrix
 for(int i = 0; i < (N*N); i++)
@@ -104,7 +105,7 @@ matrix_mul<<<dimGrid,dimBlock>>>(d_a, d_b, d_c, N);
 
  - Copy back computed value from GPU to CPU;
    transfer the data back to GPU (from device to host).
-   Here is the c matrix that contains the product of the two matrices.
+   Here is the C matrix that contains the product of the two matrices.
 ```c
 // Transfer data back to host memory
 cudaMemcpy(c, d_c, sizeof(float) * (N*N), cudaMemcpyDeviceToHost);

@@ -1,4 +1,4 @@
-## NCC Luxembourg
+## NCC Supercomputing Luxembourg
 
 [Luxinnovation](https://www.luxinnovation.lu/), the [University of Luxembourg](https://hpc.uni.lu/) and [LuxProvide](https://luxprovide.lu/) are jointly managing the [Luxembourg National Competence Centre in High-Performance Computing (HPC)](https://www.luxinnovation.lu/national-competence-centre-in-hpc/). Its mission is to promote the use of HPC linked to computing, data analytics and artificial intelligence and to support stakeholders such as industry – including SMEs and startups – academia and public administration to navigate the national and european HPC ecosystem. 
 
@@ -6,7 +6,7 @@ Luxembourg has a unique HPC infrastructure that is open to companies as well as 
 
 The Luxembourg National Competence Centre in HPC offers a wide portfolio of services to help you to set up and implement your HPC-enabled projects.
 
-Visit our webisite: [Luxembourg National Competence Centre in HPC](https://www.luxinnovation.lu/national-competence-centre-in-hpc/)
+Visit our webisite: [National Competence Centre Supercomputing Luxembourg](https://www.luxinnovation.lu/national-competence-centre-in-hpc/)
 
 
 

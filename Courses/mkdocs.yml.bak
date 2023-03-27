@@ -1,7 +1,7 @@
 site_name: NCC Luxembourg
 nav:
     - About: 'index.md'
-    - Training:
+    - Trainings:
       - CUDA:
         - Introduction: 'cuda/index.md'
         - Preparation: 'cuda/preparation.md'

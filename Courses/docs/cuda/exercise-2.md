@@ -1,3 +1,4 @@
+In this example, we will continue with vector addition in GPU using the CUDA programming model. This is an excellent example to begin with because we usually need to do some arithmetic operations using matrices or vectors. For that, we need to know how to access the indexes of the matrix or vector to do the computation efficiently. In this example, we will practice SIMT computation by adding two vectors.
 
  - Memory allocation on both CPU and GPU. Because as discussed before,
    GPU is an accelerator and can not act as a host machine

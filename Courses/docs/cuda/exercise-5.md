@@ -1,7 +1,10 @@
-### [^^Unified Memory Programming^^](https://docs.nvidia.com/cuda/profiler-users-guide/index.html#migrating-to-nsight-tools-from-visual-profiler-and-nvprof)
+Unified memory simplifies the explicit data movement from host to device by programmers.
+CUDA API will manage the data transfer between CPU and GPU. In this example, we will look into vector addition in GPU using the unified memory concept.
 
- - Unified memory simplifies the explicit data movement from host to device by programmers. 
- - Just one memory allocation is enough [`cudaMallocManaged()`](https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__MEMORY.html#group__CUDART__MEMORY_1gd228014f19cc0975ebe3e0dd2af6dd1b)
+
+ - Just one memory allocation is enough [`cudaMallocManaged()`](https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__MEMORY.html#group__CUDART__MEMORY_1gd228014f19cc0975ebe3e0dd2af6dd1b).
+ The blow table summerise the required steps needed for the unified memory concept. 
+
 
 <figure markdown>
 ![](../figures/unified-memory.svg)
