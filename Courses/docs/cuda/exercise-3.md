@@ -1,7 +1,7 @@
 We will now look into the basic matrix multiplication.
 
 <figure markdown>
-![](/figures/mat.png){align=center width=500}
+![](../figures/mat.png){align=center width=500}
 <figcaption>b</figcaption>
 </figure>
 

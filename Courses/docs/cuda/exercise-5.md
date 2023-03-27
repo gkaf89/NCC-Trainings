@@ -4,7 +4,7 @@
  - Just one memory allocation is enough [`cudaMallocManaged()`](https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__MEMORY.html#group__CUDART__MEMORY_1gd228014f19cc0975ebe3e0dd2af6dd1b)
 
 <figure markdown>
-![](/figures/unified-memory.svg)
+![](../figures/unified-memory.svg)
 <figcaption></figcaption>
 </figure>
 

@@ -12,7 +12,7 @@ Shared memory from the GPUs, which has a good bandwidth within the GPUs compared
 ```
 
 <figure markdown>
-![](/figures/matrix-multiplication-with-shared-memory.png){align=middle}
+![](../figures/matrix-multiplication-with-shared-memory.png){align=middle}
 <figcaption></figcaption>
 </figure>
 

@@ -1,7 +1,7 @@
 # Introduction to GPU programming using CUDA
 
 <figure markdown>
-![](/figures/Training_CUDA.png) 
+![](../figures/Training_CUDA.png) 
 <figcaption></figcaption>
 </figure>
 
