@@ -1,4 +1,4 @@
-site_name: NCC Luxembourg
+site_name: NCC Supercomputing Luxembourg
 nav:
     - About: 'index.md'
     - Training:
