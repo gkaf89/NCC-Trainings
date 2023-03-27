@@ -1,4 +1,4 @@
-## NCC Supercomputing Luxembourg
+# NCC Supercomputing Luxembourg
 
 [Luxinnovation](https://www.luxinnovation.lu/), the [University of Luxembourg](https://hpc.uni.lu/) and [LuxProvide](https://luxprovide.lu/) are jointly managing the [Luxembourg National Competence Centre in High-Performance Computing (HPC)](https://www.luxinnovation.lu/national-competence-centre-in-hpc/). Its mission is to promote the use of HPC linked to computing, data analytics and artificial intelligence and to support stakeholders such as industry – including SMEs and startups – academia and public administration to navigate the national and european HPC ecosystem. 
 
@@ -10,7 +10,7 @@ Visit our webisite: [National Competence Centre Supercomputing Luxembourg](https
 
 
 
-# MeluXina: open for commercial use
+## MeluXina: open for commercial use
 
 Inaugurated recently in June 2021, MeluXina is open for commercial use. It has received top marks by ranking organisation TOP500, which places it 1st in the EU and 4th in the world for its energy efficiency.
 
@@ -18,12 +18,12 @@ Unlike most HPC systems that are pure research infrastructures, 65% of MeluXina�
 
 
 
-# HPC Thursdays webinar series
+## HPC Thursdays webinar series
 
 The “HPC Thursdays” webinar series provides an understanding of the benefits of using a supercomputer. It also looks at what a supercomputer is, how it works, and the skills needed to use one. Each webinar presents concrete examples of applications in different domains to help participants understand the value added of using a supercomputer, and to inspire future users in order to boost their innovation activities.
 
 The HPC Thursdays webinars are designed for newcomers in the supercomputing world, from all sectors of industry and all disciplines of research as well as from public administration. This is the perfect exploratory path to understand the basics of HPC.
 
 
-# MeluXina: HPC Trainings
+## MeluXina: HPC Trainings
 We provide tranings in HPC/HPDA/AI regulary. 
