@@ -103,7 +103,7 @@ vector_add<<<dimGrid, dimBlock>>>(d_a, d_b, d_out, N);
             ```
 
 <figure markdown>
-![](/figures/vector_add-external-modified.svg) 
+![](../figures/vector_add-external-modified.svg) 
 <figcaption></figcaption>
 </figure>
 
