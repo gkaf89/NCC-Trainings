@@ -123,7 +123,7 @@ Hello-world.cu  module.sh
 
 #### 11. Similarly for the hands-on session, we need to do the node reservation:
   ```
-  $ salloc -A p200117 --res training_part1 --partition=gpu --qos default -N 1 -t 02:30:00
+  $ salloc -A p200117 --res training_part2 --partition=gpu --qos default -N 1 -t 02:30:00
   ```
   
 - ??? "check if your reservation is allocated"
