@@ -7,7 +7,7 @@ Luxembourg has a unique HPC infrastructure that is open to companies as well as 
 
 The Luxembourg National Competence Centre in HPC offers a wide portfolio of services to help you to set up and implement your HPC-enabled projects.
 
-Visit our webisite: [National Competence Centre Supercomputing Luxembourg](https://www.luxinnovation.lu/national-competence-centre-in-hpc/)
+Visit our webisite: [National Competence Centre Supercomputing Luxembourg](https://supercomputing-uat.luxinnovation.lu/)
 
 
 
