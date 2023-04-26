@@ -14,6 +14,14 @@ nav:
           - Profiling and Performance: 'cuda/profiling.md'
       - OpenMP:
         - Introduction: 'openmp/index.md'
+        - Preparation: 'openmp/preparation.md'
+        - Hands-On:
+          - Hello World: 'openmp/exercise-1.md'
+          - Vector Addition: 'openmp/exercise-2.md'
+          - Matrix Multiplication: 'openmp/exercise-3.md'
+          - Shared Memory: 'openmp/exercise-4.md'
+          - Unified Memory: 'openmp/exercise-5.md'
+          - Profiling and Performance: 'openmp/profiling.md'
       - OpenACC:
         - Introduction: 'openacc/index.md'
     - Bootcamp:
