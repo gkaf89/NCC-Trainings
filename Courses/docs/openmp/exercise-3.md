@@ -132,436 +132,436 @@ free(c);
 
     === "Serial(C/C++)"
         ```c
-	//-*-C++-*-
-	#include<stdio.h>
-#include<stdlib.h>
-#include<omp.h>
-
-void Matrix_Multiplication(float *a, float *b, float *c, int width)   
-{ 
-  float sum = 0;
-  for(int row = 0; row < width ; ++row)                           
-    {                                                             
-      for(int col = 0; col < width ; ++col)
-        {
-	  sum=0;
-          for(int i = 0; i < width ; ++i)                         
-            {                                                     
-              sum += a[row*width+i] * b[i*width+col];      
-            }                                                     
-          c[row*width+col] = sum;                           
+        #include<stdio.h>
+        #include<stdlib.h>
+        #include<omp.h>
+        
+        void Matrix_Multiplication(float *a, float *b, float *c, int width)   
+        { 
+          float sum = 0;
+          for(int row = 0; row < width ; ++row)                           
+            {                                                             
+              for(int col = 0; col < width ; ++col)
+                {
+                  sum=0;
+                  for(int i = 0; i < width ; ++i)                         
+                    {                                                     
+                      sum += a[row*width+i] * b[i*width+col];      
+                    }                                                     
+                  c[row*width+col] = sum;                           
+                }
+            }   
         }
-    }   
-}
 
-int main()
-{  
-  printf("Programme assumes that matrix size is N*N \n");
-  printf("Please enter the N size number \n");
-  int N =0;
-  scanf("%d", &N);
+        int main()
+         {  
+           printf("Programme assumes that matrix size is N*N \n");
+           printf("Please enter the N size number \n");
+           int N =0;
+           scanf("%d", &N);
 
-  // Initialize the memory on the host
-  float *a, *b, *c;       
+           // Initialize the memory on the host
+           float *a, *b, *c;       
     
-  // Allocate host memory
-  a = (float*)malloc(sizeof(float) * (N*N));
-  b = (float*)malloc(sizeof(float) * (N*N));
-  c = (float*)malloc(sizeof(float) * (N*N));
+           // Allocate host memory
+           a = (float*)malloc(sizeof(float) * (N*N));
+           b = (float*)malloc(sizeof(float) * (N*N));
+           c = (float*)malloc(sizeof(float) * (N*N));
   
-  // Initialize host arrays
-  for(int i = 0; i < (N*N); i++)
-    {
-      a[i] = 1.0f;
-      b[i] = 2.0f;
-    }
+          // Initialize host arrays
+          for(int i = 0; i < (N*N); i++)
+             {
+               a[i] = 1.0f;
+               b[i] = 2.0f;
+             }
 
-  // Device fuction call 
-  Matrix_Multiplication(a, b, c, N);
+           // Device fuction call 
+           Matrix_Multiplication(a, b, c, N);
   
-  // Verification
-  for(int i = 0; i < N; i++)
-    {
-      for(int j = 0; j < N; j++)
-      	{
-	  printf("%f ", c[j]);
+           // Verification
+           for(int i = 0; i < N; i++)
+              {
+              for(int j = 0; j < N; j++)
+                 {
+          	  printf("%f ", c[j]);
 
-	}
-      printf("\n");
-    }
+          	}
+              printf("\n");
+              }
   
-  // Deallocate host memory
-  free(a); 
-  free(b); 
-  free(c);
+            // Deallocate host memory
+            free(a); 
+            free(b); 
+            free(c);
 
-  return 0;
-}
+           return 0;
+        }
 
         ```
+        
+        
 
     === "Serial(FORTRAN)"
         ```c
-	module Matrix_Multiplication_Mod  
-  implicit none 
-contains
-  subroutine Matrix_Multiplication(a, b, c, width)
-    use omp_lib
-    ! Input vectors
-    real(8), intent(in), dimension(:) :: a
-    real(8), intent(in), dimension(:) :: b
-    real(8), intent(out), dimension(:) :: c
-    real(8) :: sum = 0
-    integer :: i, row, col, width
+        module Matrix_Multiplication_Mod  
+        implicit none 
+        contains
+         subroutine Matrix_Multiplication(a, b, c, width)
+        use omp_lib
+        ! Input vectors
+        real(8), intent(in), dimension(:) :: a
+        real(8), intent(in), dimension(:) :: b
+        real(8), intent(out), dimension(:) :: c
+        real(8) :: sum = 0
+        integer :: i, row, col, width
 
-    do row = 0, width-1
-       do col = 0, width-1
-          sum=0
-          do i = 0, width-1
-             sum = sum + (a((row*width)+i+1) * b((i*width)+col+1))
-          enddo
-          c(row*width+col+1) = sum
-       enddo
-    enddo
+        do row = 0, width-1
+           do col = 0, width-1
+              sum=0
+               do i = 0, width-1
+                 sum = sum + (a((row*width)+i+1) * b((i*width)+col+1))
+               enddo
+              c(row*width+col+1) = sum
+           enddo
+        enddo
 
 
-  end subroutine Matrix_Multiplication
-end module Matrix_Multiplication_Mod
+          end subroutine Matrix_Multiplication
+        end module Matrix_Multiplication_Mod
 
-program main
-  use Matrix_Multiplication_Mod
-  use omp_lib
-  implicit none
-  ! Input vectors
-  real(8), dimension(:), allocatable :: a
-  real(8), dimension(:), allocatable :: b 
-  ! Output vector
-  real(8), dimension(:), allocatable :: c
- ! real(8) :: sum = 0
+        program main
+        use Matrix_Multiplication_Mod
+        use omp_lib
+        implicit none
+       
+        ! Input vectors
+        real(8), dimension(:), allocatable :: a
+        real(8), dimension(:), allocatable :: b
+       
+        ! Output vector
+        real(8), dimension(:), allocatable :: c
+        ! real(8) :: sum = 0
 
-  integer :: n, i 
-  print *, "This program does the addition of two vectors "
-  print *, "Please specify the vector size = "
-  read *, n
-
-  ! Allocate memory for vector
-  allocate(a(n*n))
-  allocate(b(n*n))
-  allocate(c(n*n))
+        integer :: n, i 
+        print *, "This program does the addition of two vectors "
+        print *, "Please specify the vector size = "
+        read *, n
+ 
+        ! Allocate memory for vector
+        allocate(a(n*n))
+        allocate(b(n*n))
+        allocate(c(n*n))
   
-  ! Initialize content of input vectors, 
-  ! vector a[i] = sin(i)^2 vector b[i] = cos(i)^2
-  do i = 1, n*n
-     a(i) = sin(i*1D0) * sin(i*1D0)
-     b(i) = cos(i*1D0) * cos(i*1D0) 
-  enddo
+        ! Initialize content of input vectors, 
+        ! vector a[i] = sin(i)^2 vector b[i] = cos(i)^2
+        do i = 1, n*n
+           a(i) = sin(i*1D0) * sin(i*1D0)
+           b(i) = cos(i*1D0) * cos(i*1D0) 
+        enddo
 
-  ! Call the vector add subroutine 
-  call Matrix_Multiplication(a, b, c, n)
+        ! Call the vector add subroutine 
+        call Matrix_Multiplication(a, b, c, n)
   
-  !!Verification
-  do i=1,n*n
-     print *, c(i)
-  enddo
+        !!Verification
+        do i=1,n*n
+           print *, c(i)
+        enddo
   
-  ! Delete the memory
-  deallocate(a)
-  deallocate(b)
-  deallocate(c)
+        ! Delete the memory
+        deallocate(a)
+        deallocate(b)
+        deallocate(c)
   
-end program main
-
+        end program main
         ```
 
 
 
     === "Template(C/C++)"
         ```c
-        // Matrix-multiplication.c
+        #include<stdio.h>
+        #include<stdlib.h>
+        #include<omp.h>
         
-        #include<iostream>
-        
-        using namespace std;
-        
-        float * matrix_mul(float *h_a, float *h_b, float *h_c, int width)   
-        {                                                                 
+        void Matrix_Multiplication(float *a, float *b, float *c, int width)   
+        { 
+          float sum = 0;
           for(int row = 0; row < width ; ++row)                           
             {                                                             
-              for(int col = 0; col < width ; ++col)                       
-                {                                                         
-                  float temp = 0;                                       
+              for(int col = 0; col < width ; ++col)
+                {
+                  sum=0;
                   for(int i = 0; i < width ; ++i)                         
                     {                                                     
-                      temp += h_a[row*width+i] * h_b[i*width+col];      
+                      sum += a[row*width+i] * b[i*width+col];      
                     }                                                     
-                  h_c[row*width+col] = temp;                            
-                }                                                         
+                  c[row*width+col] = sum;                           
+                }
             }   
-          return h_c;           
         }
 
         int main()
-        {
-  
-          cout << "Programme assumes that matrix (square matrix )size is N*N "<<endl;
-          cout << "Please enter the N size number "<< endl;
-          int N = 0;
-          cin >> N;
+         {  
+           printf("Programme assumes that matrix size is N*N \n");
+           printf("Please enter the N size number \n");
+           int N =0;
+           scanf("%d", &N);
 
-          // Initialize the memory on the host
-          float *a, *b, *c;       
+           // Initialize the memory on the host
+           float *a, *b, *c;       
     
-          // Allocate host memory
-          a   = (float*)malloc(sizeof(float) * (N*N));
-          b   = (float*)malloc(sizeof(float) * (N*N));
-          c   = (float*)malloc(sizeof(float) * (N*N));
+           // Allocate host memory
+           a = (float*)malloc(sizeof(float) * (N*N));
+           b = (float*)malloc(sizeof(float) * (N*N));
+           c = (float*)malloc(sizeof(float) * (N*N));
   
-          // Initialize host matrix
+          // Initialize host arrays
           for(int i = 0; i < (N*N); i++)
-            {
-              a[i] = 1.0f;
-              b[i] = 2.0f;
-            }
-   
-          // Device function call 
-          matrix_mul(a, b, c, N);
+             {
+               a[i] = 1.0f;
+               b[i] = 2.0f;
+             }
 
-          // Verification
-          for(int i = 0; i < N; i++)
-            {
+           // Device fuction call 
+           Matrix_Multiplication(a, b, c, N);
+  
+           // Verification
+           for(int i = 0; i < N; i++)
+              {
               for(int j = 0; j < N; j++)
                  {
-                  cout << c[j] <<" ";
-                 }
-              cout << " " <<endl;
-           }
-    
-          // Deallocate host memory
-         free(a); 
-         free(b); 
-         free(c);
+          	  printf("%f ", c[j]);
 
-         return 0;
+          	}
+              printf("\n");
+              }
+  
+            // Deallocate host memory
+            free(a); 
+            free(b); 
+            free(c);
+
+           return 0;
         }
         ```
 
     === "Template(FORTRAN)"
         ```c
-        module Matrix_Multiplication_Mod  
-          implicit none 
+         module Matrix_Multiplication_Mod  
+        implicit none 
         contains
-          subroutine Matrix_Multiplication(a, b, c, width)
-            ! Input vectors
-            real(8), intent(in), dimension(:) :: a
-            real(8), intent(in), dimension(:) :: b
-            real(8), intent(out), dimension(:) :: c
-            real(8) :: sum = 0
-            integer :: i, row, col, width, length 
-            length = width*width
-            !$acc kernels copyin(a(1:length), b(1:length)) copyout(c(1:length))
-            !$acc loop collapse(3) reduction(+:sum)
-            do row = 0, width-1
-               do col = 0, width-1        
-                  do i = 0, width-1
-                     sum = sum + (a((row*width)+i+1) * b((i*width)+col+1))
-                  enddo
-                  c(row*width+col+1) = sum
-                  sum = 0
+         subroutine Matrix_Multiplication(a, b, c, width)
+        use omp_lib
+        ! Input vectors
+        real(8), intent(in), dimension(:) :: a
+        real(8), intent(in), dimension(:) :: b
+        real(8), intent(out), dimension(:) :: c
+        real(8) :: sum = 0
+        integer :: i, row, col, width
+
+        do row = 0, width-1
+           do col = 0, width-1
+              sum=0
+               do i = 0, width-1
+                 sum = sum + (a((row*width)+i+1) * b((i*width)+col+1))
                enddo
-            end do
-            !$acc end kernels
-            
+              c(row*width+col+1) = sum
+           enddo
+        enddo
+
+
           end subroutine Matrix_Multiplication
         end module Matrix_Multiplication_Mod
 
         program main
-          use openacc
-          use Matrix_Multiplication_Mod
-          implicit none
-          ! Input vectors
-          real(8), dimension(:), allocatable :: a
-          real(8), dimension(:), allocatable :: b
-          ! Output vector
-          real(8), dimension(:), allocatable :: c
-          ! real(8) :: sum = 0
+        use Matrix_Multiplication_Mod
+        use omp_lib
+        implicit none
+       
+        ! Input vectors
+        real(8), dimension(:), allocatable :: a
+        real(8), dimension(:), allocatable :: b
+       
+        ! Output vector
+        real(8), dimension(:), allocatable :: c
+        ! real(8) :: sum = 0
 
-          integer :: n, i 
-          print *, "This program does the addition of two vectors "
-          print *, "Please specify the vector size = "
-          read *, n
+        integer :: n, i 
+        print *, "This program does the addition of two vectors "
+        print *, "Please specify the vector size = "
+        read *, n
+ 
+        ! Allocate memory for vector
+        allocate(a(n*n))
+        allocate(b(n*n))
+        allocate(c(n*n))
+  
+        ! Initialize content of input vectors, 
+        ! vector a[i] = sin(i)^2 vector b[i] = cos(i)^2
+        do i = 1, n*n
+           a(i) = sin(i*1D0) * sin(i*1D0)
+           b(i) = cos(i*1D0) * cos(i*1D0) 
+        enddo
 
-          ! Allocate memory for vector
-          allocate(a(n*n))
-          allocate(b(n*n))
-          allocate(c(n*n))
-
-          ! Initialize content of input vectors, 
-          ! vector a[i] = sin(i)^2 vector b[i] = cos(i)^2
-          do i = 1, n*n
-             a(i) = 1 !!sin(i*1D0) * sin(i*1D0)
-             b(i) = 2 !!cos(i*1D0) * cos(i*1D0) 
-          enddo
-	    
-          ! Call the vector add subroutine 
-          call Matrix_Multiplication(a, b, c, n)
-	    
-          !!Verification
-          do i=1,n*n
-             print *, c(i)
-          enddo
-	    
-          ! Delete the memory
-          deallocate(a)
-          deallocate(b)
-          deallocate(c)
+        ! Call the vector add subroutine 
+        call Matrix_Multiplication(a, b, c, n)
+  
+        !!Verification
+        do i=1,n*n
+           print *, c(i)
+        enddo
+  
+        ! Delete the memory
+        deallocate(a)
+        deallocate(b)
+        deallocate(c)
+  
         end program main
+
         ```
 
 
     === "Solution(C/C++)"
         ```c
-	//-*-C++-*-
-#include<stdio.h>
-#include<stdlib.h>
-#include<omp.h>
-
-void Matrix_Multiplication(float *a, float *b, float *c, int width)   
-{ 
-  float sum = 0;
-#pragma for loop collapse(2) reduction (+:sum) 
-  for(int row = 0; row < width ; ++row)                           
-    {                                                             
-      for(int col = 0; col < width ; ++col)
-        {
-	  sum=0;
-          for(int i = 0; i < width ; ++i)                         
-            {                                                     
-              sum += a[row*width+i] * b[i*width+col];      
-            }                                                     
-          c[row*width+col] = sum;                           
+               #include<stdio.h>
+        #include<stdlib.h>
+        #include<omp.h>
+        
+        void Matrix_Multiplication(float *a, float *b, float *c, int width)   
+        { 
+          float sum = 0;
+          for(int row = 0; row < width ; ++row)                           
+            {                                                             
+              for(int col = 0; col < width ; ++col)
+                {
+                  sum=0;
+                  for(int i = 0; i < width ; ++i)                         
+                    {                                                     
+                      sum += a[row*width+i] * b[i*width+col];      
+                    }                                                     
+                  c[row*width+col] = sum;                           
+                }
+            }   
         }
-    }   
-}
 
-int main()
-{  
-  printf("Programme assumes that matrix size is N*N \n");
-  printf("Please enter the N size number \n");
-  int N =0;
-  scanf("%d", &N);
+        int main()
+         {  
+           printf("Programme assumes that matrix size is N*N \n");
+           printf("Please enter the N size number \n");
+           int N =0;
+           scanf("%d", &N);
 
-  // Initialize the memory on the host
-  float *a, *b, *c;       
+           // Initialize the memory on the host
+           float *a, *b, *c;       
     
-  // Allocate host memory
-  a = (float*)malloc(sizeof(float) * (N*N));
-  b = (float*)malloc(sizeof(float) * (N*N));
-  c = (float*)malloc(sizeof(float) * (N*N));
+           // Allocate host memory
+           a = (float*)malloc(sizeof(float) * (N*N));
+           b = (float*)malloc(sizeof(float) * (N*N));
+           c = (float*)malloc(sizeof(float) * (N*N));
   
-  // Initialize host arrays
-  for(int i = 0; i < (N*N); i++)
-    {
-      a[i] = 1.0f;
-      b[i] = 2.0f;
-    }
+          // Initialize host arrays
+          for(int i = 0; i < (N*N); i++)
+             {
+               a[i] = 1.0f;
+               b[i] = 2.0f;
+             }
 
-  #pragma omp parallel 
-  // Device fuction call 
-  Matrix_Multiplication(a, b, c, N);
+           // Device fuction call 
+           Matrix_Multiplication(a, b, c, N);
   
-  // Verification
-  for(int i = 0; i < N; i++)
-    {
-      for(int j = 0; j < N; j++)
-      	{
-	  printf("%f ", c[j]);
+           // Verification
+           for(int i = 0; i < N; i++)
+              {
+              for(int j = 0; j < N; j++)
+                 {
+          	  printf("%f ", c[j]);
 
-	}
-      printf("\n");
-    }
+          	}
+              printf("\n");
+              }
   
-  // Deallocate host memory
-  free(a); 
-  free(b); 
-  free(c);
+            // Deallocate host memory
+            free(a); 
+            free(b); 
+            free(c);
 
-  return 0;
-}
-
+           return 0;
+        }
         ```
 
     === "Solution(FORTRAN)"
         ```c
-	module Matrix_Multiplication_Mod  
-  implicit none 
-contains
-  subroutine Matrix_Multiplication(a, b, c, width)
-    use omp_lib
-    ! Input vectors
-    real(8), intent(in), dimension(:) :: a
-    real(8), intent(in), dimension(:) :: b
-    real(8), intent(out), dimension(:) :: c
-    real(8) :: sum = 0
-    integer :: i, row, col, width
-    !$omp do collapse(2) reduction(+:sum)
-    do row = 0, width-1
-       do col = 0, width-1
-          sum=0
-          do i = 0, width-1
-             sum = sum + (a((row*width)+i+1) * b((i*width)+col+1))
-          enddo
-          c(row*width+col+1) = sum
-       enddo
-    enddo
-    !$omp end do
+                module Matrix_Multiplication_Mod  
+        implicit none 
+        contains
+         subroutine Matrix_Multiplication(a, b, c, width)
+        use omp_lib
+        ! Input vectors
+        real(8), intent(in), dimension(:) :: a
+        real(8), intent(in), dimension(:) :: b
+        real(8), intent(out), dimension(:) :: c
+        real(8) :: sum = 0
+        integer :: i, row, col, width
 
-  end subroutine Matrix_Multiplication
-end module Matrix_Multiplication_Mod
+        do row = 0, width-1
+           do col = 0, width-1
+              sum=0
+               do i = 0, width-1
+                 sum = sum + (a((row*width)+i+1) * b((i*width)+col+1))
+               enddo
+              c(row*width+col+1) = sum
+           enddo
+        enddo
 
-program main
-  use Matrix_Multiplication_Mod
-  use omp_lib
-  implicit none
-  ! Input vectors
-  real(8), dimension(:), allocatable :: a
-  real(8), dimension(:), allocatable :: b 
-  ! Output vector
-  real(8), dimension(:), allocatable :: c
- ! real(8) :: sum = 0
 
-  integer :: n, i 
-  print *, "This program does the addition of two vectors "
-  print *, "Please specify the vector size = "
-  read *, n
+          end subroutine Matrix_Multiplication
+        end module Matrix_Multiplication_Mod
 
-  ! Allocate memory for vector
-  allocate(a(n*n))
-  allocate(b(n*n))
-  allocate(c(n*n))
+        program main
+        use Matrix_Multiplication_Mod
+        use omp_lib
+        implicit none
+       
+        ! Input vectors
+        real(8), dimension(:), allocatable :: a
+        real(8), dimension(:), allocatable :: b
+       
+        ! Output vector
+        real(8), dimension(:), allocatable :: c
+        ! real(8) :: sum = 0
+
+        integer :: n, i 
+        print *, "This program does the addition of two vectors "
+        print *, "Please specify the vector size = "
+        read *, n
+ 
+        ! Allocate memory for vector
+        allocate(a(n*n))
+        allocate(b(n*n))
+        allocate(c(n*n))
   
-  ! Initialize content of input vectors, 
-  ! vector a[i] = sin(i)^2 vector b[i] = cos(i)^2
-  do i = 1, n*n
-     a(i) = sin(i*1D0) * sin(i*1D0)
-     b(i) = cos(i*1D0) * cos(i*1D0) 
-  enddo
+        ! Initialize content of input vectors, 
+        ! vector a[i] = sin(i)^2 vector b[i] = cos(i)^2
+        do i = 1, n*n
+           a(i) = sin(i*1D0) * sin(i*1D0)
+           b(i) = cos(i*1D0) * cos(i*1D0) 
+        enddo
 
-  !$omp parallel 
-  ! Call the vector add subroutine 
-  call Matrix_Multiplication(a, b, c, n)
-  !$omp end parallel
+        ! Call the vector add subroutine 
+        call Matrix_Multiplication(a, b, c, n)
   
-  !!Verification
-  do i=1,n*n
-     print *, c(i)
-  enddo
+        !!Verification
+        do i=1,n*n
+           print *, c(i)
+        enddo
   
-  ! Delete the memory
-  deallocate(a)
-  deallocate(b)
-  deallocate(c)
+        ! Delete the memory
+        deallocate(a)
+        deallocate(b)
+        deallocate(c)
   
-end program main
+        end program main
+
         ```
 
 
