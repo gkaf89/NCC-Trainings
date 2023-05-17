@@ -1,6 +1,9 @@
 Hello world
 
 
+<figure markdown>
+![](../figures/loop.png){align=center width=500}
+</figure>
 
 
 

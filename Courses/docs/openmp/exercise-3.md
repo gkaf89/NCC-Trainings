@@ -1,416 +1,307 @@
-We will now look into the basic matrix multiplication.
-In this example, we will perform the matrix multiplication. Matrix multiplication involves a nested loop. Again, most of the time, we might end up doing computation with a nested loop. Therefore, studying this example would be good practice for solving the nested loop in the future. 
+#### Shared variable
 
-<figure markdown>
-![](../figures/mat.png){align=center width=500}
-<figcaption>b</figcaption>
-</figure>
+ - All the threads have access to the shared variable.
+ - By default in the parallel region, all the variables are
+ considered as a shared variable expect the loop iteration
+ counter variables.
 
- - Allocating the CPU memory for A, B, and C matrix.
-   Here we notice that the matrix is stored in a
-   1D array because we want to consider the same function concept for CPU and GPU.
-```c
-// Initialize the memory on the host
-float *a, *b, *c;
+!!! Note
 
-// Allocate host memory
-a   = (float*)malloc(sizeof(float) * (N*N));
-b   = (float*)malloc(sizeof(float) * (N*N));
-c   = (float*)malloc(sizeof(float) * (N*N));
-```
+	Shared variables should be handled carefully; otherwise it causes race conditions in the program.
 
- - Allocating the GPU memory for A, B, and C matrix
-```c
-// Initialize the memory on the device
-float *d_a, *d_b, *d_c;
+??? example "Examples: Shared variable"
 
-// Allocate device memory
-cudaMalloc((void**)&d_a, sizeof(float) * (N*N));
-cudaMalloc((void**)&d_b, sizeof(float) * (N*N));
-cudaMalloc((void**)&d_c, sizeof(float) * (N*N));
-```
-
- - Now we need to fill the values for the matrix A and B.
-```c
-// Initialize host matrix
-for(int i = 0; i < (N*N); i++)
-   {
-    a[i] = 2.0f;
-    b[i] = 2.0f;
-   }
-```
-
-- Transfer initialized A and B matrix
-from CPU to GPU
-```c
-cudaMemcpy(d_a, a, sizeof(float) * (N*N), cudaMemcpyHostToDevice);
-cudaMemcpy(d_b, b, sizeof(float) * (N*N), cudaMemcpyHostToDevice);
-```
-
- - 2D thread block for indexing x and y
-```c
-// Thread organization
-int blockSize = 32;
-dim3 dimBlock(blockSize,blockSize,1);
-dim3 dimGrid(ceil(N/float(blockSize)),ceil(N/float(blockSize)),1);
-```
-
- - Calling the kernel function
-```c
-// Device function call
-matrix_mul<<<dimGrid,dimBlock>>>(d_a, d_b, d_c, N);
-```
- -  ??? "matrix multiplication function call"
-
-        === "serial"
-            ```c
-            float * matrix_mul(float *h_a, float *h_b, float *h_c, int width)
-            {
-              for(int row = 0; row < width ; ++row)
-                {
-                  for(int col = 0; col < width ; ++col)
-                    {
-                      float temp = 0;
-                      for(int i = 0; i < width ; ++i)
-                        {
-                          temp += h_a[row*width+i] * h_b[i*width+col];
-                        }
-                      h_c[row*width+col] = temp;
-                    }
-                }
-              return h_c;
-            }
-            ```
-        === "cuda"
-            ```c
-            __global__ void matrix_mul(float* d_a, float* d_b, 
-            float* d_c, int width)
-            {
-              int row = blockIdx.x * blockDim.x + threadIdx.x;
-              int col = blockIdx.y * blockDim.y + threadIdx.y;
-    
-              if ((row < width) && (col < width)) 
-                {
-                  float temp = 0;
-                  // each thread computes one 
-                  // element of the block sub-matrix
-                  for (int i = 0; i < width; ++i) 
-                    {
-                      temp += d_a[row*width+i]*d_b[i*width+col];
-                    }
-                  d_c[row*width+col] = temp;
-                }
-            }
-            ```
-
- - Copy back computed value from GPU to CPU;
-   transfer the data back to GPU (from device to host).
-   Here is the C matrix that contains the product of the two matrices.
-```c
-// Transfer data back to host memory
-cudaMemcpy(c, d_c, sizeof(float) * (N*N), cudaMemcpyDeviceToHost);
-```
-
- - Deallocate the host and device memory
-```c
-// Deallocate device memory
-cudaFree(d_a);
-cudaFree(d_b);
-cudaFree(d_c);
-
-// Deallocate host memory
-free(a); 
-free(b); 
-free(c);
-```
+    === "(C/C++)
+    	```
+        #pragma omp parallel for //shared(a) //default(none)
+        for (int i = 0; i < N; i++)
+          {
+          a[i] = a[i] + i;                                                                                                                                                                                        
+        cout << "value of a " << a[i] << endl;                                                                                                                                                                    
+        } 
+	```
+	
+	
 
 ### <u>Questions and Solutions</u>
 
 
-??? example "Examples: Matrix Multiplication" 
+??? example "Examples: Vector Addition"
 
 
     === "Serial(C/C++)"
-        ```c
-        #include<stdio.h>
-        #include<stdlib.h>
-        #include<omp.h>
+    
+        ```c  
+        //-*-C++-*-
+        // Vector-addition.c
         
-        void Matrix_Multiplication(float *a, float *b, float *c, int width)   
-        { 
-          float sum = 0;
-          for(int row = 0; row < width ; ++row)                           
-            {                                                             
-              for(int col = 0; col < width ; ++col)
-                {
-                  sum=0;
-                  for(int i = 0; i < width ; ++i)                         
-                    {                                                     
-                      sum += a[row*width+i] * b[i*width+col];      
-                    }                                                     
-                  c[row*width+col] = sum;                           
-                }
-            }   
+        #include <stdio.h>
+        #include <stdlib.h>
+        #include <math.h>
+        #include <assert.h>
+        #include <time.h>
+        
+        #define N 5120
+        #define MAX_ERR 1e-6
+
+        // CPU function that adds two vector 
+        float * Vector_Add(float *a, float *b, float *out, int n) 
+        {
+          for(int i = 0; i < n; i ++)
+            {
+              out[i] = a[i] + b[i];
+            }
+          return out;
         }
 
         int main()
-         {  
-           printf("Programme assumes that matrix size is N*N \n");
-           printf("Please enter the N size number \n");
-           int N =0;
-           scanf("%d", &N);
-
-           // Initialize the memory on the host
-           float *a, *b, *c;       
+        {
+          // Initialize the variables
+          float *a, *b, *out;       
+  
+          // Allocate the memory
+          a   = (float*)malloc(sizeof(float) * N);
+          b   = (float*)malloc(sizeof(float) * N);
+          out = (float*)malloc(sizeof(float) * N);
+  
+          // Initialize the arrays
+          for(int i = 0; i < N; i++)
+            {
+              a[i] = 1.0f;
+              b[i] = 2.0f;
+            }
     
-           // Allocate host memory
-           a = (float*)malloc(sizeof(float) * (N*N));
-           b = (float*)malloc(sizeof(float) * (N*N));
-           c = (float*)malloc(sizeof(float) * (N*N));
-  
-          // Initialize host arrays
-          for(int i = 0; i < (N*N); i++)
-             {
-               a[i] = 1.0f;
-               b[i] = 2.0f;
-             }
+          // Start measuring time
+          clock_t start = clock();
 
-           // Device fuction call 
-           Matrix_Multiplication(a, b, c, N);
-  
-           // Verification
-           for(int i = 0; i < N; i++)
-              {
-              for(int j = 0; j < N; j++)
-                 {
-          	  printf("%f ", c[j]);
+          // Executing vector addtion function 
+          Vector_Add(a, b, out, N);
 
-          	}
-              printf("\n");
-              }
+          // Stop measuring time and calculate the elapsed time
+          clock_t end = clock();
+          double elapsed = (double)(end - start)/CLOCKS_PER_SEC;
+        
+          printf("Time measured: %.3f seconds.\n", elapsed);
   
-            // Deallocate host memory
-            free(a); 
-            free(b); 
-            free(c);
+          // Verification
+          for(int i = 0; i < N; i++)
+            {
+              assert(fabs(out[i] - a[i] - b[i]) < MAX_ERR);
+            }
 
-           return 0;
+          printf("out[0] = %f\n", out[0]);
+          printf("PASSED\n");
+    
+          // Deallocate the memory
+          free(a); 
+          free(b); 
+          free(out);
+   
+          return 0;
         }
-
         ```
-        
-        
 
     === "Serial(FORTRAN)"
         ```c
-        module Matrix_Multiplication_Mod  
+        module Vector_Addition_Mod  
         implicit none 
-        contains
-         subroutine Matrix_Multiplication(a, b, c, width)
-        use omp_lib
+          contains
+        subroutine Vector_Addition(a, b, c, n)
         ! Input vectors
         real(8), intent(in), dimension(:) :: a
         real(8), intent(in), dimension(:) :: b
         real(8), intent(out), dimension(:) :: c
-        real(8) :: sum = 0
-        integer :: i, row, col, width
-
-        do row = 0, width-1
-           do col = 0, width-1
-              sum=0
-               do i = 0, width-1
-                 sum = sum + (a((row*width)+i+1) * b((i*width)+col+1))
-               enddo
-              c(row*width+col+1) = sum
-           enddo
-        enddo
-
-
-          end subroutine Matrix_Multiplication
-        end module Matrix_Multiplication_Mod
+        integer :: i, n
+          do i = 1, n
+            c(i) = a(i) + b(i)
+          end do
+         end subroutine Vector_Addition
+        end module Vector_Addition_Mod
 
         program main
-        use Matrix_Multiplication_Mod
-        use omp_lib
+        use Vector_Addition_Mod
         implicit none
-       
         ! Input vectors
         real(8), dimension(:), allocatable :: a
-        real(8), dimension(:), allocatable :: b
-       
+        real(8), dimension(:), allocatable :: b 
         ! Output vector
         real(8), dimension(:), allocatable :: c
         ! real(8) :: sum = 0
 
-        integer :: n, i 
+        integer :: n, i  
         print *, "This program does the addition of two vectors "
         print *, "Please specify the vector size = "
         read *, n
- 
+
         ! Allocate memory for vector
-        allocate(a(n*n))
-        allocate(b(n*n))
-        allocate(c(n*n))
+        allocate(a(n))
+        allocate(b(n))
+        allocate(c(n))
   
         ! Initialize content of input vectors, 
         ! vector a[i] = sin(i)^2 vector b[i] = cos(i)^2
-        do i = 1, n*n
-           a(i) = sin(i*1D0) * sin(i*1D0)
-           b(i) = cos(i*1D0) * cos(i*1D0) 
+        do i = 1, n
+          a(i) = sin(i*1D0) * sin(i*1D0)
+          b(i) = cos(i*1D0) * cos(i*1D0) 
         enddo
-
+    
         ! Call the vector add subroutine 
-        call Matrix_Multiplication(a, b, c, n)
-  
+        call Vector_Addition(a, b, c, n)
+
         !!Verification
-        do i=1,n*n
-           print *, c(i)
+        do i = 1, n
+          if (abs(c(i)-(a(i)+b(i)) == 0.00000)) then 
+           else
+             print *, "FAIL"
+           endif
         enddo
-  
+        print *, "PASS"
+    
         ! Delete the memory
         deallocate(a)
         deallocate(b)
         deallocate(c)
   
         end program main
+
         ```
 
 
 
     === "Template(C/C++)"
+    
         ```c
-        #include<stdio.h>
-        #include<stdlib.h>
-        #include<omp.h>
+        //-*-C++-*-
+        // Vector-addition.c
         
-        void Matrix_Multiplication(float *a, float *b, float *c, int width)   
-        { 
-          float sum = 0;
-          for(int row = 0; row < width ; ++row)                           
-            {                                                             
-              for(int col = 0; col < width ; ++col)
-                {
-                  sum=0;
-                  for(int i = 0; i < width ; ++i)                         
-                    {                                                     
-                      sum += a[row*width+i] * b[i*width+col];      
-                    }                                                     
-                  c[row*width+col] = sum;                           
-                }
-            }   
+        #include <stdio.h>
+        #include <stdlib.h>
+        #include <math.h>
+        #include <assert.h>
+        #include <time.h>
+        
+        #define N 5120
+        #define MAX_ERR 1e-6
+
+        // CPU function that adds two vector 
+        float * Vector_Add(float *a, float *b, float *out, int n) 
+        {
+        // ADD YOUR PARALLEL REGION FOR THE LOOP
+          for(int i = 0; i < n; i ++)
+            {
+              out[i] = a[i] + b[i];
+            }
+          return out;
         }
 
         int main()
-         {  
-           printf("Programme assumes that matrix size is N*N \n");
-           printf("Please enter the N size number \n");
-           int N =0;
-           scanf("%d", &N);
-
-           // Initialize the memory on the host
-           float *a, *b, *c;       
+        {
+          // Initialize the variables
+          float *a, *b, *out;       
+  
+          // Allocate the memory
+          a   = (float*)malloc(sizeof(float) * N);
+          b   = (float*)malloc(sizeof(float) * N);
+          out = (float*)malloc(sizeof(float) * N);
+  
+          // Initialize the arrays
+          for(int i = 0; i < N; i++)
+            {
+              a[i] = 1.0f;
+              b[i] = 2.0f;
+            }
     
-           // Allocate host memory
-           a = (float*)malloc(sizeof(float) * (N*N));
-           b = (float*)malloc(sizeof(float) * (N*N));
-           c = (float*)malloc(sizeof(float) * (N*N));
-  
-          // Initialize host arrays
-          for(int i = 0; i < (N*N); i++)
-             {
-               a[i] = 1.0f;
-               b[i] = 2.0f;
-             }
+          // Start measuring time
+          clock_t start = clock();
 
-           // Device fuction call 
-           Matrix_Multiplication(a, b, c, N);
-  
-           // Verification
-           for(int i = 0; i < N; i++)
-              {
-              for(int j = 0; j < N; j++)
-                 {
-          	  printf("%f ", c[j]);
+          // ADD YOUR PARALLEL REGION HERE	
+          // Executing vector addtion function 
+          Vector_Add(a, b, out, N);
 
-          	}
-              printf("\n");
-              }
+          // Stop measuring time and calculate the elapsed time
+          clock_t end = clock();
+          double elapsed = (double)(end - start)/CLOCKS_PER_SEC;
+        
+          printf("Time measured: %.3f seconds.\n", elapsed);
   
-            // Deallocate host memory
-            free(a); 
-            free(b); 
-            free(c);
+          // Verification
+          for(int i = 0; i < N; i++)
+            {
+              assert(fabs(out[i] - a[i] - b[i]) < MAX_ERR);
+            }
 
-           return 0;
+          printf("out[0] = %f\n", out[0]);
+          printf("PASSED\n");
+    
+          // Deallocate the memory
+          free(a); 
+          free(b); 
+          free(out);
+   
+          return 0;
         }
-        ```
 
+        ```
+        
     === "Template(FORTRAN)"
         ```c
-         module Matrix_Multiplication_Mod  
+        module Vector_Addition_Mod  
         implicit none 
-        contains
-         subroutine Matrix_Multiplication(a, b, c, width)
+          contains
+        subroutine Vector_Addition(a, b, c, n)
         use omp_lib
         ! Input vectors
         real(8), intent(in), dimension(:) :: a
         real(8), intent(in), dimension(:) :: b
         real(8), intent(out), dimension(:) :: c
-        real(8) :: sum = 0
-        integer :: i, row, col, width
-
-        do row = 0, width-1
-           do col = 0, width-1
-              sum=0
-               do i = 0, width-1
-                 sum = sum + (a((row*width)+i+1) * b((i*width)+col+1))
-               enddo
-              c(row*width+col+1) = sum
-           enddo
-        enddo
-
-
-          end subroutine Matrix_Multiplication
-        end module Matrix_Multiplication_Mod
+        integer :: i, n
+        !! ADD YOUR PARALLEL DO LOOP
+          do i = 1, n
+            c(i) = a(i) + b(i)
+          end do
+         end subroutine Vector_Addition
+        end module Vector_Addition_Mod
 
         program main
-        use Matrix_Multiplication_Mod
-        use omp_lib
+        use Vector_Addition_Mod
         implicit none
-       
         ! Input vectors
         real(8), dimension(:), allocatable :: a
-        real(8), dimension(:), allocatable :: b
-       
+        real(8), dimension(:), allocatable :: b 
         ! Output vector
         real(8), dimension(:), allocatable :: c
         ! real(8) :: sum = 0
 
-        integer :: n, i 
+        integer :: n, i  
         print *, "This program does the addition of two vectors "
         print *, "Please specify the vector size = "
         read *, n
- 
+
         ! Allocate memory for vector
-        allocate(a(n*n))
-        allocate(b(n*n))
-        allocate(c(n*n))
+        allocate(a(n))
+        allocate(b(n))
+        allocate(c(n))
   
         ! Initialize content of input vectors, 
         ! vector a[i] = sin(i)^2 vector b[i] = cos(i)^2
-        do i = 1, n*n
-           a(i) = sin(i*1D0) * sin(i*1D0)
-           b(i) = cos(i*1D0) * cos(i*1D0) 
+        do i = 1, n
+          a(i) = sin(i*1D0) * sin(i*1D0)
+          b(i) = cos(i*1D0) * cos(i*1D0) 
         enddo
 
+        !! ADD YOUR PARALLEL REGION 
         ! Call the vector add subroutine 
-        call Matrix_Multiplication(a, b, c, n)
-  
+        call Vector_Addition(a, b, c, n)
+
         !!Verification
-        do i=1,n*n
-           print *, c(i)
+        do i = 1, n
+          if (abs(c(i)-(a(i)+b(i)) == 0.00000)) then 
+           else
+             print *, "FAIL"
+           endif
         enddo
-  
+        print *, "PASS"
+    
         ! Delete the memory
         deallocate(a)
         deallocate(b)
@@ -420,141 +311,142 @@ free(c);
 
         ```
 
-
     === "Solution(C/C++)"
+    
         ```c
-               #include<stdio.h>
-        #include<stdlib.h>
-        #include<omp.h>
+        //-*-C++-*-
+        // Vector-addition.c
         
-        void Matrix_Multiplication(float *a, float *b, float *c, int width)   
-        { 
-          float sum = 0;
-          for(int row = 0; row < width ; ++row)                           
-            {                                                             
-              for(int col = 0; col < width ; ++col)
-                {
-                  sum=0;
-                  for(int i = 0; i < width ; ++i)                         
-                    {                                                     
-                      sum += a[row*width+i] * b[i*width+col];      
-                    }                                                     
-                  c[row*width+col] = sum;                           
-                }
-            }   
+        #include <stdio.h>
+        #include <stdlib.h>
+        #include <math.h>
+        #include <assert.h>
+        #include <time.h>
+        
+        #define N 5120
+        #define MAX_ERR 1e-6
+
+        // CPU function that adds two vector 
+        float * Vector_Add(float *a, float *b, float *out, int n) 
+        #pragma omp for
+        // ADD YOUR PARALLEL REGION FOR THE LOOP
+          for(int i = 0; i < n; i ++)
+            {
+              out[i] = a[i] + b[i];
+            }
+          return out;
         }
 
         int main()
-         {  
-           printf("Programme assumes that matrix size is N*N \n");
-           printf("Please enter the N size number \n");
-           int N =0;
-           scanf("%d", &N);
-
-           // Initialize the memory on the host
-           float *a, *b, *c;       
+        {
+          // Initialize the variables
+          float *a, *b, *out;       
+  
+          // Allocate the memory
+          a   = (float*)malloc(sizeof(float) * N);
+          b   = (float*)malloc(sizeof(float) * N);
+          out = (float*)malloc(sizeof(float) * N);
+  
+          // Initialize the arrays
+          for(int i = 0; i < N; i++)
+            {
+              a[i] = 1.0f;
+              b[i] = 2.0f;
+            }
     
-           // Allocate host memory
-           a = (float*)malloc(sizeof(float) * (N*N));
-           b = (float*)malloc(sizeof(float) * (N*N));
-           c = (float*)malloc(sizeof(float) * (N*N));
-  
-          // Initialize host arrays
-          for(int i = 0; i < (N*N); i++)
-             {
-               a[i] = 1.0f;
-               b[i] = 2.0f;
-             }
+          // Start measuring time
+          clock_t start = clock();
 
-           // Device fuction call 
-           Matrix_Multiplication(a, b, c, N);
-  
-           // Verification
-           for(int i = 0; i < N; i++)
-              {
-              for(int j = 0; j < N; j++)
-                 {
-          	  printf("%f ", c[j]);
+          #pragma omp parallel 
+          // Executing vector addtion function 
+          Vector_Add(a, b, out, N);
 
-          	}
-              printf("\n");
-              }
+          // Stop measuring time and calculate the elapsed time
+          clock_t end = clock();
+          double elapsed = (double)(end - start)/CLOCKS_PER_SEC;
+        
+          printf("Time measured: %.3f seconds.\n", elapsed);
   
-            // Deallocate host memory
-            free(a); 
-            free(b); 
-            free(c);
+          // Verification
+          for(int i = 0; i < N; i++)
+            {
+              assert(fabs(out[i] - a[i] - b[i]) < MAX_ERR);
+            }
 
-           return 0;
+          printf("out[0] = %f\n", out[0]);
+          printf("PASSED\n");
+    
+          // Deallocate the memory
+          free(a); 
+          free(b); 
+          free(out);
+   
+          return 0;
         }
+
         ```
 
     === "Solution(FORTRAN)"
         ```c
-                module Matrix_Multiplication_Mod  
+        module Vector_Addition_Mod  
         implicit none 
-        contains
-         subroutine Matrix_Multiplication(a, b, c, width)
+          contains
+        subroutine Vector_Addition(a, b, c, n)
         use omp_lib
         ! Input vectors
         real(8), intent(in), dimension(:) :: a
         real(8), intent(in), dimension(:) :: b
         real(8), intent(out), dimension(:) :: c
-        real(8) :: sum = 0
-        integer :: i, row, col, width
-
-        do row = 0, width-1
-           do col = 0, width-1
-              sum=0
-               do i = 0, width-1
-                 sum = sum + (a((row*width)+i+1) * b((i*width)+col+1))
-               enddo
-              c(row*width+col+1) = sum
-           enddo
-        enddo
-
-
-          end subroutine Matrix_Multiplication
-        end module Matrix_Multiplication_Mod
+        integer :: i, n
+        !$omp do
+          do i = 1, n
+            c(i) = a(i) + b(i)
+          end do
+        !$omp end do
+         end subroutine Vector_Addition
+        end module Vector_Addition_Mod
 
         program main
-        use Matrix_Multiplication_Mod
-        use omp_lib
+        use Vector_Addition_Mod
         implicit none
-       
         ! Input vectors
         real(8), dimension(:), allocatable :: a
-        real(8), dimension(:), allocatable :: b
-       
+        real(8), dimension(:), allocatable :: b 
         ! Output vector
         real(8), dimension(:), allocatable :: c
         ! real(8) :: sum = 0
 
-        integer :: n, i 
+        integer :: n, i  
         print *, "This program does the addition of two vectors "
         print *, "Please specify the vector size = "
         read *, n
- 
+
         ! Allocate memory for vector
-        allocate(a(n*n))
-        allocate(b(n*n))
-        allocate(c(n*n))
+        allocate(a(n))
+        allocate(b(n))
+        allocate(c(n))
   
         ! Initialize content of input vectors, 
         ! vector a[i] = sin(i)^2 vector b[i] = cos(i)^2
-        do i = 1, n*n
-           a(i) = sin(i*1D0) * sin(i*1D0)
-           b(i) = cos(i*1D0) * cos(i*1D0) 
+        do i = 1, n
+          a(i) = sin(i*1D0) * sin(i*1D0)
+          b(i) = cos(i*1D0) * cos(i*1D0) 
         enddo
 
+        !$omp parallel 
         ! Call the vector add subroutine 
-        call Matrix_Multiplication(a, b, c, n)
-  
+        call Vector_Addition(a, b, c, n)
+        !$omp end parallel
+        
         !!Verification
-        do i=1,n*n
-           print *, c(i)
+        do i = 1, n
+          if (abs(c(i)-(a(i)+b(i)) == 0.00000)) then 
+           else
+             print *, "FAIL"
+           endif
         enddo
-  
+        print *, "PASS"
+    
         ! Delete the memory
         deallocate(a)
         deallocate(b)
@@ -563,58 +455,67 @@ free(c);
         end program main
 
         ```
-
 
 
 
 ??? "Compilation and Output"
 
-    === "Serial-version"
+    === "Serial(C/C++)"
         ```c
         // compilation
-        $ gcc Matrix-multiplication.c -o Matrix-Multiplication-CPU
+        $ gcc Vector-addition-Serial.c -o Vector-addition-Serial-C
         
         // execution 
-        $ ./Matrix-Multiplication-CPU
+        $ ./Vector-addition-Serial-C
         
         // output
-        $ g++ Matrix-multiplication.cc -o Matrix-multiplication
-        $ ./Matrix-multiplication
-        Programme assumes that matrix (square matrix) size is N*N 
-        Please enter the N size number 
-        4
-        16 16 16 16 
-        16 16 16 16  
-        16 16 16 16  
-        16 16 16 16 
+        $ ./Vector-addition-Serial-C
         ```
         
-    === "CUDA-version"
+    === "Serial(FORTRAN)"
         ```c
         // compilation
-        $ nvcc -arch=compute_70 Matrix-multiplication.cu -o Matrix-Multiplication-GPU
+        $ gfortran Vector-addition-Serial.f90 -o Vector-addition-Serial-F
         
         // execution
-        $ ./Matrix-Multiplication-GPU
-        Programme assumes that matrix (square matrix) size is N*N 
-        Please enter the N size number
-        $ 256
+        $ ./Vector-addition-Serial-F
         
         // output
-        $ Two matrices are equal
+        $ ./Vector-addition-Serial-F
         ```
+
+
+    === "Solution(C/C++)"
+        ```c
+        // compilation
+        $ gcc -fopennmp Vector-addition-OpenMP-solution.c -o Vector-addition-Solution-C
+        
+        // execution 
+        $ ./Vector-addition-Solution-C
+        
+        // output
+        $ ./Vector-addition-Solution-C
+        ```
+        
+    === "Solution(FORTRAN)"
+        ```c
+        // compilation
+        $ gfortran -fopenmp Vector-addition-OpenMP-solution.f90 -o Vector-addition-Solution-F
+        
+        // execution
+        $ ./Vector-addition-Solution-F
+        
+        // output
+        $ ./Vector-addition-Solution-F
+        ```
+
 
 ??? Question "Questions"
 
-    - Right now, we are using the 1D array to represent the matrix. However, you can also do it with the 2D matrix.
-    Can you try with 2D array matrix multiplication with 2D thread block?
-    - Can you get the correct soltion if you remove the **`if ((row < width) && (col < width))`**
-    condition from the **`__global__ void matrix_mul(float* d_a, float* d_b, float* d_c, int width)`** function?
-    - Please try with different thread blocks and different matrix sizes.
-    ```
-    // Thread organization
-    int blockSize = 32;
-    dim3 dimBlock(blockSize,blockSize,1);
-    dim3 dimGrid(ceil(N/float(blockSize)),ceil(N/float(blockSize)),1);
-    ```
-
+    - What happens if you remove the **`__syncthreads();`** from the **`__global__ void vector_add(float *a, float *b, 
+       float *out, int n)`** function.
+    - Can you remove the if condition **`if(i < n)`** from the **`__global__ void vector_add(float *a, float *b,
+       float *out, int n)`** function. If so how can you do that?
+    - Here we do not use the **`cudaDeviceSynchronize()`** in the main application, can you figure out why we
+        do not need to use it. 
+    - Can you create a different kinds of threads block for larger number of array?

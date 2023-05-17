@@ -1,5 +1,8 @@
 Hello world
 
+<figure markdown>
+![](../figures/diagram-20230517-1.png){align=center width=500}
+</figure>
 
 
 
@@ -131,10 +134,11 @@ Hello world
 
 
 
-??? Question
+??? Questions
 
 
-    Right now, we are printing the `hello world` from the threads we set in the main program. However, in some situations, we can also set several threads during the compilation time. This can be done by using `export OMP_NUM_THREADS`
+     - Right now, we are printing the `hello world` from the threads we set in the main program. However, in some situations, we can also set several threads during the compilation time. This can be done by using `export OMP_NUM_THREADS`.
+
 
 
     === "Question (C/C++)"
@@ -208,4 +212,5 @@ Hello world
         Hello world from thread id            8 from the team size of          10
         Hello world from thread id            1 from the team size of          10
         ```
-
+	
+     - What happens if you do not set `omp_set_num_threads()`, for example, `omp_set_num_threads(5)|call omp_set_num_threads(5)`, what do you notice? 
