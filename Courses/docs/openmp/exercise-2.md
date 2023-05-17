@@ -1,6 +1,9 @@
 Hello world
 
 
+<figure markdown>
+![](../figures/loop.png){align=center width=500}
+</figure>
 
 
 
@@ -10,7 +13,7 @@ Hello world
 ??? example "Examples: Vector Addition"
 
 
-    === "C/C++ - version"
+    === "Serial(C/C++)"
     
         ```c  
         //-*-C++-*-
@@ -82,8 +85,8 @@ Hello world
         }
         ```
 
-    === "FORTRAN - version"
-        ```
+    === "Serial(FORTRAN)"
+        ```c
         module Vector_Addition_Mod  
         implicit none 
           contains
@@ -149,10 +152,10 @@ Hello world
 
 
 
-    === "C/C++-template"
+    === "Template(C/C++)"
     
         ```c
-	        //-*-C++-*-
+        //-*-C++-*-
         // Vector-addition.c
         
         #include <stdio.h>
@@ -195,8 +198,7 @@ Hello world
           // Start measuring time
           clock_t start = clock();
 
-
-          #pragma omp parallel
+          // ADD YOUR PARALLEL REGION HERE	
           // Executing vector addtion function 
           Vector_Add(a, b, out, N);
 
@@ -225,130 +227,270 @@ Hello world
 
         ```
         
-    === "CUDA-version"
+    === "Template(FORTRAN)"
+        ```c
+        module Vector_Addition_Mod  
+        implicit none 
+          contains
+        subroutine Vector_Addition(a, b, c, n)
+        use omp_lib
+        ! Input vectors
+        real(8), intent(in), dimension(:) :: a
+        real(8), intent(in), dimension(:) :: b
+        real(8), intent(out), dimension(:) :: c
+        integer :: i, n
+        !! ADD YOUR PARALLEL DO LOOP
+          do i = 1, n
+            c(i) = a(i) + b(i)
+          end do
+         end subroutine Vector_Addition
+        end module Vector_Addition_Mod
+
+        program main
+        use Vector_Addition_Mod
+        implicit none
+        ! Input vectors
+        real(8), dimension(:), allocatable :: a
+        real(8), dimension(:), allocatable :: b 
+        ! Output vector
+        real(8), dimension(:), allocatable :: c
+        ! real(8) :: sum = 0
+
+        integer :: n, i  
+        print *, "This program does the addition of two vectors "
+        print *, "Please specify the vector size = "
+        read *, n
+
+        ! Allocate memory for vector
+        allocate(a(n))
+        allocate(b(n))
+        allocate(c(n))
+  
+        ! Initialize content of input vectors, 
+        ! vector a[i] = sin(i)^2 vector b[i] = cos(i)^2
+        do i = 1, n
+          a(i) = sin(i*1D0) * sin(i*1D0)
+          b(i) = cos(i*1D0) * cos(i*1D0) 
+        enddo
+
+        !! ADD YOUR PARALLEL REGION 
+        ! Call the vector add subroutine 
+        call Vector_Addition(a, b, c, n)
+
+        !!Verification
+        do i = 1, n
+          if (abs(c(i)-(a(i)+b(i)) == 0.00000)) then 
+           else
+             print *, "FAIL"
+           endif
+        enddo
+        print *, "PASS"
     
-        ```c  
+        ! Delete the memory
+        deallocate(a)
+        deallocate(b)
+        deallocate(c)
+  
+        end program main
+
+        ```
+
+    === "Solution(C/C++)"
+    
+        ```c
         //-*-C++-*-
-        // Vector-addition.cu
+        // Vector-addition.c
         
         #include <stdio.h>
         #include <stdlib.h>
         #include <math.h>
         #include <assert.h>
         #include <time.h>
-        #include <cuda.h>
-
+        
         #define N 5120
         #define MAX_ERR 1e-6
 
-
-        // GPU function that adds two vectors 
-        __global__ void vector_add(float *a, float *b, 
-        float *out, int n) 
-        {
-        
-          int i = blockIdx.x * blockDim.x * blockDim.y + 
-            threadIdx.y * blockDim.x + threadIdx.x;   
-          // Allow the   threads only within the size of N
-          if(i < n)
+        // CPU function that adds two vector 
+        float * Vector_Add(float *a, float *b, float *out, int n) 
+        #pragma omp for
+        // ADD YOUR PARALLEL REGION FOR THE LOOP
+          for(int i = 0; i < n; i ++)
             {
               out[i] = a[i] + b[i];
             }
-
-          // Synchronice all the threads 
-          __syncthreads();
+          return out;
         }
 
         int main()
         {
-          // Initialize the memory on the host
-          float *a, *b, *out;
-
-          // Allocate host memory
+          // Initialize the variables
+          float *a, *b, *out;       
+  
+          // Allocate the memory
           a   = (float*)malloc(sizeof(float) * N);
           b   = (float*)malloc(sizeof(float) * N);
           out = (float*)malloc(sizeof(float) * N);
-           
-          // Initialize the memory on the device
-          float *d_a, *d_b, *d_out;
-
-          // Allocate device memory
-          cudaMalloc((void**)&d_a, sizeof(float) * N);
-          cudaMalloc((void**)&d_b, sizeof(float) * N);
-          cudaMalloc((void**)&d_out, sizeof(float) * N); 
   
-          // Initialize host arrays
+          // Initialize the arrays
           for(int i = 0; i < N; i++)
             {
               a[i] = 1.0f;
               b[i] = 2.0f;
             }
-
-          // Transfer data from host to device memory
-          cudaMemcpy(d_a, a, sizeof(float) * N, cudaMemcpyHostToDevice);
-          cudaMemcpy(d_b, b, sizeof(float) * N, cudaMemcpyHostToDevice);
     
-          // Thread organization 
-          dim3 dimGrid(ceil(N/32), ceil(N/32), 1);
-          dim3 dimBlock(32, 32, 1); 
+          // Start measuring time
+          clock_t start = clock();
 
-          // execute the CUDA kernel function 
-          vector_add<<<dimGrid, dimBlock>>>(d_a, d_b, d_out, N);
+          #pragma omp parallel 
+          // Executing vector addtion function 
+          Vector_Add(a, b, out, N);
 
-          // Transfer data back to host memory
-          cudaMemcpy(out, d_out, sizeof(float) * N, cudaMemcpyDeviceToHost);
-      
+          // Stop measuring time and calculate the elapsed time
+          clock_t end = clock();
+          double elapsed = (double)(end - start)/CLOCKS_PER_SEC;
+        
+          printf("Time measured: %.3f seconds.\n", elapsed);
+  
           // Verification
           for(int i = 0; i < N; i++)
-             {
-               assert(fabs(out[i] - a[i] - b[i]) < MAX_ERR);
-             }
+            {
+              assert(fabs(out[i] - a[i] - b[i]) < MAX_ERR);
+            }
 
           printf("out[0] = %f\n", out[0]);
           printf("PASSED\n");
     
-          // Deallocate device memory
-          cudaFree(d_a);
-          cudaFree(d_b);
-          cudaFree(d_out);
-
-          // Deallocate host memory
+          // Deallocate the memory
           free(a); 
           free(b); 
           free(out);
-
+   
           return 0;
         }
+
         ```
+
+    === "Solution(FORTRAN)"
+        ```c
+        module Vector_Addition_Mod  
+        implicit none 
+          contains
+        subroutine Vector_Addition(a, b, c, n)
+        use omp_lib
+        ! Input vectors
+        real(8), intent(in), dimension(:) :: a
+        real(8), intent(in), dimension(:) :: b
+        real(8), intent(out), dimension(:) :: c
+        integer :: i, n
+        !$omp do
+          do i = 1, n
+            c(i) = a(i) + b(i)
+          end do
+        !$omp end do
+         end subroutine Vector_Addition
+        end module Vector_Addition_Mod
+
+        program main
+        use Vector_Addition_Mod
+        implicit none
+        ! Input vectors
+        real(8), dimension(:), allocatable :: a
+        real(8), dimension(:), allocatable :: b 
+        ! Output vector
+        real(8), dimension(:), allocatable :: c
+        ! real(8) :: sum = 0
+
+        integer :: n, i  
+        print *, "This program does the addition of two vectors "
+        print *, "Please specify the vector size = "
+        read *, n
+
+        ! Allocate memory for vector
+        allocate(a(n))
+        allocate(b(n))
+        allocate(c(n))
+  
+        ! Initialize content of input vectors, 
+        ! vector a[i] = sin(i)^2 vector b[i] = cos(i)^2
+        do i = 1, n
+          a(i) = sin(i*1D0) * sin(i*1D0)
+          b(i) = cos(i*1D0) * cos(i*1D0) 
+        enddo
+
+        !$omp parallel 
+        ! Call the vector add subroutine 
+        call Vector_Addition(a, b, c, n)
+        !$omp end parallel
+        
+        !!Verification
+        do i = 1, n
+          if (abs(c(i)-(a(i)+b(i)) == 0.00000)) then 
+           else
+             print *, "FAIL"
+           endif
+        enddo
+        print *, "PASS"
+    
+        ! Delete the memory
+        deallocate(a)
+        deallocate(b)
+        deallocate(c)
+  
+        end program main
+
+        ```
+
+
 
 ??? "Compilation and Output"
 
-    === "Serial-version"
+    === "Serial(C/C++)"
         ```c
         // compilation
-        $ gcc Vector-addition.c -o Vector-Addition-CPU
+        $ gcc Vector-addition-Serial.c -o Vector-addition-Serial-C
         
         // execution 
-        $ ./Vector-Addition-CPU
+        $ ./Vector-addition-Serial-C
         
         // output
-        $ ./Vector-addition-CPU 
-        out[0] = 3.000000
-        PASSED
+        $ ./Vector-addition-Serial-C
         ```
         
-    === "CUDA-version"
+    === "Serial(FORTRAN)"
         ```c
         // compilation
-        $ nvcc -arch=compute_70 Vector-addition.cu -o Vector-Addition-GPU
+        $ gfortran Vector-addition-Serial.f90 -o Vector-addition-Serial-F
         
         // execution
-        $ ./Vector-Addition-GPU
+        $ ./Vector-addition-Serial-F
         
         // output
-        $ ./Vector-addition-GPU
-        out[0] = 3.000000
-        PASSED
+        $ ./Vector-addition-Serial-F
+        ```
+
+
+    === "Solution(C/C++)"
+        ```c
+        // compilation
+        $ gcc -fopennmp Vector-addition-OpenMP-solution.c -o Vector-addition-Solution-C
+        
+        // execution 
+        $ ./Vector-addition-Solution-C
+        
+        // output
+        $ ./Vector-addition-Solution-C
+        ```
+        
+    === "Solution(FORTRAN)"
+        ```c
+        // compilation
+        $ gfortran -fopenmp Vector-addition-OpenMP-solution.f90 -o Vector-addition-Solution-F
+        
+        // execution
+        $ ./Vector-addition-Solution-F
+        
+        // output
+        $ ./Vector-addition-Solution-F
         ```
 
 

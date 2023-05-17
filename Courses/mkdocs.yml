@@ -18,9 +18,10 @@ nav:
         - Hands-On:
           - Hello World: 'openmp/exercise-1.md'
           - Vector Addition: 'openmp/exercise-2.md'
-          - Matrix Multiplication: 'openmp/exercise-3.md'
-          - Shared Memory: 'openmp/exercise-4.md'
-          - Unified Memory: 'openmp/exercise-5.md'
+          - Data Sharing Attribute: 'openmp/exercise-3.md'
+          - Work Sharing Constructs: 'openmp/exercise-4.md'
+          - SIMD and Synchronization: 'openmp/exercise-5.md'
+          - Matrix Multiplication: 'openmp/exercise-6.md'
           - Profiling and Performance: 'openmp/profiling.md'
       - OpenACC:
         - Introduction: 'openacc/index.md'
