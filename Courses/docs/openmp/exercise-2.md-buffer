@@ -1,35 +1,9 @@
-To begin to understand the work-sharing constructs, we need to learn how to parallelise the `for` or `do` loop.
-For this, we will learn simple vector addition examples.
+Hello world
+
 
 <figure markdown>
-![](../figures/vector_add-external.png){ align=middle}
-<figcaption></figcaption>
+![](../figures/loop.png){align=center width=500}
 </figure>
-
-
-As we can see from the above figure, the two vectors should be added to get a single vector. This is done by iterating over the elements and adding them together. For this, we use `for` or `do`. Since there are no data dependencies, the loop indexes do not have any data dependency on the other indexes. Therefore, it is easy to parallelise.
-
-
-
-??? example "Examples: Loops"
-
-    === "Serial(C/C++)"
-
-        ```c  
-        for(int i = 0; i < n; i ++)
-          {
-            c[i] = a[i] + b[i];
-          }
-        ```  
-        
-
-    === "FORTRAN(C/C++)"
-    
-        ```c  
-        do i = 1, n
-          c(i) = a(i) + b(i)
-        end do
-        ```  
 
 
 ### <u>Questions and Solutions</u>
@@ -472,50 +446,50 @@ As we can see from the above figure, the two vectors should be added to get a si
     === "Serial(C/C++)"
         ```c
         // compilation
-        $ gcc Vector-addition-Serial.c -o Vector-addition-Serial
+        $ gcc Vector-addition-Serial.c -o Vector-addition-Serial-C
         
         // execution 
-        $ ./Vector-addition-Serial
+        $ ./Vector-addition-Serial-C
         
         // output
-        $ ./Vector-addition-Serial
+        $ ./Vector-addition-Serial-C
         ```
         
     === "Serial(FORTRAN)"
         ```c
         // compilation
-        $ gfortran Vector-addition-Serial.f90 -o Vector-addition-Serial
+        $ gfortran Vector-addition-Serial.f90 -o Vector-addition-Serial-F
         
         // execution
-        $ ./Vector-addition-Serial
+        $ ./Vector-addition-Serial-F
         
         // output
-        $ ./Vector-addition-Serial
+        $ ./Vector-addition-Serial-F
         ```
 
 
     === "Solution(C/C++)"
         ```c
         // compilation
-        $ gcc -fopennmp Vector-addition-OpenMP-solution.c -o Vector-addition-Solution
+        $ gcc -fopennmp Vector-addition-OpenMP-solution.c -o Vector-addition-Solution-C
         
         // execution 
-        $ ./Vector-addition-Solution
+        $ ./Vector-addition-Solution-C
         
         // output
-        $ ./Vector-addition-Solution
+        $ ./Vector-addition-Solution-C
         ```
         
     === "Solution(FORTRAN)"
         ```c
         // compilation
-        $ gfortran -fopenmp Vector-addition-OpenMP-solution.f90 -o Vector-addition-Solution
+        $ gfortran -fopenmp Vector-addition-OpenMP-solution.f90 -o Vector-addition-Solution-F
         
         // execution
-        $ ./Vector-addition-Solution
+        $ ./Vector-addition-Solution-F
         
         // output
-        $ ./Vector-addition-Solution
+        $ ./Vector-addition-Solution-F
         ```
 
 
