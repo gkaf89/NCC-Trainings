@@ -1,128 +1,278 @@
-We will now look into the basic matrix multiplication.
-In this example, we will perform the matrix multiplication. Matrix multiplication involves a nested loop. Again, most of the time, we might end up doing computation with a nested loop. Therefore, studying this example would be good practice for solving the nested loop in the future. 
+Most of the time, we end up having more than one loop, a nested loop, where two or three loops will be next to each other. OpenMP provides a clause for handling this kind of situation with `collapse`. To understand this, we will now study Matrix multiplication, which involves a nested loop. Again, most of the time, we might do computation with a nested loop. Therefore, studying this example would be good practice for solving the nested loop in the future.
 
 <figure markdown>
 ![](../figures/mat.png){align=center width=500}
-<figcaption>b</figcaption>
+<figcaption></figcaption>
 </figure>
 
- - Allocating the CPU memory for A, B, and C matrix.
-   Here we notice that the matrix is stored in a
-   1D array because we want to consider the same function concept for CPU and GPU.
-```c
-// Initialize the memory on the host
-float *a, *b, *c;
+####<u>[Collapse](https://www.openmp.org/spec-html/5.2/openmpsu30.html)</u>
 
-// Allocate host memory
-a   = (float*)malloc(sizeof(float) * (N*N));
-b   = (float*)malloc(sizeof(float) * (N*N));
-c   = (float*)malloc(sizeof(float) * (N*N));
-```
+<figure markdown>
+![](../figures/collapse.png){align=center width=500}
+<figcaption></figcaption>
+</figure>
 
- - Allocating the GPU memory for A, B, and C matrix
-```c
-// Initialize the memory on the device
-float *d_a, *d_b, *d_c;
+<figure markdown>
+![](../figures/collapse-2.png){align=center width=500}
+<figcaption></figcaption>
+</figure>
 
-// Allocate device memory
-cudaMalloc((void**)&d_a, sizeof(float) * (N*N));
-cudaMalloc((void**)&d_b, sizeof(float) * (N*N));
-cudaMalloc((void**)&d_c, sizeof(float) * (N*N));
-```
 
- - Now we need to fill the values for the matrix A and B.
-```c
-// Initialize host matrix
-for(int i = 0; i < (N*N); i++)
-   {
-    a[i] = 2.0f;
-    b[i] = 2.0f;
-   }
-```
+??? Info "Collapse"
 
-- Transfer initialized A and B matrix
-from CPU to GPU
-```c
-cudaMemcpy(d_a, a, sizeof(float) * (N*N), cudaMemcpyHostToDevice);
-cudaMemcpy(d_b, b, sizeof(float) * (N*N), cudaMemcpyHostToDevice);
-```
-
- - 2D thread block for indexing x and y
-```c
-// Thread organization
-int blockSize = 32;
-dim3 dimBlock(blockSize,blockSize,1);
-dim3 dimGrid(ceil(N/float(blockSize)),ceil(N/float(blockSize)),1);
-```
-
- - Calling the kernel function
-```c
-// Device function call
-matrix_mul<<<dimGrid,dimBlock>>>(d_a, d_b, d_c, N);
-```
- -  ??? "matrix multiplication function call"
-
-        === "serial"
-            ```c
-            float * matrix_mul(float *h_a, float *h_b, float *h_c, int width)
-            {
-              for(int row = 0; row < width ; ++row)
-                {
-                  for(int col = 0; col < width ; ++col)
-                    {
-                      float temp = 0;
-                      for(int i = 0; i < width ; ++i)
-                        {
-                          temp += h_a[row*width+i] * h_b[i*width+col];
-                        }
-                      h_c[row*width+col] = temp;
-                    }
-                }
-              return h_c;
-            }
-            ```
-        === "cuda"
-            ```c
-            __global__ void matrix_mul(float* d_a, float* d_b, 
-            float* d_c, int width)
-            {
-              int row = blockIdx.x * blockDim.x + threadIdx.x;
-              int col = blockIdx.y * blockDim.y + threadIdx.y;
-    
-              if ((row < width) && (col < width)) 
-                {
-                  float temp = 0;
-                  // each thread computes one 
-                  // element of the block sub-matrix
-                  for (int i = 0; i < width; ++i) 
-                    {
-                      temp += d_a[row*width+i]*d_b[i*width+col];
-                    }
-                  d_c[row*width+col] = temp;
+    === "C/C++"
+        ```c
+        #pragma omp parallel
+        #pragma omp for collapse(2)
+          for(int i = 0; i < N; i++)
+             {
+              for(int j = 0; j < N; j++)
+                {	  
+                 cout << " Thread id" << " " << omp_get_thread_num() << endl;
                 }
             }
-            ```
+            
+        // Or
+        
+        #pragma omp parallel for collapse(2)
+          for(int i = 0; i < N; i++)
+            {
+              for(int j = 0; j < N; j++)
+                { 
+                cout << " Thread id" << " " << omp_get_thread_num() << endl;
+                }
+            }
+        ```
 
- - Copy back computed value from GPU to CPU;
-   transfer the data back to GPU (from device to host).
-   Here is the C matrix that contains the product of the two matrices.
-```c
-// Transfer data back to host memory
-cudaMemcpy(c, d_c, sizeof(float) * (N*N), cudaMemcpyDeviceToHost);
-```
+    === "FORTRAN"
+    	```c
+        !$omp parallel
+        !$omp do collapse(2) 
+        do i = 1, n
+           do j = 1, n
+              print*, 'Thread id', omp_get_thread_num()
+           end do
+        end do
+        !$omp end do
+        !$omp end parallel
+        
+        !! Or
+        
+        !$omp parallel do collapse(2)
+        do i = 1, n
+           do j = 1, n
+              print*, 'Thread id', omp_get_thread_num()
+           end do
+        end do
+        !$omp end parallel do
+        ```
 
- - Deallocate the host and device memory
-```c
-// Deallocate device memory
-cudaFree(d_a);
-cudaFree(d_b);
-cudaFree(d_c);
+??? example "Examples: Collapse" 
 
-// Deallocate host memory
-free(a); 
-free(b); 
-free(c);
-```
+
+    === "OpenMP(C/C++)"
+        ```c
+        #include <iostream>
+        #include <omp.h>
+        
+        using namespace std;
+        
+        int main()
+        {
+          int N=5;
+        
+        #pragma omp parallel
+        #pragma omp for collapse(2)
+          for(int i = 0; i < N; i++)
+            {
+             for(int j = 0; j < N; j++)
+               {
+                cout << "Outer loop id " << i << " Inner loop id "<< j << " Thread id" << " " << omp_get_thread_num() << endl;
+               }
+            }
+            
+          return 0;
+        }
+        ```
+        
+        
+    === "OpenMP(FORTRAN)"
+        ```c
+        program main
+        use omp_lib
+        implicit none
+        
+        integer :: n, i, j  
+        n=5
+        
+        !$omp parallel
+        !$omp do collapse(2) 
+        do i = 1, n
+           do j = 1, n
+              print*, 'Outer loop id ', i , 'Inner loop id ', j , 'Thread id', omp_get_thread_num()
+           end do
+        end do
+        !$omp end do
+        !$omp end parallel
+        
+        end program main
+        ```
+
+
+    === "Output(FORTRAN)"
+        ```c
+        Outer loop id            4 Inner loop id            2 Thread id          16
+        Outer loop id            1 Inner loop id            4 Thread id           3
+        Outer loop id            5 Inner loop id            1 Thread id          20
+        Outer loop id            4 Inner loop id            1 Thread id          15
+        Outer loop id            2 Inner loop id            1 Thread id           5
+        Outer loop id            3 Inner loop id            1 Thread id          10
+        Outer loop id            3 Inner loop id            4 Thread id          13
+        Outer loop id            4 Inner loop id            4 Thread id          18
+        Outer loop id            4 Inner loop id            3 Thread id          17
+        Outer loop id            3 Inner loop id            3 Thread id          12
+        Outer loop id            1 Inner loop id            2 Thread id           1
+        Outer loop id            2 Inner loop id            3 Thread id           7
+        Outer loop id            1 Inner loop id            5 Thread id           4
+        Outer loop id            2 Inner loop id            2 Thread id           6
+        Outer loop id            3 Inner loop id            2 Thread id          11
+        Outer loop id            2 Inner loop id            5 Thread id           9
+        Outer loop id            3 Inner loop id            5 Thread id          14
+        Outer loop id            5 Inner loop id            3 Thread id          22
+        Outer loop id            5 Inner loop id            4 Thread id          23
+        Outer loop id            5 Inner loop id            5 Thread id          24
+        Outer loop id            2 Inner loop id            4 Thread id           8
+        Outer loop id            1 Inner loop id            3 Thread id           2
+        Outer loop id            4 Inner loop id            5 Thread id          19
+        Outer loop id            1 Inner loop id            1 Thread id           0
+        Outer loop id            5 Inner loop id            2 Thread id          21
+        ```
+
+####<u>[Reduction](https://www.openmp.org/spec-html/5.0/openmpsu107.html)</u>
+
+??? Info "Reduction"
+
+    === "C/C++"
+        ```c
+        #pragma omp parallel
+        #pragma omp for reduction(+:sum)
+          for(int i = 0; i < N; i++)
+             {
+              sum +=a[i];
+             }
+            
+        // Or
+        
+        #pragma omp parallel for reduction(+:sum)
+          for(int i = 0; i < N; i++)
+            {
+             sum += a[i];
+            }
+        ```
+
+    === "FORTRAN"
+        ```c
+        !$omp parallel
+        !$omp do reduction(+:sum)
+        do i = 1, n
+           sum = sum + a(i)
+        end do
+        !$omp end do
+        !$omp end parallel
+        
+        !! Or
+        
+        !$omp parallel do reduction(+:sum)
+        do i = 1, n
+           sum = sum + a(i)
+        end do
+        !$omp end parallel do
+        ```
+
+
+
+??? example "Examples: Reduction" 
+
+    === "OpenMP(C/C++)"
+        ```c
+        #include <iostream>
+        #include <omp.h>
+
+        using namespace std;
+
+        int main()
+        {
+          int sum,N = 10;
+          float *a = (float*)malloc(sizeof(float) * N);
+            
+        #pragma omp parallel for reduction(+:sum)
+          for(int i = 0; i < N; i++)
+            {
+              a[i] = i;
+              sum += a[i];
+            }
+          cout << "Sum is "<< sum << endl;
+          
+          return 0;
+        }
+        ```
+
+    === "OpenMP(FORTRAN)"
+        ```c
+        program main
+          use omp_lib
+          implicit none
+  
+          ! Input vectors
+          real(8), dimension(:), allocatable :: a
+            
+          integer :: n, i, sum
+          n=10
+  
+          ! Allocate memory for vector
+          allocate(a(n))
+  
+          !$omp parallel do reduction(+:sum)
+          do i = 1, n
+              a(i) = i
+              sum = sum + a(i)
+          end do
+          !$omp end parallel do
+            
+          print *, 'Sum is ', sum
+            
+        end program main
+        ```
+
+
+
+####<u>Matrix Multiplication</u>
+
+??? "matrix multiplication function call"
+
+     === "Function(C/C++)"
+         ```c
+         void Matrix_Multiplication(float *a, float *b, float *c, int width)   
+         { 
+           float sum = 0;
+           for(int row = 0; row < width ; ++row)                           
+             {                                                             
+               for(int col = 0; col < width ; ++col)
+                 {
+                   sum=0;
+                   for(int i = 0; i < width ; ++i)                         
+                     {                                                     
+                       sum += a[row*width+i] * b[i*width+col];      
+                     }                                                     
+                   c[row*width+col] = sum;                           
+                 }
+             }   
+         }
+         ```
+     === "Function(FORTRAN)"
+         ```c
+         ```
+
 
 ### <u>Questions and Solutions</u>
 
@@ -160,22 +310,22 @@ free(c);
            int N =0;
            scanf("%d", &N);
 
-           // Initialize the memory on the host
+           // Initialize the memory
            float *a, *b, *c;       
     
-           // Allocate host memory
+           // Allocate memory
            a = (float*)malloc(sizeof(float) * (N*N));
            b = (float*)malloc(sizeof(float) * (N*N));
            c = (float*)malloc(sizeof(float) * (N*N));
   
-          // Initialize host arrays
+          // Initialize arrays
           for(int i = 0; i < (N*N); i++)
              {
                a[i] = 1.0f;
                b[i] = 2.0f;
              }
 
-           // Device fuction call 
+           // Fuction call 
            Matrix_Multiplication(a, b, c, N);
   
            // Verification
@@ -189,7 +339,7 @@ free(c);
               printf("\n");
               }
   
-            // Deallocate host memory
+            // Deallocate memory
             free(a); 
             free(b); 
             free(c);
@@ -307,22 +457,22 @@ free(c);
            int N =0;
            scanf("%d", &N);
 
-           // Initialize the memory on the host
+           // Initialize the memory 
            float *a, *b, *c;       
     
-           // Allocate host memory
+           // Allocate memory
            a = (float*)malloc(sizeof(float) * (N*N));
            b = (float*)malloc(sizeof(float) * (N*N));
            c = (float*)malloc(sizeof(float) * (N*N));
   
-          // Initialize host arrays
+          // Initialize arrays
           for(int i = 0; i < (N*N); i++)
              {
                a[i] = 1.0f;
                b[i] = 2.0f;
              }
 
-           // Device fuction call 
+           // Fuction call 
            Matrix_Multiplication(a, b, c, N);
   
            // Verification
@@ -336,7 +486,7 @@ free(c);
               printf("\n");
               }
   
-            // Deallocate host memory
+            // Deallocate memory
             free(a); 
             free(b); 
             free(c);
@@ -423,7 +573,7 @@ free(c);
 
     === "Solution(C/C++)"
         ```c
-               #include<stdio.h>
+        #include<stdio.h>
         #include<stdlib.h>
         #include<omp.h>
         
@@ -451,22 +601,22 @@ free(c);
            int N =0;
            scanf("%d", &N);
 
-           // Initialize the memory on the host
+           // Initialize the memory
            float *a, *b, *c;       
     
-           // Allocate host memory
+           // Allocate memory
            a = (float*)malloc(sizeof(float) * (N*N));
            b = (float*)malloc(sizeof(float) * (N*N));
            c = (float*)malloc(sizeof(float) * (N*N));
   
-          // Initialize host arrays
+          // Initialize arrays
           for(int i = 0; i < (N*N); i++)
              {
                a[i] = 1.0f;
                b[i] = 2.0f;
              }
 
-           // Device fuction call 
+           // Fuction call 
            Matrix_Multiplication(a, b, c, N);
   
            // Verification
@@ -480,7 +630,7 @@ free(c);
               printf("\n");
               }
   
-            // Deallocate host memory
+            // Deallocate memory
             free(a); 
             free(b); 
             free(c);
@@ -561,7 +711,6 @@ free(c);
         deallocate(c)
   
         end program main
-
         ```
 
 

@@ -1,4 +1,4 @@
-#### Shared variable
+#### <u>Shared variable</u>
 
  - All the threads have access to the shared variable.
  - By default in the parallel region, all the variables are
@@ -91,7 +91,7 @@
      - Does the value of vector `a` change after the parallel loop, if not why, think?
      - Do we really need to mention `shared(a)`, is it neccessary? 
 
-#### Private variable
+#### <u>Private variable</u>
 
  - Each thread will have its own copy of the private variable.
  - And the private variable is only accessible within the parallel region,
@@ -184,7 +184,7 @@
      - After the parallel region, does variable `a` has been updated or not? 
 
 
-#### Lastprivate
+#### <u>Lastprivate</u>
 
  - lastprivate: is also similar to a private clause
  - But each thread will have an uninitialized copy of the variables passed
@@ -255,7 +255,7 @@
      - Do you think the initial value of varibale `var` is been considered within the parallel region? 
 
 
-#### Firstprivate
+#### <u>Firstprivate</u>
 
  - firstprivate: is similar to a private clause
  - But each thread will have an initialized copy of the variables passed

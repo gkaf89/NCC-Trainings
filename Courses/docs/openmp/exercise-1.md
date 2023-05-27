@@ -1,4 +1,4 @@
-#### Parallel Contruct 
+#### <u>Parallel Contruct</u>
 
 In this exercise, we will create a parallel region and execute the computational content in parallel.
 First, however, this exercise is to create a parallel region and understand the threads' behaviour in parallel.
@@ -39,6 +39,36 @@ At the same time, in order to enable OpenMP constructs, clauses, and environment
         use omp_lib
         ```
 
+
+#### <u>Compilers</u>
+
+The following copilers would support the OpenMP programming model.
+
+ - [GNU](https://gcc.gnu.org/) - It is an opensource and can be used for Intel and AMD CPUs
+ - [Intel](https://www.intel.com/content/www/us/en/developer/tools/oneapi/dpc-compiler.html#gs.zd201n) - It is from Intel and only optimized for Intel CPUs
+ - [AOOC](https://www.amd.com/content/dam/amd/en/documents/pdfs/developer/aocc/aocc-v4.0-ga-user-guide.pdf) - Suitable for AMD CPUs, especially “Zen” core architecture.
+
+
+??? Info "Examples (GNU, Intel and AMD): Compilation"
+
+    === "GNU"
+        ```c
+        $ gcc test.c -fopenmp
+        $ g++ test.cc -fopenmp
+        $ gfortran test.f90 -fopenmp
+        ```
+    === "Intel"
+        ```c
+        $ icc test.c -qopenmp
+        $ icpc test.cc -qopenmp
+        $ ifort test.f90 -qopenmp        
+        ```
+    === "AOOC"
+        ```c
+        $ clang test.c -fopenmp
+        $ clang++ test.cc -fopenmp
+        $ flang test.f90 -fopenmp        
+        ```
 
 ### <u>Questions and Solutions</u>
 
@@ -176,7 +206,7 @@ At the same time, in order to enable OpenMP constructs, clauses, and environment
 
 Although creating a parallel region would allow us to do the parallel computation, however, at the same time, we should have control over the threads being created in the parallel region, for example, how many threads are needed for a particular computation, thread number, etc. For this, we need to know a few of the important environment routines which are provided by OpenMP. The below list shows a few of the most important environment routines that should be known by the programmer for optimised OpenMP coding.
 
-#### Environment Routines (important)
+#### <u>Environment Routines (important)</u>
 
  - Define number of threads to be used within the parallel region
  
@@ -292,7 +322,7 @@ Although creating a parallel region would allow us to do the parallel computatio
         ``` c
         $ export OMP_NUM_THREADS=10
         // or 
-        $ setenv OMP NUM THREADS 4
+        $ setenv OMP_NUM_THREADS 4
         // or
         $ OMP NUM THREADS=4 ./omp code.exe
         ```

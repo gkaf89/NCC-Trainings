@@ -1,4 +1,4 @@
-### <u>Serial version discussion</u>
+#### <u>Serial version discussion</u>
 
 To begin to understand the work-sharing constructs,
 we need to learn how to parallelise the `for - C/C++` or `do - FORTRAN` loop.
@@ -44,7 +44,7 @@ Therefore, it is easy to parallelise.
     C/C++ arrray index starts from 0
     ```
 
-### <u>Parallel version discussion</u>
+#### <u>Parallel version discussion</u>
 
 Now we will look into the how to parallelize the `for - C/C++` or `do - FORTRAN` loops.
 For this, we just need to add below syntax (OpenMP directives).
@@ -422,7 +422,7 @@ Could you try this by yourself? The serial code, templates and compilation comma
         // CPU function that adds two vector 
         float * Vector_Add(float *a, float *b, float *c, int n) 
         #pragma omp for
-        // ADD YOUR PARALLEL REGION FOR THE LOOP
+        // ADD YOUR PARALLE
           for(int i = 0; i < n; i ++)
             {
               c[i] = a[i] + b[i];
@@ -614,23 +614,3 @@ Could you try this by yourself? The serial code, templates and compilation comma
     - Can you create a different kinds of threads block for larger number of array?
 
 
-
-### <u>Loop scheduling</u>
-
-   However, the above example is very simple.
-   Because, in most cases, we would end up doing a large list of arrays with complex computations within the loop.
-   Therefore, the work loading should be optimally distributed among the threads in those cases.
-   To handle those considerations, OpenMP has provided the following loop-sharing clauses. They are:
-
-    - Static
-    - Dynamic
-    - Guided
-    - Auto 
-    - Runtime
-
-#### <u>Static</u>
-
- - The number of iterations are divided by chunksize. 
- - If the chunksize is not provided, a number of iterations will be divided by the size of the team of threads.
-    - e.g., n=100, numthreads=5; each thread will execute the 20 iterations in parallel.
- - This is useful when the computational cost is similar to each iteration.
