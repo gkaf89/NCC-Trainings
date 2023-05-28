@@ -355,5 +355,32 @@ Although creating a parallel region would allow us to do the parallel computatio
         Hello world from thread id            8 from the team size of          10
         Hello world from thread id            1 from the team size of          10
         ```
+
+
+#### <u>Utilities</u>
+
+
+The main aim is to do the parallel computation to speed up computation on a given parallel architecture. Therefore, measuring the timing and comparing the solution between serial and parallel code is very important. In order to measure the timing, OpenMP provides an environmental variable, `omp_get_wtime();`.
+
+??? Info "Time measuring"
+
+    === "C/C++"
+        ```
+        double start; 
+        double end; 
+        start = omp_get_wtime(); 
+        ... work to be timed ... 
+        end = omp_get_wtime(); 
+        printf("Work took %f seconds\n", end - start);
+        ```
 	
-     
+    === "FORTRAN"
+        ```
+        DOUBLE PRECISION START, END 
+        START = omp_get_wtime() 
+        ... work to be timed ... 
+        END = omp_get_wtime() 
+        PRINT *, "Work took", END - START, "seconds"        
+        ```
+
+
