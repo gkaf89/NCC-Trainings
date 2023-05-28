@@ -5,7 +5,7 @@ Profiling is an important task to be considered when a computer code is written.
  - [Intel tools](https://www.intel.com/content/www/us/en/developer/tools/oneapi/vtune-profiler.html)
 
 ####<u>[ARM Forge](https://developer.arm.com/documentation/101136/22-1-3/Performance-Reports?lang=en)</u>
-Arm Forge is another standard commercial tool for debugging, profiling, and analysing scientific code on the massively parallel computer architecture. They have a separate toolset for each category with the common environment: DDT for debugging, MAP for profiling, and performance reports for analysis. It also supports the MPI, UPC, CUDA, and OpenMP programming models for a different architecture with different variety of compilers. DDT and MAP will launch the GUI, where we can interactively debug and profile the code. Whereas `perf-report` will provide the analysis results in `.html` and `.txt` files.
+Arm Forge is another standard commercial tool for debugging, profiling, and analysing scientific code on the massively parallel computer architecture. They have a separate toolset for each category with the common environment: DDT for debugging, MAP for profiling, and performance reports for analysis. It also supports the MPI, UPC, CUDA, and OpenMP programming models for a different architecture with different variety of compilers. DDT and MAP will launch the GUI, where we can interactively debug and profile the code. Whereas perf-report will provide the analysis results in .html and .txt files.
 
 
 ??? Info "Example: ARM Forge"
@@ -55,7 +55,7 @@ Arm Forge is another standard commercial tool for debugging, profiling, and anal
 ####<u>[Intel tools](https://www.intel.com/content/www/us/en/developer/tools/oneapi/vtune-profiler.html)</u>
 
 ##### Intel Application Snapshot
-Intel Application Performance Snapshot tool helps to find essential performance factors and the metrics of CPU utilisation, memory access efficiency, and vectorisation.
+Intel Application Performance Snapchat tool helps to find essential performance factors and the metrics of CPU utilisation, memory access efficiency, and vectorisation.
 `aps -help` will list out profiling metrics options in APS
      
 <figure markdown>

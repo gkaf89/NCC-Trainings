@@ -46,23 +46,23 @@ Therefore, it is easy to parallelise.
 
 #### <u>Parallel version discussion</u>
 
-Now we will look into the how to parallelise the `for - C/C++` or `do - FORTRAN` loops.
+Now we will look into the how to parallelize the `for - C/C++` or `do - FORTRAN` loops.
 For this, we just need to add below syntax (OpenMP directives).
 
 | Functionality | Syntax in C/C++ | Syntax in FORTRAN|
 | -----------   | -----------     | -----------------|
-| Distribute iterations over the threads | #pragma omp for | !$omp do         |
+| Distribute iterations over the threads | #pragrma omp for | !$omp do         |
 
 
-With the help of the above syntax the loops can be easily parallelised.
-The figure below shows an example of how the loops are parallelised.
+With the help of the above syntax the loops can be easily parallelized.
+The figure below shows an example of how the loops are parallelized.
 As we can notice here, we set the `omp_set_num_threads(5)`
 for the number of parallel threads that should be used within the loops.
 Furthermore, the loop index goes from `0` to `9`;
 in total, we need to iterate `10` elements. 
 
 In this example, using `5` threads would divide `10` iterations by `two`.
-Therefore, each thread will handle `2` iterations.
+Therefore, each thead will handle `2` iterations.
 In total, `5` threads will do just `2` iterations in parallel for `10` elements.  
 
 <figure markdown>
@@ -70,7 +70,7 @@ In total, `5` threads will do just `2` iterations in parallel for `10` elements.
 <figcaption></figcaption>
 </figure>
 
-??? example "Examples: Loops parallelisation"
+??? example "Examples: Loops parallelization"
 
     === "Serial(C/C++)"
 

@@ -6,11 +6,14 @@ Most of the time, we end up having more than one loop, a nested loop, where two 
 </figure>
 
 ####<u>[Collapse](https://www.openmp.org/spec-html/5.2/openmpsu30.html)</u>
+The collapse clause can be used for the nested loop; an entire part of the iteration will be divided by an available number of threads. If the outer loop is equal to the available threads, then the outer loop will be divided number of threads. The figure below shows an example of not using a `collapse` clause. Therefore, only the outer loop is parallelised; each outer loop index will have N number of inner loop iterations. 
 
 <figure markdown>
 ![](../figures/collapse.png){align=center width=500}
 <figcaption></figcaption>
 </figure>
+
+This is not what we want. Instead, with the available threads, we would like to parallelise the loops as efficiently as we could. Moreover, most of the time, we might have more threads available on a machine; for example, on MeluXina, we can have up to 256 threads. Therefore, when adding the `collapse` clause, we notice that the available threads execute every single iteration, as seen in the figure below.
 
 <figure markdown>
 ![](../figures/collapse-2.png){align=center width=500}
@@ -67,7 +70,7 @@ Most of the time, we end up having more than one loop, a nested loop, where two 
         !$omp end parallel do
         ```
 
-??? example "Examples: Collapse" 
+??? example "Examples and Questions: Collapse" 
 
 
     === "OpenMP(C/C++)"
@@ -147,8 +150,15 @@ Most of the time, we end up having more than one loop, a nested loop, where two 
         Outer loop id            1 Inner loop id            1 Thread id           0
         Outer loop id            5 Inner loop id            2 Thread id          21
         ```
-
+    - Can you add here any of the scheduling clauses, for example, static, dynamic, etc?
+    - Is it really necessary to them when you use `collapse`, or is it dependent on other factors, such as the nature of the	computation and available threads?
+    
 ####<u>[Reduction](https://www.openmp.org/spec-html/5.0/openmpsu107.html)</u>
+
+The reduction clauses are data-sharing attribute clauses that can be used to perform some forms of repetition calculations in the parallel region.
+
+ - it can be used for arithmetic reductions: +,*,-,max,min
+ - and also with logical operator reductions in C: & && | || ˆ
 
 ??? Info "Reduction"
 
@@ -191,7 +201,7 @@ Most of the time, we end up having more than one loop, a nested loop, where two 
 
 
 
-??? example "Examples: Reduction" 
+??? example "Examples and Question: Reduction" 
 
     === "OpenMP(C/C++)"
         ```c
@@ -244,34 +254,46 @@ Most of the time, we end up having more than one loop, a nested loop, where two 
         end program main
         ```
 
+    - What happens if you do not use the reduction clause? Do we still get the correct answer?
 
 
 ####<u>Matrix Multiplication</u>
 
+
+In this example, we consider a square matrix; `M=N` is equal for both `A` and `B` matrices. Even though we deal here with a 2D matrix, we create a 1D array to represent a 2D matrix. In this example,  we must use `collapse` clause since matrix multiplication deals with 3 loops. The first 2 outer loops will take rows of the `A` matrix and columns of the `B` matrix. Therefore, these two loops can be easily parallelised. But then we need to sum the value of the those two outer loops value finally; this is where we should use the `reduction` clause. 
+
+
 ??? "matrix multiplication function call"
 
-     === "Function(C/C++)"
-         ```c
-         void Matrix_Multiplication(float *a, float *b, float *c, int width)   
-         { 
-           float sum = 0;
-           for(int row = 0; row < width ; ++row)                           
-             {                                                             
-               for(int col = 0; col < width ; ++col)
-                 {
-                   sum=0;
-                   for(int i = 0; i < width ; ++i)                         
-                     {                                                     
-                       sum += a[row*width+i] * b[i*width+col];      
-                     }                                                     
-                   c[row*width+col] = sum;                           
-                 }
-             }   
-         }
-         ```
-     === "Function(FORTRAN)"
-         ```c
-         ```
+    === "C/C++"
+        ```c
+        for(int row = 0; row < width ; ++row)                           
+           {                                                             
+             for(int col = 0; col < width ; ++col)
+               {
+                 sum=0;
+                 for(int i = 0; i < width ; ++i)                         
+                   {                                                     
+                     sum += a[row*width+i] * b[i*width+col];      
+                   }                                                     
+                 c[row*width+col] = sum;                           
+               }
+           } 
+        ```
+
+    === "FORTRAN"
+        ```c
+        do row = 0, width-1
+           do col = 0, width-1
+              sum=0
+              do i = 0, width-1
+                 sum = sum + (a((row*width)+i+1) * b((i*width)+col+1))
+              enddo
+              c(row*width+col+1) = sum
+           enddo
+        enddo
+        ```
+
 
 
 ### <u>Questions and Solutions</u>
@@ -508,7 +530,7 @@ Most of the time, we end up having more than one loop, a nested loop, where two 
         real(8), intent(out), dimension(:) :: c
         real(8) :: sum = 0
         integer :: i, row, col, width
-
+        !!! ADD LOOP PARALLELISATION
         do row = 0, width-1
            do col = 0, width-1
               sum=0
@@ -553,6 +575,7 @@ Most of the time, we end up having more than one loop, a nested loop, where two 
            b(i) = cos(i*1D0) * cos(i*1D0) 
         enddo
 
+        !!!! ADD PARALLEL REGION 
         ! Call the vector add subroutine 
         call Matrix_Multiplication(a, b, c, n)
   
@@ -580,6 +603,7 @@ Most of the time, we end up having more than one loop, a nested loop, where two 
         void Matrix_Multiplication(float *a, float *b, float *c, int width)   
         { 
           float sum = 0;
+          #pragma for loop collapse(2) reduction (+:sum)
           for(int row = 0; row < width ; ++row)                           
             {                                                             
               for(int col = 0; col < width ; ++col)
@@ -593,7 +617,7 @@ Most of the time, we end up having more than one loop, a nested loop, where two 
                 }
             }   
         }
-
+        
         int main()
          {  
            printf("Programme assumes that matrix size is N*N \n");
@@ -609,13 +633,13 @@ Most of the time, we end up having more than one loop, a nested loop, where two 
            b = (float*)malloc(sizeof(float) * (N*N));
            c = (float*)malloc(sizeof(float) * (N*N));
   
-          // Initialize arrays
-          for(int i = 0; i < (N*N); i++)
-             {
-               a[i] = 1.0f;
-               b[i] = 2.0f;
-             }
-
+           // Initialize arrays
+           for(int i = 0; i < (N*N); i++)
+              {
+                a[i] = 1.0f;
+                b[i] = 2.0f;
+              }
+           #pragma omp parallel
            // Fuction call 
            Matrix_Multiplication(a, b, c, N);
   
@@ -624,46 +648,46 @@ Most of the time, we end up having more than one loop, a nested loop, where two 
               {
               for(int j = 0; j < N; j++)
                  {
-          	  printf("%f ", c[j]);
-
-          	}
-              printf("\n");
+                  printf("%f ", c[j]);
+          	 }
+               printf("\n");
               }
   
-            // Deallocate memory
-            free(a); 
-            free(b); 
-            free(c);
+           // Deallocate memory
+           free(a); 
+           free(b); 
+           free(c);
 
-           return 0;
+          return 0;
         }
         ```
 
     === "Solution(FORTRAN)"
         ```c
         module Matrix_Multiplication_Mod  
-        implicit none 
+          implicit none 
         contains
-         subroutine Matrix_Multiplication(a, b, c, width)
-        use omp_lib
-        ! Input vectors
-        real(8), intent(in), dimension(:) :: a
-        real(8), intent(in), dimension(:) :: b
-        real(8), intent(out), dimension(:) :: c
-        real(8) :: sum = 0
-        integer :: i, row, col, width
-
-        do row = 0, width-1
-           do col = 0, width-1
-              sum=0
-               do i = 0, width-1
-                 sum = sum + (a((row*width)+i+1) * b((i*width)+col+1))
+          subroutine Matrix_Multiplication(a, b, c, width)
+            use omp_lib
+            ! Input vectors
+            real(8), intent(in), dimension(:) :: a
+            real(8), intent(in), dimension(:) :: b
+            real(8), intent(out), dimension(:) :: c
+            real(8) :: sum = 0
+            integer :: i, row, col, width
+        
+            !$omp do collapse(2) reduction(+:sum)
+            do row = 0, width-1
+               do col = 0, width-1
+                  sum=0
+                  do i = 0, width-1
+                     sum = sum + (a((row*width)+i+1) * b((i*width)+col+1))
+                  enddo
+                  c(row*width+col+1) = sum
                enddo
-              c(row*width+col+1) = sum
-           enddo
-        enddo
-
-
+            enddo
+            !$omp end do
+            
           end subroutine Matrix_Multiplication
         end module Matrix_Multiplication_Mod
 
@@ -696,9 +720,11 @@ Most of the time, we end up having more than one loop, a nested loop, where two 
            a(i) = sin(i*1D0) * sin(i*1D0)
            b(i) = cos(i*1D0) * cos(i*1D0) 
         enddo
-
+        
+        !$omp parallel
         ! Call the vector add subroutine 
         call Matrix_Multiplication(a, b, c, n)
+        !$omp end parallel
   
         !!Verification
         do i=1,n*n
@@ -718,52 +744,79 @@ Most of the time, we end up having more than one loop, a nested loop, where two 
 
 ??? "Compilation and Output"
 
-    === "Serial-version"
+    === "Serial-version(C/C++)"
         ```c
         // compilation
-        $ gcc Matrix-multiplication.c -o Matrix-Multiplication-CPU
+        $ gcc Matrix-multiplication.c -o Matrix-Multiplication-Serial
         
         // execution 
-        $ ./Matrix-Multiplication-CPU
+        $ ./Matrix-Multiplication-Serial
         
-        // output
-        $ g++ Matrix-multiplication.cc -o Matrix-multiplication
-        $ ./Matrix-multiplication
         Programme assumes that matrix (square matrix) size is N*N 
         Please enter the N size number 
         4
-        16 16 16 16 
-        16 16 16 16  
-        16 16 16 16  
-        16 16 16 16 
+        8 8 8 8 
+        8 8 8 8  
+        8 8 8 8  
+        8 8 8 8 
         ```
-        
-    === "CUDA-version"
+
+    === "Serial-version(FORTRAN)"
         ```c
         // compilation
-        $ nvcc -arch=compute_70 Matrix-multiplication.cu -o Matrix-Multiplication-GPU
+        $ gfortran Matrix-multiplication.f90 -o Matrix-Multiplication-Serial
+        
+        // execution 
+        $ ./Matrix-Multiplication-Serial
+        
+        Programme assumes that matrix (square matrix) size is N*N 
+        Please enter the N size number 
+        4
+        8 8 8 8 
+        8 8 8 8  
+        8 8 8 8  
+        8 8 8 8 
+        ```
+        
+    === "OpenMP(C/C++)"
+        ```c
+        // compilation
+        $ gcc -fopenmp Matrix-multiplication-Solution.c -o Matrix-Multiplication-Solution
         
         // execution
-        $ ./Matrix-Multiplication-GPU
+        $ ./Matrix-Multiplication-Solution
         Programme assumes that matrix (square matrix) size is N*N 
-        Please enter the N size number
-        $ 256
-        
-        // output
-        $ Two matrices are equal
+        Please enter the N size number 
+        4
+        8 8 8 8 
+        8 8 8 8  
+        8 8 8 8  
+        8 8 8 8 
         ```
 
+    === "OpenMP(FORTRAN)"
+        ```c
+        // compilation
+        $ gfortran -fopenmp Matrix-multiplication-Solution.f90 -o Matrix-Multiplication-Solution
+        
+        // execution
+        $ ./Matrix-Multiplication-Solution
+        Programme assumes that matrix (square matrix) size is N*N 
+        Please enter the N size number 
+        4
+        8 8 8 8 
+        8 8 8 8  
+        8 8 8 8  
+        8 8 8 8 
+        ```
+	
 ??? Question "Questions"
 
-    - Right now, we are using the 1D array to represent the matrix. However, you can also do it with the 2D matrix.
-    Can you try with 2D array matrix multiplication with 2D thread block?
-    - Can you get the correct soltion if you remove the **`if ((row < width) && (col < width))`**
-    condition from the **`__global__ void matrix_mul(float* d_a, float* d_b, float* d_c, int width)`** function?
-    - Please try with different thread blocks and different matrix sizes.
-    ```
-    // Thread organization
-    int blockSize = 32;
-    dim3 dimBlock(blockSize,blockSize,1);
-    dim3 dimGrid(ceil(N/float(blockSize)),ceil(N/float(blockSize)),1);
-    ```
+    - Right now, we are dealing with square matrices. Could you write a code for a different matrix size while still fulfilling the matrix multiplication condition?
+ 
+    <figure markdown>
+    ![](../figures/product.png){align=center width=500}
+    <figcaption></figcaption>
+    </figure>
 
+    - Could you use any one of the loop scheduling, for example, `dynamic` or `static`? Do you see any performance gain?
