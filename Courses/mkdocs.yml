@@ -20,7 +20,7 @@ nav:
           - Data Sharing Attribute: 'openmp/exercise-2.md'
           - Work Sharing Constructs(loop): 'openmp/exercise-3.md'
           - Work Sharing Constructs(loop-scheduling): 'openmp/exercise-4.md'
-          - Other Worksharing Constructs: 'openmp/exercise-5.md'
+          - Worksharing Constructs(others): 'openmp/exercise-5.md'
           - SIMD and Others: 'openmp/exercise-6.md'
           - Profiling and Performance: 'openmp/profiling.md'
       - OpenACC:

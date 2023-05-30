@@ -43,21 +43,20 @@
   [u100490@login03 OpenMP]$ pwd
   /project/home/p200117/u100490/OpenMP
   [u100490@login03 OpenMP]$ ls -lthr
-  total 20K
-  -rw-r-----. 1 u100490 p200117   51 Mar 13 15:50 module.sh
-  drwxr-s---. 2 u100490 p200117 4.0K Mar 13 15:50 Vector-addition
-  drwxr-s---. 2 u100490 p200117 4.0K Mar 13 15:50 Unified-memory
+  drwxr-s---. 2 u100490 p200117 4.0K May 27 21:42 Data-Sharing-Attribute
+  drwxr-s---. 2 u100490 p200117 4.0K May 28 00:35 Parallel-Region
+  drwxr-s---. 2 u100490 p200117 4.0K May 30 18:26 Dry-run-test
   ...
   ...
   ```
 #### 7. Until now you are in the login node, now its time to do the dry run test
-- 7.1 Reserve the interactive node for running/testing CUDA applications 
+- 7.1 Reserve the interactive node for running/testing OpenMP applications 
   ```
-  $ salloc -A p200117 --res training_part1 --partition=gpu --qos default -N 1 -t 01:00:00
+  $ salloc -A p200117 --res intro_openmp --partition=cpu --qos default -N 1 -t 01:00:00
   ```
 - ??? "check if your reservation is allocated"
       ```
-      [u100490@login03 ~]$ salloc -A p200117 --res training_part1 --partition=gpu --qos default -N 1 -t 01:00:00
+      [u100490@login03 ~]$ salloc -A p200117 --res intro_openmp --partition=cpu --qos default -N 1 -t 01:00:00
       salloc: Pending job allocation 296848
       salloc: job 296848 queued and waiting for resources
       salloc: job 296848 has been allocated resources
@@ -69,66 +68,66 @@
  ```
  [u100490@mel2131 ~]$ squeue -u u100490
              JOBID PARTITION     NAME     USER    ACCOUNT    STATE       TIME   TIME_LIMIT  NODES NODELIST(REASON)
-            304381       gpu interact  u100490    p200117  RUNNING       0:37     01:00:00      1 mel2131
+            304381       cpu interact  u100490    p200117  RUNNING       0:37     01:00:00      1 mel2131
  ```
 
-#### 8. Now we need to check simple CUDA application, if that is going to work for you:
+#### 8. Now we need to check simple OpenMP application, if that is going to work for you:
  - 8.1 Go to folder `Dry-run-test`
 ```
 [u100490@login03 OpenMP]$ cd Dry-run-test/
 [u100490@login03 Dry-run-test]$ ls 
-Hello-world.cu  module.sh
+source.sh  Test.cc  Test.f90
 ```
 
-#### 9. Finally, we need to load the compiler to test the GPU CUDA codes
- - 9.1 We need a Nvidia HPC SDK compiler for compiling and testing CUDA code
+#### 9. Finally, we need to load the compiler to test the our OpenMP codes
+ - 9.1 We will work with GNU compiler
  ```
- $ module load OpenMPI/4.1.4-NVHPC-22.7-CUDA-11.7.0
- ### or
  $ source module.sh
  ```
 
 - ??? "check if the module is loaded properly"
       ```
-      [u100490@mel2131 ~]$ module load OpenMPI/4.1.4-NVHPC-22.7-CUDA-11.7.0
       [u100490@mel2131 ~]$ module list
  
-      Currently Loaded Modules:
-      1) env/release/2022.1           (S)   6) numactl/2.0.14-GCCcore-11.3.0  11) libpciaccess/0.16-GCCcore-11.3.0  16) GDRCopy/2.3-GCCcore-11.3.0                  21) knem/1.1.4.90-GCCcore-11.3.0
-      2) lxp-tools/myquota/0.3.1      (S)   7) CUDA/11.7.0                    12) hwloc/2.7.1-GCCcore-11.3.0        17) UCX-CUDA/1.13.1-GCCcore-11.3.0-CUDA-11.7.0  22) OpenMPI/4.1.4-NVHPC-22.7-CUDA-11.7.0
-      3) GCCcore/11.3.0                     8) NVHPC/22.7-CUDA-11.7.0         13) OpenSSL/1.1                       18) libfabric/1.15.1-GCCcore-11.3.0
-      4) zlib/1.2.12-GCCcore-11.3.0         9) XZ/5.2.5-GCCcore-11.3.0        14) libevent/2.1.12-GCCcore-11.3.0    19) PMIx/4.2.2-GCCcore-11.3.0
-      5) binutils/2.38-GCCcore-11.3.0      10) libxml2/2.9.13-GCCcore-11.3.0  15) UCX/1.13.1-GCCcore-11.3.0         20) xpmem/2.6.5-36-GCCcore-11.3.0
-
+      currently Loaded Modules:
+      1) env/release/2022.1                (S)  19) libpciaccess/0.16-GCCcore-11.3.0    37) jbigkit/2.1-GCCcore-11.3.0        55) VTune/2022.3.0                          73) NSS/3.79-GCCcore-11.3.0
+      2) lxp-tools/myquota/0.3.1           (S)  20) X11/20220504-GCCcore-11.3.0         38) gzip/1.12-GCCcore-11.3.0          56) numactl/2.0.14-GCCcore-11.3.0           74) snappy/1.1.9-GCCcore-11.3.0
+      3) GCCcore/11.3.0                         21) Arm-Forge/22.0.4-GCC-11.3.0         39) lz4/1.9.3-GCCcore-11.3.0          57) hwloc/2.7.1-GCCcore-11.3.0              75) JasPer/2.0.33-GCCcore-11.3.0
+      4) zlib/1.2.12-GCCcore-11.3.0             22) libglvnd/1.4.0-GCCcore-11.3.0       40) zstd/1.5.2-GCCcore-11.3.0         58) OpenSSL/1.1                             76) nodejs/16.15.1-GCCcore-11.3.0
+      5) binutils/2.38-GCCcore-11.3.0           23) AMD-uProf/3.6.449                   41) libdeflate/1.10-GCCcore-11.3.0    59) libevent/2.1.12-GCCcore-11.3.0          77) Qt5/5.15.5-GCCcore-11.3.0
+      6) ncurses/6.3-GCCcore-11.3.0             24) Advisor/2022.1.0                    42) LibTIFF/4.3.0-GCCcore-11.3.0      60) UCX/1.13.1-GCCcore-11.3.0               78) CubeGUI/4.7-GCCcore-11.3.0
       Where:
           S:  Module is Sticky, requires --force to unload or purge
       ```
 
 
-#### 10. Please compile and test your CUDA application 
+#### 10. Please compile and test your OpenMP application 
  - For example, Dry-run-test
  ```
- // compilation
- $ nvcc -arch=compute_70 Hello-world.cu -o Hello-World-GPU
+ // compilation (C/C++)
+ $ g++ Test.cc -fopenmp
+
+ // compilation (FORTRAN)
+ $ gfortran Test.f90 -fopenmp
 
  // execution
- $ ./Hello-World-GPU
+ $ ./a.out
 
  // output
- $ Hello World from GPU!
-   Hello World from GPU!
-   Hello World from GPU!
-   Hello World from GPU!
+ $ Hello world from master thread 
+   Hello world from thread id Hello world from thread id Hello world from thread 
+   id Hello world from thread id Hello world from thread id 4 from the team size of 
+   1 from the team size of 20 from the team size of  from the team size of 555
  ```
 
 #### 11. Similarly for the hands-on session, we need to do the node reservation:
   ```
-  $ salloc -A p200117 --res training_part2 --partition=gpu --qos default -N 1 -t 02:30:00
+  $ salloc -A p200117 --res intro_openmp --partition=cpu --qos default -N 1 -t 02:30:00
   ```
   
 - ??? "check if your reservation is allocated"
       ```
-      [u100490@login03 ~]$ salloc -A p200117 --res training_part2 --partition=gpu --qos default -N 1 -t 02:30:00
+      [u100490@login03 ~]$ salloc -A p200117 --res intro_openmp --partition=cpu --qos default -N 1 -t 02:30:00
       salloc: Pending job allocation 296848
       salloc: job 296848 queued and waiting for resources
       salloc: job 296848 has been allocated resources
@@ -141,20 +140,17 @@ Hello-world.cu  module.sh
  - 12.1 For example, `Hello World` example, we do the following steps:
 
 ```
-[u100490@mel2063 CUDA]$ pwd
-/project/home/p200117/u100490/CUDA
-[u100490@mel2063 CUDA]$ ls
-[u100490@mel2063 CUDA]$ ls
-Dry-run-test  Matrix-multiplication  Profiling      Unified-memory
-Hello-world   module.sh              Shared-memory  Vector-addition
-[u100490@mel2063 CUDA]$ source module.sh
-[u100490@mel2063 CUDA]$ cd Hello-world
-// compilation
-[u100490@mel2063 CUDA]$ nvcc -arch=compute_70 Hello-world.cu -o Hello-World-GPU
-
-// execution
-[u100490@mel2063 CUDA]$ ./Hello-World-GPU
-
-// output
-[u100490@mel2063 CUDA]$ Hello World from GPU
+[u100490@mel2063 OpenMP]$ pwd
+/project/home/p200117/u100490/OpenMP
+[u100490@mel2063 OpenMP]$ ls
+[u100490@mel2063 OpenMP]$ ls
+drwxr-s---. 2 u100490 p200117 4.0K May 27 21:42 Data-Sharing-Attribute
+drwxr-s---  2 u100490 p200117 4.0K May 28 00:35 Parallel-Region
+drwxr-s---  2 u100490 p200117 4.0K May 28 23:45 Worksharing-Constructs-Schedule
+drwxr-s---. 2 u100490 p200117 4.0K May 29 00:57 Worksharing-Constructs-Other
+drwxr-s---. 2 u100490 p200117 4.0K May 29 18:07 Worksharing-Constructs-Loop
+drwxr-s---. 2 u100490 p200117 4.0K May 30 18:25 SIMD-Others
+drwxr-s---. 2 u100490 p200117 4.0K May 30 18:37 Dry-run-test
+-rw-r-----  1 u100490 p200117  241 May 30 18:41 module.sh
+[u100490@mel2063 OpenMP]$ source module.sh
 ```

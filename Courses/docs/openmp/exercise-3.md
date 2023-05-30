@@ -125,9 +125,6 @@ Could you try this by yourself? The serial code, templates and compilation comma
     === "Serial(C/C++)"
     
         ```c  
-        //-*-C++-*-
-        // Vector-addition.c
-        
         #include <stdio.h>
         #include <stdlib.h>
         #include <math.h>
@@ -264,9 +261,6 @@ Could you try this by yourself? The serial code, templates and compilation comma
     === "Template(C/C++)"
     
         ```c
-        //-*-C++-*-
-        // Vector-addition.c
-        
         #include <stdio.h>
         #include <stdlib.h>
         #include <math.h>
@@ -407,9 +401,6 @@ Could you try this by yourself? The serial code, templates and compilation comma
     === "Solution(C/C++)"
     
         ```c
-        //-*-C++-*-
-        // Vector-addition.c
-        
         #include <stdio.h>
         #include <stdlib.h>
         #include <math.h>

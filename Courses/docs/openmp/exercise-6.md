@@ -4,57 +4,490 @@
 </figure>
 
 
-
-
-
-
 ### <u>Questions and Solutions</u>
 
 
-??? Questions
+??? example "Examples: SIMD - Vector Addition"
 
-     - How can you identify the thread numbers within the parallel region?
-     - What happens if you not set `omp_set_num_threads()`, for example, `omp_set_num_threads(5)|call omp_set_num_threads(5)`, what do you notice? 
-     - Alternatively, you can also set a number of threads to be used in the application while the compilation `export OMP_NUM_THREADS`; what do you see?
 
-    === "Question (C/C++)"
+    === "Serial(C/C++)"
+    
+        ```c  
+        #include <stdio.h>
+        #include <stdlib.h>
+        #include <math.h>
+        #include <assert.h>
+        #include <time.h>
+        
+        #define N 5120
+        #define MAX_ERR 1e-6
 
-        ```c
-        #include<iostream>
-        #include<omp.h>
-        using namespace std;
+        // CPU function that adds two vector 
+        float * Vector_Add(float *a, float *b, float *c, int n) 
+        {
+          for(int i = 0; i < n; i ++)
+            {
+              c[i] = a[i] + b[i];
+            }
+          return c;
+        }
+
         int main()
         {
-          cout << "Hello world from master thread "<< endl;
-          cout << endl;
-                    
-          // creating the parallel region (with N number of threads)
-          #pragma omp parallel
-           {
-                //cout << "Hello world from thread id "
-                << " from the team size of "
-                << endl;
-            } // parallel region is closed
-            
-        cout << endl;
-        cout << "end of the programme from master thread" << endl;
-        return 0;
+          // Initialize the variables
+          float *a, *b, *c;       
+  
+          // Allocate the memory
+          a   = (float*)malloc(sizeof(float) * N);
+          b   = (float*)malloc(sizeof(float) * N);
+          c = (float*)malloc(sizeof(float) * N);
+  
+          // Initialize the arrays
+          for(int i = 0; i < N; i++)
+            {
+              a[i] = 1.0f;
+              b[i] = 2.0f;
+            }
+    
+          // Start measuring time
+          clock_t start = clock();
+
+          // Executing vector addtion function 
+          Vector_Add(a, b, c, N);
+
+          // Stop measuring time and calculate the elapsed time
+          clock_t end = clock();
+          double elapsed = (double)(end - start)/CLOCKS_PER_SEC;
+        
+          printf("Time measured: %.3f seconds.\n", elapsed);
+  
+          // Verification
+          for(int i = 0; i < N; i++)
+            {
+              assert(fabs(c[i] - a[i] - b[i]) < MAX_ERR);
+            }
+
+          printf("c[0] = %f\n", c[0]);
+          printf("PASSED\n");
+    
+          // Deallocate the memory
+          free(a); 
+          free(b); 
+          free(c);
+   
+          return 0;
         }
         ```
 
-    === "Question (FORTRAN)"
-        ``` fortran
-        program Hello_world_OpenMP
-        use omp_lib
-                
-        !$omp parallel 
-        !! print *, 
-        !$omp end parallel
-        
-        end program
+    === "Serial(FORTRAN)"
+        ```c
+        module Vector_Addition_Mod  
+        implicit none 
+          contains
+        subroutine Vector_Addition(a, b, c, n)
+        ! Input vectors
+        real(8), intent(in), dimension(:) :: a
+        real(8), intent(in), dimension(:) :: b
+        real(8), intent(out), dimension(:) :: c
+        integer :: i, n
+          do i = 1, n
+            c(i) = a(i) + b(i)
+          end do
+         end subroutine Vector_Addition
+        end module Vector_Addition_Mod
+
+        program main
+        use Vector_Addition_Mod
+        implicit none
+        ! Input vectors
+        real(8), dimension(:), allocatable :: a
+        real(8), dimension(:), allocatable :: b 
+        ! Output vector
+        real(8), dimension(:), allocatable :: c
+        ! real(8) :: sum = 0
+
+        integer :: n, i  
+        print *, "This program does the addition of two vectors "
+        print *, "Please specify the vector size = "
+        read *, n
+
+        ! Allocate memory for vector
+        allocate(a(n))
+        allocate(b(n))
+        allocate(c(n))
+  
+        ! Initialize content of input vectors, 
+        ! vector a[i] = sin(i)^2 vector b[i] = cos(i)^2
+        do i = 1, n
+          a(i) = sin(i*1D0) * sin(i*1D0)
+          b(i) = cos(i*1D0) * cos(i*1D0) 
+        enddo
+    
+        ! Call the vector add subroutine 
+        call Vector_Addition(a, b, c, n)
+
+        !!Verification
+        do i = 1, n
+          if (abs(c(i)-(a(i)+b(i)) == 0.00000)) then 
+           else
+             print *, "FAIL"
+           endif
+        enddo
+        print *, "PASS"
+    
+        ! Delete the memory
+        deallocate(a)
+        deallocate(b)
+        deallocate(c)
+  
+        end program main
+
         ```
+
+
+
+    === "Template(C/C++)"
+    
+        ```c
+        #include <stdio.h>
+        #include <stdlib.h>
+        #include <math.h>
+        #include <assert.h>
+        #include <time.h>
+        
+        #define N 5120
+        #define MAX_ERR 1e-6
+
+        // CPU function that adds two vector 
+        float * Vector_Add(float *a, float *b, float *c, int n) 
+        {
+        // ADD YOUR PARALLEL REGION FOR THE LOOP SIMD
+          for(int i = 0; i < n; i ++)
+            {
+              c[i] = a[i] + b[i];
+            }
+          return c;
+        }
+
+        int main()
+        {
+          // Initialize the variables
+          float *a, *b, *c;       
+  
+          // Allocate the memory
+          a   = (float*)malloc(sizeof(float) * N);
+          b   = (float*)malloc(sizeof(float) * N);
+          c = (float*)malloc(sizeof(float) * N);
+  
+          // Initialize the arrays
+          for(int i = 0; i < N; i++)
+            {
+              a[i] = 1.0f;
+              b[i] = 2.0f;
+            }
+    
+          // Start measuring time
+          clock_t start = clock();
+
+          // ADD YOUR PARALLEL REGION HERE	
+          // Executing vector addtion function 
+          Vector_Add(a, b, c, N);
+
+          // Stop measuring time and calculate the elapsed time
+          clock_t end = clock();
+          double elapsed = (double)(end - start)/CLOCKS_PER_SEC;
+        
+          printf("Time measured: %.3f seconds.\n", elapsed);
+  
+          // Verification
+          for(int i = 0; i < N; i++)
+            {
+              assert(fabs(c[i] - a[i] - b[i]) < MAX_ERR);
+            }
+
+          printf("c[0] = %f\n", c[0]);
+          printf("PASSED\n");
+    
+          // Deallocate the memory
+          free(a); 
+          free(b); 
+          free(c);
+   
+          return 0;
+        }
+
+        ```
+        
+    === "Template(FORTRAN)"
+        ```c
+        module Vector_Addition_Mod  
+        implicit none 
+          contains
+        subroutine Vector_Addition(a, b, c, n)
+        use omp_lib
+        ! Input vectors
+        real(8), intent(in), dimension(:) :: a
+        real(8), intent(in), dimension(:) :: b
+        real(8), intent(out), dimension(:) :: c
+        integer :: i, n
+        !! ADD YOUR PARALLEL DO LOOP WITH SIMD
+          do i = 1, n
+            c(i) = a(i) + b(i)
+          end do
+         end subroutine Vector_Addition
+        end module Vector_Addition_Mod
+
+        program main
+        use Vector_Addition_Mod
+        implicit none
+        ! Input vectors
+        real(8), dimension(:), allocatable :: a
+        real(8), dimension(:), allocatable :: b 
+        ! Output vector
+        real(8), dimension(:), allocatable :: c
+        ! real(8) :: sum = 0
+
+        integer :: n, i  
+        print *, "This program does the addition of two vectors "
+        print *, "Please specify the vector size = "
+        read *, n
+
+        ! Allocate memory for vector
+        allocate(a(n))
+        allocate(b(n))
+        allocate(c(n))
+  
+        ! Initialize content of input vectors, 
+        ! vector a[i] = sin(i)^2 vector b[i] = cos(i)^2
+        do i = 1, n
+          a(i) = sin(i*1D0) * sin(i*1D0)
+          b(i) = cos(i*1D0) * cos(i*1D0) 
+        enddo
+
+        !! ADD YOUR PARALLEL REGION 
+        ! Call the vector add subroutine 
+        call Vector_Addition(a, b, c, n)
+
+        !!Verification
+        do i = 1, n
+          if (abs(c(i)-(a(i)+b(i)) == 0.00000)) then 
+           else
+             print *, "FAIL"
+           endif
+        enddo
+        print *, "PASS"
+    
+        ! Delete the memory
+        deallocate(a)
+        deallocate(b)
+        deallocate(c)
+  
+        end program main
+
+        ```
+
+    === "Solution(C/C++)"
+    
+        ```c       
+        #include <stdio.h>
+        #include <stdlib.h>
+        #include <math.h>
+        #include <assert.h>
+        #include <time.h>
+        
+        #define N 5120
+        #define MAX_ERR 1e-6
+
+        // CPU function that adds two vector 
+        float * Vector_Add(float *a, float *b, float *c, int n) 
+        #pragma omp for simd
+        // ADD YOUR PARALLE SIMD
+          for(int i = 0; i < n; i ++)
+            {
+              c[i] = a[i] + b[i];
+            }
+          return c;
+        }
+
+        int main()
+        {
+          // Initialize the variables
+          float *a, *b, *c;       
+  
+          // Allocate the memory
+          a   = (float*)malloc(sizeof(float) * N);
+          b   = (float*)malloc(sizeof(float) * N);
+          c = (float*)malloc(sizeof(float) * N);
+  
+          // Initialize the arrays
+          for(int i = 0; i < N; i++)
+            {
+              a[i] = 1.0f;
+              b[i] = 2.0f;
+            }
+    
+          double start = omp_get_wtime();
+          #pragma omp parallel 
+          // Executing vector addtion function 
+          Vector_Add(a, b, c, N);
+          double end = omp_get_wtime();
+          printf("Work took %f seconds\n", end - start);
+  
+          // Verification
+          for(int i = 0; i < N; i++)
+            {
+              assert(fabs(c[i] - a[i] - b[i]) < MAX_ERR);
+            }
+
+          printf("c[0] = %f\n", c[0]);
+          printf("PASSED\n");
+    
+          // Deallocate the memory
+          free(a); 
+          free(b); 
+          free(c);
+   
+          return 0;
+        }
+
+        ```
+
+    === "Solution(FORTRAN)"
+        ```c
+        module Vector_Addition_Mod  
+        implicit none 
+          contains
+        subroutine Vector_Addition(a, b, c, n)
+        use omp_lib
+        ! Input vectors
+        real(8), intent(in), dimension(:) :: a
+        real(8), intent(in), dimension(:) :: b
+        real(8), intent(out), dimension(:) :: c
+        integer :: i, n
+        !$omp do simd
+          do i = 1, n
+            c(i) = a(i) + b(i)
+          end do
+        !$omp end do simd
+         end subroutine Vector_Addition
+        end module Vector_Addition_Mod
+
+        program main
+        use Vector_Addition_Mod
+        implicit none
+        ! Input vectors
+        real(8), dimension(:), allocatable :: a
+        real(8), dimension(:), allocatable :: b 
+        ! Output vector
+        real(8), dimension(:), allocatable :: c
+        ! real(8) :: sum = 0
+        double precision :: start, end
 	
-    === "Answer (C/C++)"
+        integer :: n, i  
+        print *, "This program does the addition of two vectors "
+        print *, "Please specify the vector size = "
+        read *, n
+
+        ! Allocate memory for vector
+        allocate(a(n))
+        allocate(b(n))
+        allocate(c(n))
+  
+        ! Initialize content of input vectors, 
+        ! vector a[i] = sin(i)^2 vector b[i] = cos(i)^2
+        do i = 1, n
+          a(i) = sin(i*1D0) * sin(i*1D0)
+          b(i) = cos(i*1D0) * cos(i*1D0) 
+        enddo
+
+        start = omp_get_wtime()
+        !$omp parallel 
+        ! Call the vector add subroutine 
+        call Vector_Addition(a, b, c, n)
+        !$omp end parallel
+        end = omp_get_wtime()
+        PRINT *, "Work took", end - start, "seconds"
+	
+        !!Verification
+        do i = 1, n
+          if (abs(c(i)-(a(i)+b(i)) == 0.00000)) then 
+           else
+             print *, "FAIL"
+           endif
+        enddo
+        print *, "PASS"
+    
+        ! Delete the memory
+        deallocate(a)
+        deallocate(b)
+        deallocate(c)
+  
+        end program main
+
+        ```
+
+
+
+??? "Compilation and Output"
+
+    === "Serial(C/C++)"
+        ```c
+        // compilation
+        $ gcc Vector-addition-Serial.c -o Vector-addition-Serial
+        
+        // execution 
+        $ ./Vector-addition-Serial
+        
+        // output
+        $ ./Vector-addition-Serial
+        ```
+        
+    === "Serial(FORTRAN)"
+        ```c
+        // compilation
+        $ gfortran Vector-addition-Serial.f90 -o Vector-addition-Serial
+        
+        // execution
+        $ ./Vector-addition-Serial
+        
+        // output
+        $ ./Vector-addition-Serial
+        ```
+
+
+    === "Solution(C/C++)"
+        ```c
+        // compilation
+        $ gcc -fopennmp Vector-addition-OpenMP-solution.c -o Vector-addition-Solution
+        
+        // execution 
+        $ ./Vector-addition-Solution
+        
+        // output
+        $ ./Vector-addition-Solution
+        ```
+        
+    === "Solution(FORTRAN)"
+        ```c
+        // compilation
+        $ gfortran -fopenmp Vector-addition-OpenMP-solution.f90 -o Vector-addition-Solution
+        
+        // execution
+        $ ./Vector-addition-Solution
+        
+        // output
+        $ ./Vector-addition-Solution
+	```
+
+
+
+####<u>Critical, Single, and Master</u>
+
+
+
+??? "Examples and Question: Critical, Single and Master"
+
+    === "(C/C++)"
         ```c
         #include<iostream>
         #include<omp.h>
@@ -79,7 +512,7 @@
         }
         ```
 
-    === "Answer (FORTRAN)"
+    === "FORTRAN)"
         ``` fortran
         program Hello_world_OpenMP
         use omp_lib
@@ -90,43 +523,9 @@
         
         end program
         ```
-        
-    === "Answer"
-        ``` c
-        $ export OMP_NUM_THREADS=10
-        // or 
-        $ setenv OMP_NUM_THREADS 4
-        // or
-        $ OMP NUM THREADS=4 ./omp code.exe
-        ```
 
-    === "Solution Output (C/C++)"
-        ```c
-        ead id Hello world from thread id Hello world from thread id 3 from the team size of 9 from the team size of 52 from the team size of  from the team size of 10
-        0 from the team size of 10
-        10
-        10
-        10
-        7 from the team size of 10
-        4 from the team size of 10
-        8 from the team size of 10
-        1 from the team size of 10
-        6 from the team size of 10
-        ```
-        
-    === "Solution Output (FORTRAN)"
 
-        ```c
-        Hello world from thread id            0 from the team size of          10
-        Hello world from thread id            4 from the team size of          10
-        Hello world from thread id            5 from the team size of          10
-        Hello world from thread id            9 from the team size of          10
-        Hello world from thread id            2 from the team size of          10
-        Hello world from thread id            3 from the team size of          10
-        Hello world from thread id            7 from the team size of          10
-        Hello world from thread id            6 from the team size of          10
-        Hello world from thread id            8 from the team size of          10
-        Hello world from thread id            1 from the team size of          10
-        ```
-
+      - Try single clause
+      - Try master clause
+      - Try critical clause
 
