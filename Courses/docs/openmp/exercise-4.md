@@ -3,13 +3,12 @@
    However, the above example is very simple.
    Because, in most cases, we would end up doing a large list of arrays with complex computations within the loop.
    Therefore, the work loading should be optimally distributed among the threads in those cases.
-   To handle those considerations, OpenMP has provided the following loop-sharing clauses. They are:
+   To handle those considerations, OpenMP has provided the following loop-sharing clauses. They are: `Static`, `Dynamic`, `Guided`, `Auto`, and, `Runtime`.
 
-   - Static
-   - Dynamic
-   - Guided
-   - Auto 
-   - Runtime
+<figure markdown>
+![](../figures/schedule.png){width="500", align=middle}
+<figcaption></figcaption>
+</figure>
 
 ??? Info "Example - Loop scheduling clauses"
 

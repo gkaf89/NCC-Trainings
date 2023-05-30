@@ -15,7 +15,7 @@ For this, we use `for - C/C++` or `do - FORTRAN`.
 Since there are no data dependencies, the loop indexes do not have any data dependency on the other indexes.
 Therefore, it is easy to parallelise.
 
-??? example "Examples: Loops"
+??? example "Examples: Loop"
 
     === "Serial(C/C++)"
 
@@ -604,7 +604,6 @@ Could you try this by yourself? The serial code, templates and compilation comma
 
 
 ??? Question "Questions"
-   
-      - Can you measure the performance speed comparison parallelising the loop and not? Do you see any speedup?
-      - For example, can you create more threads to speed up the computation than the default (or available threads)? Again, do you see any speedup? If yer or not, why?
-   
+
+      - Can you measure the performance speedup for parallelising loop? Do you see any speedup?
+      - For example, can you create more threads to speed up the computation? If yer or not, why?

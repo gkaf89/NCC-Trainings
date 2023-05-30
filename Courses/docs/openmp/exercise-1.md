@@ -18,7 +18,7 @@ To create a parallel region, we use the following parallel constructs:
         ```
     === "FORTRAN"
         ```
-        !$omp parllel 
+        !$omp parallel 
         ```
 
 The above figure illustrates the parallel region behaviour;
