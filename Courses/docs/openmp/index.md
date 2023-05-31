@@ -1,5 +1,11 @@
 # Introduction to OpenMP Programming for Shared Memory Parallel Architecture 
 
+<figure markdown>
+[![](../figures/OpenMP-first-page.png)](https://github.com/ezhilmathik/NCC-Luxembourg/blob/5c2e27445af99b1fe13a4c3f550a8064ce014fd1/Courses/docs/openmp/Training-OpenMP.pdf)
+<figcaption></figcaption>
+</figure>
+
+
 Participants from this course will learn Multicore (shared memory) CPU programming using the OpenMP programming model, such as parallel region, environmental routines, and data sharing. Furthermore, understanding the multicore shared memory architecture and how parallel threads blocks are used to parallelise the computational task. Since we deal with multicores and parallel threads, proper parallel work sharing and the synchronisation of the parallel calls are to be studied in detail. Finally, participants will also learn to use the OpenMP programming model to accelerate linear algebra (routines) and iterative solvers on the Multicore CPU. Participants will learn theories first and implement the OpenMP programming model with mentors' guidance later in the hands-on tutorial part.
 
 
