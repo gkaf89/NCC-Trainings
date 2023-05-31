@@ -206,7 +206,7 @@ tunning in the code. `survey`: analyse and explore an idea about where to add ef
 AMD uProf profiler follows a statistical sampling-based approach to collect profile data to identify
 the performance bottlenecks in the application.
 
-??? Info "Example: Intel VTune"
+??? Info "Example: AMD uProf"
 
     === "C/C++"
         ```c
