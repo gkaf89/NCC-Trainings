@@ -4,10 +4,10 @@
 </figure>
 
 
-### <u>Questions and Solutions</u>
+In this exercise, we will try to add the simd classes to our existing problems, for example, vector addition. 
 
 
-??? example "Examples: SIMD - Vector Addition"
+??? example "Examples and Question: SIMD - Vector Addition"
 
 
     === "Serial(C/C++)"
@@ -416,73 +416,22 @@
            endif
         enddo
         print *, "PASS"
-    
+        
         ! Delete the memory
         deallocate(a)
         deallocate(b)
         deallocate(c)
-  
+        
         end program main
-
         ```
+       - Please try the examples without the `simd` clause. Do you notice any performance differences? 
 
-
-
-??? "Compilation and Output"
-
-    === "Serial(C/C++)"
-        ```c
-        // compilation
-        $ gcc Vector-addition-Serial.c -o Vector-addition-Serial
-        
-        // execution 
-        $ ./Vector-addition-Serial
-        
-        // output
-        $ ./Vector-addition-Serial
-        ```
-        
-    === "Serial(FORTRAN)"
-        ```c
-        // compilation
-        $ gfortran Vector-addition-Serial.f90 -o Vector-addition-Serial
-        
-        // execution
-        $ ./Vector-addition-Serial
-        
-        // output
-        $ ./Vector-addition-Serial
-        ```
-
-
-    === "Solution(C/C++)"
-        ```c
-        // compilation
-        $ gcc -fopennmp Vector-addition-OpenMP-solution.c -o Vector-addition-Solution
-        
-        // execution 
-        $ ./Vector-addition-Solution
-        
-        // output
-        $ ./Vector-addition-Solution
-        ```
-        
-    === "Solution(FORTRAN)"
-        ```c
-        // compilation
-        $ gfortran -fopenmp Vector-addition-OpenMP-solution.f90 -o Vector-addition-Solution
-        
-        // execution
-        $ ./Vector-addition-Solution
-        
-        // output
-        $ ./Vector-addition-Solution
-	```
 
 
 
 ####<u>Critical, Single, and Master</u>
 
+We will explore how single, master and critical are working in the OpenMP programming model. For this, we consider the following simple examples.
 
 
 ??? "Examples and Question: Critical, Single and Master"

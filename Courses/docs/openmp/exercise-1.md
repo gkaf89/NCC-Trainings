@@ -360,7 +360,7 @@ Although creating a parallel region would allow us to do the parallel computatio
 #### <u>Utilities</u>
 
 
-The main aim is to do the parallel computation to speed up computation on a given parallel architecture. Therefore, measuring the timing and comparing the solution between serial and parallel code is very important. In order to measure the timing, OpenMP provides an environmental variable, `omp_get_wtime();`.
+The main aim is to do the parallel computation to speed up computation on a given parallel architecture. Therefore, measuring the timing and comparing the solution between serial and parallel code is very important. In order to measure the timing, OpenMP provides an environmental variable, `omp_get_wtime()`.
 
 ??? Info "Time measuring"
 
