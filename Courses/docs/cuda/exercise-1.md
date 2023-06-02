@@ -46,7 +46,7 @@ To do that, we need to do the following things:
         //-*-C++-*-
         // Hello-world.cu
         
-        #include<studio.h>
+        #include<stdio.h>
         #include<cuda.h>
         
         // device function will be executed on device (GPU) 
