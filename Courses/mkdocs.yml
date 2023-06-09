@@ -1,6 +1,6 @@
 site_name: SuperComputing Luxembourg - National Competence Center
 nav:
-    - About: 'index.md'
+    - SuperComputing Luxembourg: 'index.md'
     - Training:
       - CUDA:
         - Introduction: 'cuda/index.md'
