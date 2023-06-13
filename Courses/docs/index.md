@@ -1,7 +1,7 @@
 ![](figures/NCC-logo.png){align=center  width="900"}
 
 
-<p> SuperCompuing Luxembourg and EuroCC (Joint Undertaking) </p>
+<p> SuperComputing Luxembourg and EuroCC (Joint Undertaking) </p>
 
 >:boom: We have categorized our training events into three:
 
