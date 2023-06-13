@@ -1,6 +1,6 @@
 site_name: SuperComputing Luxembourg - National Competence Center
 nav:
-    - SuperComputing Luxembourg: 'index.md'
+    - How is structured: 'index.md'
     - Training:
       - CUDA:
         - Introduction: 'cuda/index.md'
@@ -27,7 +27,10 @@ nav:
         - Introduction: 'openacc/index.md'
     - Bootcamp:
       - AI:
-        - Introduction: 'ai/introduction.md'
+        - Introduction: 'Bootcamps/ai/introduction.md'
+    - Hackathons:
+      - HPDA:
+        - Introduction: 'Hackathons/hpda/introduction.md'
 
 markdown_extensions:
   - pymdownx.superfences
