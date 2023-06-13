@@ -1,7 +1,7 @@
 site_name: SuperComputing Luxembourg - National Competence Center
 nav:
-    - How is structured: 'index.md'
-    - Training:
+    - Trainings organization: 'index.md'
+    - Courses:
       - CUDA:
         - Introduction: 'cuda/index.md'
         - Preparation: 'cuda/preparation.md'
