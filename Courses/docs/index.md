@@ -1,7 +1,7 @@
 ![](figures/Logo_SC_Luxembourg.png){align=left  width="535"}
 ![](figures/EuroCC2-Logo.png){align=right  width="215"}
 
-<p> SuperCompuing Luxembourg and EuroCC (Joint Undertaking) </p>
+<p> SuperComputing Luxembourg and EuroCC (Joint Undertaking) </p>
 
 >:boom: We have categorized our training events into three:
 
