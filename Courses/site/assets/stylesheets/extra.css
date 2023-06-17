@@ -1,0 +1,14 @@
+/* main color */
+:root {
+    --md-primary-fg-color:#005A96;
+}
+
+/* publications */
+.author {
+    color: grey;
+}
+
+/* page width */
+.md-grid {
+    max-width: 2800px;
+}

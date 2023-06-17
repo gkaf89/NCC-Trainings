@@ -18,7 +18,7 @@ Courses are mainly focused on parallel programming on CPUs and GPUs and accelera
      - lecture (introduction and focusing on the course topic)
      - practicals (hands-on session)
      
-##<u>Bootcamps</u>
+##<u>Bootcamps:</u>
 
 Bootcamps are usually one- or two-day events designed to teach scientists and researchers how to start quickly accelerating codes on modern processors (for example, GPUs).
 Participants will be introduced to available libraries, programming models, and platforms.
