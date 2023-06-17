@@ -33,6 +33,8 @@ nav:
         - Introduction: 'Hackathons/hpda/introduction.md'
 
 markdown_extensions:
+  - attr_list
+  - md_in_html
   - pymdownx.superfences
   - pymdownx.tabbed:
       alternate_style: true
@@ -191,6 +193,6 @@ extra:
     - icon: fontawesome/brands/linkedin
       link: https://www.linkedin.com/company/eurocc-luxembourg/
 
-copyright: Copyright &copy; 2023 SuperComputing Luxembourg and Maintained by Ezhilmathi Krishnasamy
+copyright: Copyright &copy; 2023 SuperComputing Luxembourg and Ezhilmathi Krishnasamy
 
 google_analytics: ['UA-27795084-5', 'mkdocs.org']
