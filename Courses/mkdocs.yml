@@ -194,6 +194,4 @@ extra:
     - icon: fontawesome/brands/linkedin
       link: https://www.linkedin.com/company/eurocc-luxembourg/
 
-copyright: Copyright &copy; 2023 SuperComputing Luxembourg and Ezhilmathi Krishnasamy
-
-google_analytics: ['UA-27795084-5', 'mkdocs.org']
+copyright: Copyright &copy; 2023 Ezhilmathi Krishnasamy and SuperComputing Luxembourg
