@@ -9,14 +9,14 @@ Most of the time, we end up having more than one loop, a nested loop, where two 
 The collapse clause can be used for the nested loop; an entire part of the iteration will be divided by an available number of threads. If the outer loop is equal to the available threads, then the outer loop will be divided number of threads. The figure below shows an example of not using a `collapse` clause. Therefore, only the outer loop is parallelised; each outer loop index will have N number of inner loop iterations. 
 
 <figure markdown>
-![](../figures/collapse.png){align=center width=500}
+![](../figures/collapse-white.png){align=center width=500}
 <figcaption></figcaption>
 </figure>
 
 This is not what we want. Instead, with the available threads, we would like to parallelise the loops as efficiently as we could. Moreover, most of the time, we might have more threads available on a machine; for example, on MeluXina, we can have up to 256 threads. Therefore, when adding the `collapse` clause, we notice that the available threads execute every single iteration, as seen in the figure below.
 
 <figure markdown>
-![](../figures/collapse-2.png){align=center width=500}
+![](../figures/collapse-2-white.png){align=center width=500}
 <figcaption></figcaption>
 </figure>
 
