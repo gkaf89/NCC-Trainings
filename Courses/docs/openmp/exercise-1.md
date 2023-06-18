@@ -5,7 +5,7 @@ First, however, this exercise is to create a parallel region and understand the 
 In later exercises, we will study how to parallelise the computational task within the parallel region.
 
 <figure markdown>
-![](../figures/diagram-20230517-1.png){align=center width=500}
+![](../figures/parallel-white.png){align=center width=500}
 </figure>
 
 To create a parallel region, we use the following parallel constructs:
@@ -198,7 +198,7 @@ The following compilers would support the OpenMP programming model.
         end of the programme from master thread
         ```
 
-??? Questions
+??? question "Questions"
 
      - What do you notice from those examples? Can you control parallel region printout, that is, how many times it should be printed or executed?     
      - What happens if you do not use the OpenMP library, `#include<omp.h> or use omp_lib`?
@@ -238,7 +238,7 @@ Although creating a parallel region would allow us to do the parallel computatio
 ### <u>Questions and Solutions</u>
 
 
-??? Questions
+??? question "Questions"
 
      - How can you identify the thread numbers within the parallel region?
      - What happens if you not set `omp_set_num_threads()`, for example, `omp_set_num_threads(5)|call omp_set_num_threads(5)`, what do you notice? 

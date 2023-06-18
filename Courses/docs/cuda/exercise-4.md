@@ -4,8 +4,16 @@ that can fit into the shared memory of the Nvidia GPU.
 Shared memory from the GPUs, which has a good bandwidth within the GPUs compared to access to the global memory.
 
 
-![](../figures/memory.png){width="275"}
-![](../figures/memory-1.png){width="250"}
+![](../figures/memory-white.png){width="450", align=left}
+![](../figures/memory-1.png){width="375", align=right}
+
+
+
+<br/><br/><br/>
+
+<br/><br/><br/>
+
+<br/><br/><br/>
 
 
  - This is very similar to the previous example; however, we just need to allocate the small block matrix into shared memory.
@@ -29,27 +37,27 @@ These can be achieved with CUDA threads.
  - You can also increase the shared memory or L1 cache size by using `cudaFuncSetCacheConfig`. For more information about
  CUDA API, please refer to [cudaFuncSetCacheConfig](https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__EXECUTION.html#group__CUDART__EXECUTION_1g6699ca1943ac2655effa0d571b2f4f15).
 
-??? "Tips"
-    ```
-    cudaFuncSetCacheConfig(kernel, cudaFuncCachePreferL1);
-    //cudaFuncSetCacheConfig(kernel, cudaFuncCachePreferShared);
+    ??? "Tips"
+        ```
+        cudaFuncSetCacheConfig(kernel, cudaFuncCachePreferL1);
+        //cudaFuncSetCacheConfig(kernel, cudaFuncCachePreferShared);
 
-    cudaFuncCachePreferNone: no preference for shared memory or L1 (default)
-    cudaFuncCachePreferShared: prefer larger shared memory and smaller L1 cache
-    cudaFuncCachePreferL1: prefer larger L1 cache and smaller shared memory
-    cudaFuncCachePreferEqual: prefer equal size L1 cache and shared memory
-
-    // simple example usage increasing more shared memory 
-    #include<stdio.h>
-    int main()
-    {
-      // example of increasing the shared memory 
-      cudaDeviceSetCacheConfig(My_Kernel, cudaFuncCachePreferShared);
-      My_Kernel<<<>>>();
-      cudaDeviceSynchronize(); 
-      return 0;
-    }
-    ```
+        cudaFuncCachePreferNone: no preference for shared memory or L1 (default)
+        cudaFuncCachePreferShared: prefer larger shared memory and smaller L1 cache
+        cudaFuncCachePreferL1: prefer larger L1 cache and smaller shared memory
+        cudaFuncCachePreferEqual: prefer equal size L1 cache and shared memory
+ 
+        // simple example usage increasing more shared memory 
+        #include<stdio.h>
+        int main()
+        {
+          // example of increasing the shared memory 
+          cudaDeviceSetCacheConfig(My_Kernel, cudaFuncCachePreferShared);
+          My_Kernel<<<>>>();
+          cudaDeviceSynchronize(); 
+          return 0;
+        }
+        ```
 
  - Different Nvidia GPUs provides different configuration, for example, [Ampere GA102 GPU Architecture, will support the following configuration:](https://www.nvidia.com/content/PDF/nvidia-ampere-ga-102-gpu-architecture-whitepaper-v2.pdf)
        ```

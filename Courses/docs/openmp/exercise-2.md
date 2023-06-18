@@ -10,7 +10,7 @@
 	Shared variables should be handled carefully; otherwise it causes race conditions in the program.
 
 <figure markdown>
-![](../figures/shared.png){align=center width=500}
+![](../figures/shared-white.png){align=center width=500}
 </figure>
 
 ??? example "Examples: Shared variable"
@@ -86,7 +86,7 @@
         end program main
         ```
 
-??? info "Question"
+??? question "Questions"
 
      - Does the value of vector `a` change after the parallel loop, if not why, think?
      - Do we really need to mention `shared(a)`, is it neccessary? 
@@ -101,7 +101,7 @@
 
 
 <figure markdown>
-![](../figures/private.png){align=center width=500}
+![](../figures/private-white.png){align=center width=500}
 </figure>
 
 
@@ -178,7 +178,7 @@
         end program main
         ```
 
-??? info "Questions"
+??? question "Questions"
 
      - What is the value of the varible `a` in the parallel region and after the parallel region?
      - After the parallel region, does variable `a` has been updated or not? 
@@ -249,7 +249,7 @@
         end program main
         ```
 
-??? info "Questions"
+??? question "Questions"
 
      - What is the value of the varible `var` in the parallel region and after the parallel region?
      - Do you think the initial value of varibale `var` is been considered within the parallel region? 
@@ -321,7 +321,7 @@
         ```
 
 
-??? info "Questions"
+??? question "Questions"
 
      - What is the value of the varible `var` in the parallel region and after the parallel region?
      - Is variable `var` has been updated after the parallel region, if not why, think?

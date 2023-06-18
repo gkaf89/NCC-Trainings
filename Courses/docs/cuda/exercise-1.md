@@ -95,7 +95,7 @@ To do that, we need to do the following things:
         $ Hello World from GPU!
         ```
 
-??? Question
+??? question "Questions"
 
     Right now, you are printing just one **`Hello World from GPU`**,
     but what if you would like to print more **`Hello World from GPU`**? How can you do that?

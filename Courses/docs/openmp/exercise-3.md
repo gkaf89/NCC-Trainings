@@ -50,7 +50,7 @@ Now we will look into the how to parallelise the `for - C/C++` or `do - FORTRAN`
 For this, we just need to add below syntax (OpenMP directives).
 
 | Functionality | Syntax in C/C++ | Syntax in FORTRAN|
-| -----------   | -----------     | -----------------|
+|-----------| -----------|-----------------|
 | Distribute iterations over the threads | #pragma omp for | !$omp do         |
 
 
@@ -66,7 +66,7 @@ Therefore, each thread will handle `2` iterations.
 In total, `5` threads will do just `2` iterations in parallel for `10` elements.  
 
 <figure markdown>
-![](../figures/vector-add.png){width="500", align=middle}
+![](../figures/vector-add-white.png){width="500", align=middle}
 <figcaption></figcaption>
 </figure>
 

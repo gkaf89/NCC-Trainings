@@ -7,7 +7,7 @@ CUDA API will manage the data transfer between CPU and GPU. In this example, we 
 
 
 <figure markdown>
-![](../figures/unified-memory.svg)
+![](../figures/unified-memory-white.png)
 <figcaption></figcaption>
 </figure>
 
