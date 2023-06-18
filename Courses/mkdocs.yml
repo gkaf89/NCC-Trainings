@@ -97,7 +97,8 @@ theme:
 
   features:
     - navigation.instant
-
+    - navigation.footer
+    
   icon:
     admonition:
       note: octicons/tag-16
