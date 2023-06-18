@@ -11,11 +11,11 @@
 
 Courses are primarily designed for just one day.
 It is mainly considered an effective way of learning rather than focusing on more than one training day.
-Courses are mainly focused on parallel programming on CPUs and GPUs and acceleration of your scientific software on supercomputers. For example, OpenMP, MPI, OpenACC, CUDA, and OpenMP Offloading using programming languages such as C/C++ and FORTRAN. Plus, also we focus on Python, R, Matlab and Julia to parallelize your application. Regarding the software acceleration, GROMACS, CFD and FEM software, material science and bioinformatic, etc., will be offered. 
+Courses are mainly focused on parallel programming on CPUs and GPUs and acceleration of your scientific software on supercomputers. For example, OpenMP, MPI, OpenACC, CUDA, and OpenMP Offloading using programming languages such as C/C++ and FORTRAN. Plus, also we focus on Python, R, Matlab and Julia to parallelize your application. Regarding the software acceleration, GROMACS, CFD and FEM software, material science and bioinformatics, etc., will be offered. 
 
  - The one-day training consists of three stages:
      - preparation (pre-preparation to follow up on the lecture and practicals)
-     - lecture (introduction and focusing on the course topic)
+     - lecture (introduction and focus on the course topic)
      - practicals (hands-on session)
      
 ##<u>Bootcamps:</u>
