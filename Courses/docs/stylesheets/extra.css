@@ -15,6 +15,14 @@ table {
     max-width: 1600px;
 }
 
+.md-typeset__table {
+   min-width: 100%;
+}
+
+.md-typeset table:not([class]) {
+    display: table;
+}
+
 .md-typeset table:not([class]) {
 	 background-color: var(--md-default-bg-color);
          border: 0.05rem solid var(--md-default-bg-color);
