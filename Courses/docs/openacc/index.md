@@ -12,7 +12,7 @@ Participants will learn theories first and implement the OpenACC programming mod
  - Understanding the GPU architecture (and also the difference between GPU and CPU)
     - Streaming architecture 
     - Threads blocks 
-- Implement OpenACC programming model  
+- Implement the OpenACC programming model  
     - Compute constructs  
     - Loop constructs 
     - Data clauses

@@ -54,16 +54,18 @@
   ```
   $ salloc -A p200117 --res intro_openmp --partition=cpu --qos default -N 1 -t 01:00:00
   ```
-- ??? "check if your reservation is allocated"
-      ```
-      [u100490@login03 ~]$ salloc -A p200117 --res intro_openmp --partition=cpu --qos default -N 1 -t 01:00:00
-      salloc: Pending job allocation 296848
-      salloc: job 296848 queued and waiting for resources
-      salloc: job 296848 has been allocated resources
-      salloc: Granted job allocation 296848
-      salloc: Waiting for resource configuration
-      salloc: Nodes mel2131 are ready for job
-      ```
+  
+    ??? "check if your reservation is allocated"
+        ```
+        [u100490@login03 ~]$ salloc -A p200117 --res intro_openmp --partition=cpu --qos default -N 1 -t 01:00:00
+        salloc: Pending job allocation 296848
+        salloc: job 296848 queued and waiting for resources
+        salloc: job 296848 has been allocated resources
+        salloc: Granted job allocation 296848
+        salloc: Waiting for resource configuration
+        salloc: Nodes mel2131 are ready for job
+        ```
+        
  - 7.2 You can also check if you got the interactive node for your computations, for example, here with the user `u100490`:
  ```
  [u100490@mel2131 ~]$ squeue -u u100490
@@ -85,24 +87,24 @@ source.sh  Test.cc  Test.f90
  $ source module.sh
  ```
 
-- ??? "check if the module is loaded properly"
-      ```
-      [u100490@mel2131 ~]$ module list
+    ??? "check if the module is loaded properly"
+        ```
+        [u100490@mel2131 ~]$ module list
  
-      currently Loaded Modules:
-      1) env/release/2022.1                (S)  19) libpciaccess/0.16-GCCcore-11.3.0    37) jbigkit/2.1-GCCcore-11.3.0        55) VTune/2022.3.0                          73) NSS/3.79-GCCcore-11.3.0
-      2) lxp-tools/myquota/0.3.1           (S)  20) X11/20220504-GCCcore-11.3.0         38) gzip/1.12-GCCcore-11.3.0          56) numactl/2.0.14-GCCcore-11.3.0           74) snappy/1.1.9-GCCcore-11.3.0
-      3) GCCcore/11.3.0                         21) Arm-Forge/22.0.4-GCC-11.3.0         39) lz4/1.9.3-GCCcore-11.3.0          57) hwloc/2.7.1-GCCcore-11.3.0              75) JasPer/2.0.33-GCCcore-11.3.0
-      4) zlib/1.2.12-GCCcore-11.3.0             22) libglvnd/1.4.0-GCCcore-11.3.0       40) zstd/1.5.2-GCCcore-11.3.0         58) OpenSSL/1.1                             76) nodejs/16.15.1-GCCcore-11.3.0
-      5) binutils/2.38-GCCcore-11.3.0           23) AMD-uProf/3.6.449                   41) libdeflate/1.10-GCCcore-11.3.0    59) libevent/2.1.12-GCCcore-11.3.0          77) Qt5/5.15.5-GCCcore-11.3.0
-      6) ncurses/6.3-GCCcore-11.3.0             24) Advisor/2022.1.0                    42) LibTIFF/4.3.0-GCCcore-11.3.0      60) UCX/1.13.1-GCCcore-11.3.0               78) CubeGUI/4.7-GCCcore-11.3.0
-      Where:
-          S:  Module is Sticky, requires --force to unload or purge
-      ```
+        currently Loaded Modules:
+        1) env/release/2022.1                (S)  19) libpciaccess/0.16-GCCcore-11.3.0    37) jbigkit/2.1-GCCcore-11.3.0        55) VTune/2022.3.0                          73) NSS/3.79-GCCcore-11.3.0
+        2) lxp-tools/myquota/0.3.1           (S)  20) X11/20220504-GCCcore-11.3.0         38) gzip/1.12-GCCcore-11.3.0          56) numactl/2.0.14-GCCcore-11.3.0           74) snappy/1.1.9-GCCcore-11.3.0
+        3) GCCcore/11.3.0                         21) Arm-Forge/22.0.4-GCC-11.3.0         39) lz4/1.9.3-GCCcore-11.3.0          57) hwloc/2.7.1-GCCcore-11.3.0              75) JasPer/2.0.33-GCCcore-11.3.0
+        4) zlib/1.2.12-GCCcore-11.3.0             22) libglvnd/1.4.0-GCCcore-11.3.0       40) zstd/1.5.2-GCCcore-11.3.0         58) OpenSSL/1.1                             76) nodejs/16.15.1-GCCcore-11.3.0
+        5) binutils/2.38-GCCcore-11.3.0           23) AMD-uProf/3.6.449                   41) libdeflate/1.10-GCCcore-11.3.0    59) libevent/2.1.12-GCCcore-11.3.0          77) Qt5/5.15.5-GCCcore-11.3.0
+        6) ncurses/6.3-GCCcore-11.3.0             24) Advisor/2022.1.0                    42) LibTIFF/4.3.0-GCCcore-11.3.0      60) UCX/1.13.1-GCCcore-11.3.0               78) CubeGUI/4.7-GCCcore-11.3.0
+        Where:
+            S:  Module is Sticky, requires --force to unload or purge
+        ```
 
 
 #### 10. Please compile and test your OpenMP application 
- - For example, Dry-run-test
+ - 10.1 For example, Dry-run-test
  ```
  // compilation (C/C++)
  $ g++ Test.cc -fopenmp
@@ -121,20 +123,21 @@ source.sh  Test.cc  Test.f90
  ```
 
 #### 11. Similarly for the hands-on session, we need to do the node reservation:
+ - 11.1 For example, reservation
   ```
   $ salloc -A p200117 --res intro_openmp --partition=cpu --qos default -N 1 -t 02:30:00
   ```
   
-- ??? "check if your reservation is allocated"
-      ```
-      [u100490@login03 ~]$ salloc -A p200117 --res intro_openmp --partition=cpu --qos default -N 1 -t 02:30:00
-      salloc: Pending job allocation 296848
-      salloc: job 296848 queued and waiting for resources
-      salloc: job 296848 has been allocated resources
-      salloc: Granted job allocation 296848
-      salloc: Waiting for resource configuration
-      salloc: Nodes mel2131 are ready for job
-      ```
+    ??? "check if your reservation is allocated"
+        ```
+        [u100490@login03 ~]$ salloc -A p200117 --res intro_openmp --partition=cpu --qos default -N 1 -t 02:30:00
+        salloc: Pending job allocation 296848
+        salloc: job 296848 queued and waiting for resources
+        salloc: job 296848 has been allocated resources
+        salloc: Granted job allocation 296848
+        salloc: Waiting for resource configuration
+        salloc: Nodes mel2131 are ready for job
+        ```
 
 #### 12. We will continue with our Hands on exercise
  - 12.1 For example, `Hello World` example, we do the following steps:

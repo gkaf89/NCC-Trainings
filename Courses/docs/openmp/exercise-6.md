@@ -4,7 +4,7 @@
 </figure>
 
 
-In this exercise, we will try to add the simd classes to our existing problems, for example, vector addition. 
+In this exercise, we will try to add the `simd` classes to our existing problems, for example, vector addition. 
 
 
 ??? example "Examples and Question: SIMD - Vector Addition"

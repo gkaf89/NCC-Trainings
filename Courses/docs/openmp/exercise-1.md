@@ -208,13 +208,13 @@ Although creating a parallel region would allow us to do the parallel computatio
 
 #### <u>Environment Routines (important)</u>
 
- - Define number of threads to be used within the parallel region
+ - Define the number of threads to be used within the parallel region
  
         (C/C++): void omp_set_num_threads(int num_threads);
         (FORTRAN): subroutine omp_set_num_threads(num_threads) 
         integer num_threads
 
- - To get number of threads in the current parallel region
+ - To get the number of threads in the current parallel region
 
         (C/C++): int omp_get_num_threads(void);
         (FORTRAN): integer function omp_get_num_threads()
@@ -229,7 +229,7 @@ Although creating a parallel region would allow us to do the parallel computatio
         (c/c+): int omp_get_thread_num(void);
         (FORTRAN): integer function omp_get_thread_num()
 
- - To know number processors available to the device
+ - To know the number processors available to the device
  
         (c/c++): int omp_get_num_procs(void);
         (FROTRAN): integer function omp_get_num_procs()

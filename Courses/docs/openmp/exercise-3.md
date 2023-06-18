@@ -49,7 +49,7 @@ Therefore, it is easy to parallelise.
 Now we will look into the how to parallelise the `for - C/C++` or `do - FORTRAN` loops.
 For this, we just need to add below syntax (OpenMP directives).
 
-| Functionality | Syntax in C/C++ | Syntax in FORTRAN|
+|__Functionality__ | __Syntax in C/C++__ | __Syntax in FORTRAN__|
 |-----------| -----------|-----------------|
 | Distribute iterations over the threads | #pragma omp for | !$omp do         |
 

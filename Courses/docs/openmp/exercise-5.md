@@ -6,7 +6,7 @@ Most of the time, we end up having more than one loop, a nested loop, where two 
 </figure>
 
 ####<u>[Collapse](https://www.openmp.org/spec-html/5.2/openmpsu30.html)</u>
-The collapse clause can be used for the nested loop; an entire part of the iteration will be divided by an available number of threads. If the outer loop is equal to the available threads, then the outer loop will be divided number of threads. The figure below shows an example of not using a `collapse` clause. Therefore, only the outer loop is parallelised; each outer loop index will have N number of inner loop iterations. 
+The collapse clause can be used for the nested loop; an entire part of the iteration will be divided by an available number of threads. If the outer loop is equal to the available threads, then the outer loop will be divided number of threads. The figure below shows an example of not using the `collapse` clause. Therefore, only the outer loop is parallelised; each outer loop index will have N number of inner loop iterations. 
 
 <figure markdown>
 ![](../figures/collapse-white.png){align=center width=500}
@@ -151,7 +151,7 @@ This is not what we want. Instead, with the available threads, we would like to 
         Outer loop id            5 Inner loop id            2 Thread id          21
         ```
     - Can you add here any of the scheduling clauses, for example, static, dynamic, etc?
-    - Is it really necessary to them when you use `collapse`, or is it dependent on other factors, such as the nature of the	computation and available threads?
+    - Is it really necessary to them when you use the `collapse`, or is it dependent on other factors, such as the nature of the	computation and available threads?
     
 ####<u>[Reduction](https://www.openmp.org/spec-html/5.0/openmpsu107.html)</u>
 
@@ -260,7 +260,7 @@ The reduction clauses are data-sharing attribute clauses that can be used to per
 ####<u>Matrix Multiplication</u>
 
 
-In this example, we consider a square matrix; `M=N` is equal for both `A` and `B` matrices. Even though we deal here with a 2D matrix, we create a 1D array to represent a 2D matrix. In this example,  we must use `collapse` clause since matrix multiplication deals with 3 loops. The first 2 outer loops will take rows of the `A` matrix and columns of the `B` matrix. Therefore, these two loops can be easily parallelised. But then we need to sum the value of the those two outer loops value finally; this is where we should use the `reduction` clause. 
+In this example, we consider a square matrix; `M=N` is equal for both `A` and `B` matrices. Even though we deal here with a 2D matrix, we create a 1D array to represent a 2D matrix. In this example,  we must use `collapse` clause since matrix multiplication deals with 3 loops. The first 2 outer loops will take rows of the `A` matrix and columns of the `B` matrix. Therefore, these two loops can be easily parallelised. But then we need to sum the value of those two outer loops value finally; this is where we should use the `reduction` clause. 
 
 
 ??? "matrix multiplication function call"

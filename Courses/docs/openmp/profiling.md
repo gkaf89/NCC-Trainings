@@ -130,8 +130,8 @@ For example, memory access and memory leaks can be found.
 
 ##### Intel Advisor
 
-Intel Advisor: set of collection tools for the metrics and traces that can be used for further
-tunning in the code. `survey`: analyse and explore an idea about where to add efficient vectorisation.
+Intel Advisor: a set of collection tools for the metrics and traces that can be used for further
+tuning in the code. `survey`: analyse and explore an idea about where to add efficient vectorisation.
 
 
 ??? Info "Example: Intel Advisor"
@@ -169,7 +169,7 @@ tunning in the code. `survey`: analyse and explore an idea about where to add ef
 ##### Intel VTune
 
  - Identifying the time consuming part in the code.
- - And also the identify the cache misses and latency.
+ - And also identify the cache misses and latency.
 
 
 ??? Info "Example: Intel VTune"

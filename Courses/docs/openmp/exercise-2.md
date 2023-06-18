@@ -1,13 +1,11 @@
 #### <u>Shared variable</u>
 
  - All the threads have access to the shared variable.
- - By default in the parallel region, all the variables are
- considered as a shared variable expect the loop iteration
- counter variables.
-
+ - By default, in the parallel region, all the variables are considered shared variables except the loop iteration counter variables.
+ 
 !!! Note
 
-	Shared variables should be handled carefully; otherwise it causes race conditions in the program.
+	Shared variables should be handled carefully; otherwise, it causes race conditions in the program.
 
 <figure markdown>
 ![](../figures/shared-white.png){align=center width=500}
