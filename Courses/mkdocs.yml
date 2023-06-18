@@ -175,7 +175,7 @@ markdown_extensions:
 
 plugins:
   - search:
-      prebuild_index: false
+#      prebuild_index: false
   - minify:
       minify_html: true
   - glightbox
