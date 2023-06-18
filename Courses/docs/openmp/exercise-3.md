@@ -111,7 +111,7 @@ In total, `5` threads will do just `2` iterations in parallel for `10` elements.
         !$omp end parallel
         ```  
 
-Form understating loop parallelisation, we will continue with vector operations in parallel, that is, adding two vectors.
+From understating loop parallelisation, we will continue with vector operations in parallel, that is, adding two vectors.
 It is very simple, and we just need to add the `#pragma omp parallel for` for C/C++, `!$omp parallel do` for FORTRAN.
 Could you try this by yourself? The serial code, templates and compilation command have been provided as follows.
 
