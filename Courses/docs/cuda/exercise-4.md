@@ -19,7 +19,7 @@ Shared memory from the GPUs, which has a good bandwidth within the GPUs compared
 
 
  - This is very similar to the previous example; however, we just need to allocate the small block matrix into shared memory.
- The below example shows the blocking size for a and b matrix respectively for gobal A and B matrix. 
+ The below example shows the blocking size for `a` and `b` matrices respectively for global `A` and `B` matrices. 
 ```
   // Shared memory allocation for the block matrix  
   __shared__ int a_block[BLOCK_SIZE][BLOCK_SIZE];

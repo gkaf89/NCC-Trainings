@@ -1,8 +1,7 @@
 ### Time measurement
 
 In CUDA, the execution time can be measured by using the cuda events.
-CUDA API events shall be created using `cudaEvent_t`, for example, `cudaEvent_t start, stop;`.
-And thereafter, it can be initiated by `cudaEventCreate(&start)` for start and similarly for stop,
+CUDA API events shall be created using `cudaEvent_t`, for example, `cudaEvent_t start, stop;`. Moreover, it can be initiated by `cudaEventCreate(&start)` for a start and similarly for stop,
 it can be created as `cudaEventCreate(&stop)`. 
 
 ??? "CUDA API"
@@ -60,7 +59,7 @@ This will help the programmer optimise the code performance on the given archite
 For this, Nvidia offers three kinds of profiling options, they are:
 
 - [Nsight Compute](https://docs.nvidia.com/nsight-compute/index.html):
-CUDA application interactive [kernel profiler](https://docs.nvidia.com/nsight-compute/ProfilingGuide/index.html): This will give traces and events of the kernel calls; this further provides both [visual profile-GUI](https://docs.nvidia.com/nsight-compute/NsightCompute/index.html) and [Command Line Interface (CLI)](https://docs.nvidia.com/nsight-compute/NsightComputeCli/index.html) profiling options. **`ncu -o profile Application.exe`** command will create an output file **`profile.ncu-rep`** which can be opened using **`ncu-ui`**. 
+CUDA application interactive [kernel profiler](https://docs.nvidia.com/nsight-compute/ProfilingGuide/index.html): This will give traces and events of the kernel calls; this further provides both [visual profile-GUI](https://docs.nvidia.com/nsight-compute/NsightCompute/index.html) and [Command Line Interface (CLI)](https://docs.nvidia.com/nsight-compute/NsightComputeCli/index.html) profiling options. **`ncu -o profile Application.exe`** command will create an output file **`profile.ncu-rep`**, which can be opened using **`ncu-ui`**. 
 
     ??? example
         ```

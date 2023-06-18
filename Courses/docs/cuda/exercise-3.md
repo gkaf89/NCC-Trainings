@@ -1,4 +1,4 @@
-We will now look into the basic matrix multiplication.
+We will now look into basic matrix multiplication.
 In this example, we will perform the matrix multiplication. Matrix multiplication involves a nested loop. Again, most of the time, we might end up doing computation with a nested loop. Therefore, studying this example would be good practice for solving the nested loop in the future. 
 
 <figure markdown>
@@ -6,7 +6,7 @@ In this example, we will perform the matrix multiplication. Matrix multiplicatio
 <figcaption>b</figcaption>
 </figure>
 
- - Allocating the CPU memory for A, B, and C matrix.
+ - Allocating the CPU memory for A, B, and C matrices.
    Here we notice that the matrix is stored in a
    1D array because we want to consider the same function concept for CPU and GPU.
 ```c
