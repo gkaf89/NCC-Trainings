@@ -180,7 +180,16 @@ plugins:
   - minify:
       minify_html: true
   - glightbox
-
+  - git-revision-date-localized:
+      type: datetime
+      custom_format: "%d. %B %Y"
+      timezone: Europe/Amsterdam
+      locale: en
+      fallback_to_build_date: false
+      enable_creation_date: true
+      enabled: true
+      strict: true
+      
 
 # Extra stylesheets (incl. Twitter Bootstrap)
 extra_css:
