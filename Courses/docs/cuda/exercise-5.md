@@ -362,6 +362,6 @@ CUDA API will manage the data transfer between CPU and GPU. In this example, we 
 ??? Question "Questions"
 
     - Here in this example, we have used **`cudaDeviceSynchronize()`**; can you remove **`cudaDeviceSynchronize()`**
-      and still get a correct solution? if not, why (think)?
+      and still get a correct solution? If not, why (think)?
     - Please try with different thread blocks and array sizes. 
 

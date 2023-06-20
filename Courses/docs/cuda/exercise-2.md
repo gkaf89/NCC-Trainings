@@ -508,10 +508,7 @@ free(out);
 
 ??? Question "Questions"
 
-    - What happens if you remove the **`__syncthreads();`** from the **`__global__ void vector_add(float *a, float *b, 
-       float *out, int n)`** function.
-    - Can you remove the if condition **`if(i < n)`** from the **`__global__ void vector_add(float *a, float *b,
-       float *out, int n)`** function. If so how can you do that?
-    - Here we do not use the **`cudaDeviceSynchronize()`** in the main application, can you figure out why we
-        do not need to use it. 
-    - Can you create a different kinds of threads block for larger number of array?
+    - What happens if you remove the __syncthreads(); from the __global__ void vector_add(float *a, float *b, float *out, int n) function.
+    - Can you remove the if condition if(i < n) from the __global__ void vector_add(float *a, float *b, float *out, int n) function? If so, how can you do that?
+    - Here we do not use the cudaDeviceSynchronize() in the main application. Can you figure out why we do not need to use it?
+    - Can you create a different thread block for a larger number of arrays?

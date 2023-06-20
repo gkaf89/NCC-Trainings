@@ -509,7 +509,7 @@ free(c);
 
     - Right now, we are using the 1D array to represent the matrix. However, you can also do it with the 2D matrix.
     Can you try with 2D array matrix multiplication with 2D thread block?
-    - Can you get the correct soltion if you remove the **`if ((row < width) && (col < width))`**
+    - Can you get the correct solution if you remove the **`if ((row < width) && (col < width))`**
     condition from the **`__global__ void matrix_mul(float* d_a, float* d_b, float* d_c, int width)`** function?
     - Please try with different thread blocks and different matrix sizes.
     ```
