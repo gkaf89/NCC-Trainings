@@ -203,7 +203,7 @@ extra:
 
   analytics:
     provider: google
-    property: G-YR6MCK5PME
+    property: G-Q3V4FYR53V
     feedback:
       title: Was this page helpful?
       ratings:
