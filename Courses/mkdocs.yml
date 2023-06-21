@@ -217,7 +217,7 @@ extra:
           data: 0
           note: >- 
             Thanks for your feedback! Help us improve this page by
-            using our <a href="https://ncclux.github.io/NCC-Trainings/" target="_blank" rel="noopener">feedback form</a>.
+            using our <a href="https://github.com/NCCLUX/NCC-Trainings/issues/new?title=[Feedback]+{title}+-+{url}" target="_blank" rel="noopener">feedback form</a>.
 
 
 copyright: Copyright &copy; 2023 <a href="https://ezhilmathik.github.io/personal-site/">Ezhilmathi Krishnasamy</a> and <a href="https://supercomputing.lu/">SuperComputing Luxembourg</a>
