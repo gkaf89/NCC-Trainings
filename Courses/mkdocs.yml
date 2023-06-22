@@ -4,7 +4,7 @@ nav:
     - Courses:
       - CUDA:
         - Introduction: 'cuda/index.md'
-        - Preparation: 'cuda/preparation.md'
+        - paration: 'cuda/preparation.md'
         - Hands-On:
           - Hello World: 'cuda/exercise-1.md'
           - Vector Addition: 'cuda/exercise-2.md'
@@ -75,11 +75,11 @@ theme:
     #- primary: black
   language: en
   palette:
-    primary: blue
-    accent:  light blue
+      primary: blue
+      accent:  light blue
+
 
   palette: 
-
     # Palette toggle for light mode
     - scheme: default
       toggle:
@@ -111,6 +111,10 @@ theme:
       bug: octicons/bug-16
       example: octicons/beaker-16
       quote: octicons/quote-16
+    repo: fontawesome/brands/git-alt
+    edit: material/pencil
+    view: material/eye
+
 
 
 # Extensions
@@ -201,6 +205,10 @@ extra:
     - icon: fontawesome/brands/linkedin
       link: https://www.linkedin.com/company/eurocc-luxembourg/
 
+  version:
+    provider: mike
+    default: stable
+    
   analytics:
     provider: google
     property: G-Q3V4FYR53V
@@ -221,3 +229,9 @@ extra:
 
 
 copyright: Copyright &copy; 2023 <a href="https://ezhilmathik.github.io/personal-site/">Ezhilmathi Krishnasamy</a> and <a href="https://supercomputing.lu/">SuperComputing Luxembourg</a>
+
+
+
+repo_name: NCCLUX/NCC-Trainings
+repo_url: https://github.com/NCCLUX/NCC-Trainings.git
+edit_uri: -/edit/master/NCC-Trainings/
