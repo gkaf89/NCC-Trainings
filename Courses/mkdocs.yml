@@ -4,7 +4,7 @@ nav:
     - Courses:
       - CUDA:
         - Introduction: 'cuda/index.md'
-        - paration: 'cuda/preparation.md'
+        - Preparation: 'cuda/preparation.md'
         - Hands-On:
           - Hello World: 'cuda/exercise-1.md'
           - Vector Addition: 'cuda/exercise-2.md'
