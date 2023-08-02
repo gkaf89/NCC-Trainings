@@ -2,35 +2,43 @@ site_name: SuperComputing Luxembourg - National Competence Center
 nav:
     - Trainings organization: 'index.md'
     - Courses:
-      - CUDA:
-        - Introduction: 'cuda/index.md'
-        - Preparation: 'cuda/preparation.md'
-        - Hands-On:
-          - Hello World: 'cuda/exercise-1.md'
-          - Vector Addition: 'cuda/exercise-2.md'
-          - Matrix Multiplication: 'cuda/exercise-3.md'
-          - Shared Memory: 'cuda/exercise-4.md'
-          - Unified Memory: 'cuda/exercise-5.md'
-          - Profiling and Performance: 'cuda/profiling.md'
-      - OpenMP:
-        - Introduction: 'openmp/index.md'
-        - Preparation: 'openmp/preparation.md'
-        - Hands-On:
-          - Parallel Region: 'openmp/exercise-1.md'
-          - Data Sharing Attribute: 'openmp/exercise-2.md'
-          - Work Sharing Constructs(loop): 'openmp/exercise-3.md'
-          - Work Sharing Constructs(loop-scheduling): 'openmp/exercise-4.md'
-          - Worksharing Constructs(others): 'openmp/exercise-5.md'
-          - SIMD and Others: 'openmp/exercise-6.md'
-          - Profiling and Performance: 'openmp/profiling.md'
-      - OpenACC:
-        - Introduction: 'openacc/index.md'
+      - Parallel Programming:
+        - CUDA:
+          - Introduction: 'cuda/index.md'
+          - Preparation: 'cuda/preparation.md'
+          - Hands-On:
+            - Hello World: 'cuda/exercise-1.md'
+            - Vector Addition: 'cuda/exercise-2.md'
+            - Matrix Multiplication: 'cuda/exercise-3.md'
+            - Shared Memory: 'cuda/exercise-4.md'
+            - Unified Memory: 'cuda/exercise-5.md'
+            - Profiling and Performance: 'cuda/profiling.md'
+        - OpenMP:
+          - Introduction: 'openmp/index.md'
+          - Preparation: 'openmp/preparation.md'
+          - Hands-On:
+            - Parallel Region: 'openmp/exercise-1.md'
+            - Data Sharing Attribute: 'openmp/exercise-2.md'
+            - Work Sharing Constructs(loop): 'openmp/exercise-3.md'
+            - Work Sharing Constructs(loop-scheduling): 'openmp/exercise-4.md'
+            - Worksharing Constructs(others): 'openmp/exercise-5.md'
+            - SIMD and Others: 'openmp/exercise-6.md'
+            - Profiling and Performance: 'openmp/profiling.md'
+        - OpenACC:
+          - Introduction: 'openacc/index.md'
+      - AI with HPC:
+        - Accelerated AI:
+          - Introduction: 'openacc/index.md'
+      - Computational Chemistry:
+        - Quantum Espresso:
+          - Introduction: 'openacc/index.md'
+
     - Bootcamp:
-      - AI:
-        - Introduction: 'Bootcamps/ai/introduction.md'
+        - AI:
+          - Introduction: 'Bootcamps/ai/introduction.md'
     - Hackathons:
-      - HPDA:
-        - Introduction: 'Hackathons/hpda/introduction.md'
+        - HPDA:
+          - Introduction: 'Hackathons/hpda/introduction.md'
 
 markdown_extensions:
   - attr_list
