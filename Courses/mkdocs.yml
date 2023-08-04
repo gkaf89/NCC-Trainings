@@ -27,7 +27,7 @@ nav:
         - OpenACC:
           - Introduction: 'openacc/index.md'
       - AI with HPC:
-        - Accelerated AI:
+        - Distributed Deep Learning:
           - Introduction: 'openacc/index.md'
       - Computational Chemistry:
         - Quantum Espresso:
