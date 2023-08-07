@@ -32,13 +32,15 @@ nav:
       - Computational Chemistry:
         - Quantum Espresso:
           - Introduction: 'openacc/index.md'
-
     - Bootcamp:
         - AI:
           - Introduction: 'Bootcamps/ai/introduction.md'
     - Hackathons:
         - HPDA:
           - Introduction: 'Hackathons/hpda/introduction.md'
+    - Instructions for Educators:
+        - Introduction: 'education/introduction.md'
+        - Requirements: 'education/requirements.md'
 
 markdown_extensions:
   - attr_list
