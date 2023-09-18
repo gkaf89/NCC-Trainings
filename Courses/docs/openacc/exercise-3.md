@@ -3,7 +3,7 @@
 The collapse clause can be used for the nested loop; an entire part of the iteration will be divided by an available number of threads. If the outer loop is equal to the available threads, then the outer loop will be divided number of threads. The figure below shows an example of not using the `collapse` clause. Therefore, only the outer loop is parallelised; each outer loop index will have N number of inner loop iterations. 
 
 <figure markdown>
-![](../figures/collapse-white.png){align=center width=500}
+![](../figures/parallel-loop-acc.png){align=center width=500}
 <figcaption></figcaption>
 </figure>
 
@@ -12,7 +12,7 @@ Moreover, most of the time, we would have more threads in a given GPU, in our ca
 Therefore, when adding the `collapse` clause, we notice that the available threads execute every single iteration, as seen in the figure below.
 
 <figure markdown>
-![](../figures/collapse-2-white.png){align=center width=500}
+![](../figures/parallel-acc-collapse.png){align=center width=500}
 <figcaption></figcaption>
 </figure>
 

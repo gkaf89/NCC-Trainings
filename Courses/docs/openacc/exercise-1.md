@@ -25,6 +25,11 @@ At the same time, in order to enable OpenACC constructs, clauses, and environmen
         use openacc
         ```
 
+<figure markdown>
+![](../figures/acc-parallel.png){align=center width=500}
+</figure>
+
+
 To create a parallel region in OpenACC, we use the following compute constructs:
 
 !!! Info "Parallel Constructs"
@@ -220,6 +225,9 @@ To start with a simple example, we will begin with printing **`Hello World from 
 Moreover, just adding  **`#pragma acc parallel`** or  **`#pragma acc kernels`** would not parallelize your computation, instead will make sure that the computation will be executed on the device. 
 
     
+<figure markdown>
+![](../figures/acc-loop.png){align=center width=500}
+</figure>
     
     
 !!! Info "Loop Constructs"
