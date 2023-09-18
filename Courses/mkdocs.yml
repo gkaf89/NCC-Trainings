@@ -33,7 +33,7 @@ nav:
               - Compute Constructs and Paralleize Loops: 'openacc/exercise-1.md'
               - Data Locality: 'openacc/exercise-2.md'
               - Optimize Loops: 'openacc/exercise-3.md'
-              - Unified Memory: 'openacc/exercise-5.md'
+              - Unified Memory: 'openacc/exercise-4.md'
               - Profiling and Performance: 'openacc/profiling.md'
         - Other Accelerators:
             - Introduction: 'openacc/index.md' 
