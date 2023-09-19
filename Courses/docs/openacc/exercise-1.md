@@ -219,6 +219,8 @@ The following compilers would support the [OpenACC programming model](https://ww
         ```
 
 
+#### <u>Loop</u>
+
 Our second exercise is to work on how to parallelize the loop. 
 Most of the time, we would be doing the intense computation under the loop. In situations like that, it would be more efficient to parallelize the loops in the computation. 
 To start with a simple example, we will begin with printing **`Hello World from GPU`** multiple times in addition to our previous example. 

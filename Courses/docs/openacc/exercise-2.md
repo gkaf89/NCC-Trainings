@@ -1,3 +1,5 @@
+#### <u>Data Clauses</u>
+
 Vector addition is one of the basic linear algebra routines.
 It involves adding two vectors into one where each index of the corresponding vector should be added.
 This vector addition example covers two of the most important OpenACC constructs and clauses: compute constructs and data clauses. They are:
@@ -71,7 +73,7 @@ The following are the steps for learning vector addition example:
 <figcaption></figcaption>
 </figure>
 
- - Allocating the CPU memory for a, b, and out vector
+ - Allocating the CPU memory for `a`, `b`, and `c` vector
 ```c
 // Initialize the memory on the host
 float *restrict a, *restrict b, *restrict c;
@@ -83,7 +85,7 @@ c = (float*)malloc(sizeof(float) * N);
 ```
 
  - Now we need to fill the values for the
-    arrays a and b. 
+    arrays `a` and `b`. 
 ```c
 // Initialize host arrays
 for(int i = 0; i < N; i++)
@@ -399,9 +401,7 @@ free(c);
         ```
 
 
-??? Question "Questions"
+??? Question "Question"
 
-    - Do you notice any performance difference using `parallel` and `kernels` compute constructs
-    - Alternatively, you could also use  `num_gangs()`, `num_workers()` and `vector_length()` to manually set the number of grids, thread blocks and threads. 
-      And check if you could see any performance difference compared to the default thread used by a compiler. 
+    - Please try other data clauses for	other applications and get familiarised with them.
 

@@ -1,5 +1,4 @@
-
-####<u>[Collapse](https://www.openmp.org/spec-html/5.2/openmpsu30.html)</u>
+####<u>Collapse</u>
 The collapse clause can be used for the nested loop; an entire part of the iteration will be divided by an available number of threads. If the outer loop is equal to the available threads, then the outer loop will be divided number of threads. The figure below shows an example of not using the `collapse` clause. Therefore, only the outer loop is parallelised; each outer loop index will have N number of inner loop iterations. 
 
 <figure markdown>
@@ -436,18 +435,11 @@ free(c);
         ```
 
 ??? Question "Questions"
+    ```
+    - Try to compute different matrix sizes instead of square matrices.
+    ```
 
-    - Right now, we are using the 1D array to represent the matrix. However, you can also do it with the 2D matrix.
-    Can you try with 2D array matrix multiplication with 2D thread block?
-    - Can you get the correct solution if you remove the **`if ((row < width) && (col < width))`**
-    condition from the **`__global__ void matrix_mul(float* d_a, float* d_b, float* d_c, int width)`** function?
-    - Please try with different thread blocks and different matrix sizes.
-    ```
-    // Thread organization
-    int blockSize = 32;
-    dim3 dimBlock(blockSize,blockSize,1);
-    dim3 dimGrid(ceil(N/float(blockSize)),ceil(N/float(blockSize)),1);
-    ```
+####<u>Three levels of parallelism</u>
 
 By default, the compiler chooses the best combination of the thread blocks needed for the computation. However, sometimes, if needed as a programmer, you could also control the threads block in the program. OpenACC provides straightforward clauses that can control the threads and thread blocks in the application. 
 
@@ -455,3 +447,16 @@ By default, the compiler chooses the best combination of the thread blocks neede
 <figure markdown>
 ![](../figures/OpenACC-Gang-Workers-Vector.png){align=center width=500}
 </figure>
+
+
+|__OpenACC__|__CUDA__|__Parallelism__|
+|----------------------|-------------------|----|
+|num_gangs|Grid Block|coarse|
+|numn_workers|Warps|fine |
+|vector_length|Threads|SIMD or vector|
+
+
+??? Question "Questions"
+
+    - Change the values in `num_gangs()`, `num_workers()` and `vector_length()` and
+    check if you would see any performance difference compared to the default thread used by a compiler.
