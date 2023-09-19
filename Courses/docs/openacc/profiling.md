@@ -49,7 +49,7 @@ otherwise, you will not be able to see the GUI application. For example, on Melu
     ```c
     $ ssh -X meluxina
     
-    $ salloc -A p200117 --partition=gpu --qos test -N 1 -t 00:30:00 srun --forward-x --pty bash -l
+    $ salloc -A p200117 --res p200117-openacc-2 --partition=gpu --qos default -N 1 -t 00:30:00 srun --forward-x --pty bash -l
     ```
 
 We also need to add a few extra modules to open a GUI application. 
