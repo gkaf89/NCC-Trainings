@@ -43,9 +43,10 @@ nav:
       - Computational Chemistry:
         - Quantum Espresso:
           - Introduction: 'openacc/index.md'
-      - Numerical Libraries:
-        - Quantum Espresso:
-          - Introduction: 'openacc/index.md'
+      - Numerical Methods:
+        - Introduction: 'numerical-methods/index.md'
+        - Concepts: 'numerical-methods/index.md'
+        - Libraries: 'numerical-methods/index.md'
 
     - Bootcamp:
         - AI:
