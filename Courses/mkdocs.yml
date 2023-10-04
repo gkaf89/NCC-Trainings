@@ -3,7 +3,7 @@ nav:
     - Trainings organization: 'index.md'
     - Courses:
       - Parallel Programming:
-        - CPU: 
+        - CPU:
           - OpenMP:
             - Introduction: 'openmp/index.md'
             - Preparation: 'openmp/preparation.md'
@@ -15,7 +15,7 @@ nav:
               - Worksharing Constructs(others): 'openmp/exercise-5.md'
               - SIMD and Others: 'openmp/exercise-6.md'
               - Profiling and Performance: 'openmp/profiling.md'
-        - GPU: 
+        - GPU:
           - CUDA:
             - Introduction: 'cuda/index.md'
             - Preparation: 'cuda/preparation.md'
@@ -35,8 +35,10 @@ nav:
               - Optimize Loops: 'openacc/exercise-3.md'
               - Unified Memory: 'openacc/exercise-4.md'
               - Profiling and Performance: 'openacc/profiling.md'
-        - Other Accelerators:
-            - Introduction: 'openacc/index.md' 
+      - Julia:
+        - Introduction: 'julia/index.md'
+      - Other Accelerators:
+            - Introduction: 'openacc/index.md'
       - AI with HPC:
         - Distributed Deep Learning:
           - Introduction: 'openacc/index.md'
@@ -59,7 +61,7 @@ nav:
     - Calender:
         - Past Events: 'calender/past.md'
         - Future Events: 'calender/future.md'
-        
+
 markdown_extensions:
   - attr_list
   - md_in_html
@@ -75,12 +77,12 @@ markdown_extensions:
   - pymdownx.snippets
   - pymdownx.superfences
   - tables
-  
+
 extra_javascript:
    - javascripts/mathjax.js
    - https://polyfill.io/v3/polyfill.min.js?features=es6
    - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
-      
+
 theme:
   name: material
   logo: 'figures/Logo_SC_Luxembourg.png'
@@ -97,7 +99,7 @@ theme:
     - toc.follow
     - content.code.copy
     - content.code.select
-    - content.code.annotate 
+    - content.code.annotate
 
   #palette:
     #- primary: black
@@ -107,11 +109,11 @@ theme:
       accent:  light blue
 
 
-  palette: 
+  palette:
     # Palette toggle for light mode
     - scheme: default
       toggle:
-        icon: material/brightness-7 
+        icon: material/brightness-7
         name: Switch to dark mode
 
     # Palette toggle for dark mode
@@ -124,7 +126,7 @@ theme:
 #    - navigation.instant
     - navigation.tabs
     - navigation.footer
-    
+
   icon:
     admonition:
       note: octicons/tag-16
@@ -175,7 +177,7 @@ markdown_extensions:
   - pymdownx.tilde
   - pymdownx.snippets
   - pymdownx.tabbed:
-      alternate_style: true 
+      alternate_style: true
   # code blocks with syntax highlighting, graphs
   - pymdownx.superfences:
         custom_fences:
@@ -218,7 +220,7 @@ plugins:
       enable_creation_date: true
       enabled: true
       strict: true
-      
+
 
 # Extra stylesheets (incl. Twitter Bootstrap)
 extra_css:
@@ -236,7 +238,7 @@ extra:
   version:
     provider: mike
     default: stable
-    
+
   analytics:
     provider: google
     property: G-Q3V4FYR53V
@@ -251,7 +253,7 @@ extra:
         - icon: material/emoticon-sad-outline
           name: This page could be improved
           data: 0
-          note: >- 
+          note: >-
             Thanks for your feedback! Help us improve this page by
             using our <a href="https://github.com/NCCLUX/NCC-Trainings/issues/new?title=[Feedback]+{title}+-+{url}" target="_blank" rel="noopener">feedback form</a>.
 
