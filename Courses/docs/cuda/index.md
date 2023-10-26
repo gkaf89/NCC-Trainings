@@ -1,7 +1,7 @@
 # Introduction to GPU programming using CUDA
 
 <figure markdown>
-[![](../figures/Training_CUDA.png)](https://github.com/ezhilmathik/NCC-Luxembourg/blob/2ead3917771b8a066948103cc854683b28c87623/Courses/docs/cuda/Training-CUDA.pdf) 
+[![](../figures/Training_CUDA.png)](https://github.com/NCCLUX/NCC-Trainings/blob/f0648eb05fc1da22a6a2e4c7dea4f47dc4c7d825/Courses/docs/cuda/Training_CUDA_Formatted.pdf)
 <figcaption></figcaption>
 </figure>
 
