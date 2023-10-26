@@ -1,5 +1,10 @@
 # Introduction to OpenACC for Heterogeneous Computing 
 
+<figure markdown>
+[![](../figures/OpenACC-first-page.png)](https://github.com/NCCLUX/NCC-Trainings/blob/858cc4e52ace5843b39e7b0d607e1ae3aa7384db/Courses/docs/openacc/Training_OpenACC_Formatted.pdf)
+<figcaption></figcaption>
+</figure>
+
 Participants from this course will learn GPU programming using the OpenACC programming model,
 such as compute constructs, loop constructs and data clauses.
 Furthermore, understanding the GPU architecture and how parallel threads blocks are created and used to parallelise the computational task.
