@@ -23,12 +23,14 @@ GPU Compute Resource
 Participants attending the event will be given access to the MeluXina supercomputer during the hackathon. To learn more about MeluXina, please consult the Meluxina overview and the MeluXina – Getting Started Guide.
 Agenda
 
+## Materials and timeline
+
 This 2-day Bootcamp will be hosted online (CET time). All communication will be done through Zoom, Slack and email.
 
 Day 1 – Thursday, February 9th 2023: 01:30 PM – 05:00 PM
 
 <figure markdown>
-[![](../figures/AI-Day-1.png)](https://github.com/NCCLUX/NCC-Trainings/blob/eb4fd80c4e791b577ce14c592bf4ba635ce9d9c8/Courses/docs/openmp/Training_OpenMP_Formatted.pdf)
+[![](../../figures/AI-Day-1.png)](https://github.com/NCCLUX/NCC-Trainings/blob/273d67bdc0de2ed39e5b6c2fafa9f122b0a9617c/Courses/docs/Bootcamps/ai/AI-Day-1.pdf)
 <figcaption></figcaption>
 </figure>
 
@@ -40,7 +42,7 @@ Day 1 – Thursday, February 9th 2023: 01:30 PM – 05:00 PM
 Day 2 – Friday, February 10th  2023: 01:30 PM – 05:00 PM
 
 <figure markdown>
-[![](../figures/AI-Practical.png)](https://github.com/NCCLUX/NCC-Trainings/blob/eb4fd80c4e791b577ce14c592bf4ba635ce9d9c8/Courses/docs/openmp/Training_OpenMP_Formatted.pdf)
+[![](../../figures/AI-Practical.png)](https://github.com/NCCLUX/NCC-Trainings/blob/273d67bdc0de2ed39e5b6c2fafa9f122b0a9617c/Courses/docs/Bootcamps/ai/AI-Day-2.pdf)
 <figcaption></figcaption>
 </figure>
 
