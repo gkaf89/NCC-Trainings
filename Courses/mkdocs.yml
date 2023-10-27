@@ -52,6 +52,8 @@ nav:
     - Bootcamp:
         - AI:
           - Introduction: 'Bootcamps/ai/introduction.md'
+          - Preparation: 'Bootcamps/ai/preparation.md'
+          - Hands-on: 'Bootcamps/ai/handson.md'
     - Hackathons:
         - HPDA:
           - Introduction: 'Hackathons/hpda/introduction.md'
