@@ -1,8 +1,9 @@
 # Introduction to Numerical Methods with BLAS
 
-This course is a practical introduction to numerical methods.
-The fundamental concepts that govern the design and use of efficient libraries of numerical methods will be covered briefly.
-Then, and overview of well established libraries will be provided followed by a practical session.
+This course is a practical introduction to numerical methods. Basic mathematical operations from linear algebra used in many applications from machine learning to traditional engineering simulations. However, the traditional evaluation methods taught in linear algebra courses are not optimal for the current computer architectures. BLAS provides high performance implementations for a number of fundamental numerical algorithms such as vector-matrix and matrix-matrix multiplication.
+
+
+This course will cover the fundamental concepts that govern the design and use of efficient libraries for numerical methods in order to explain the design and use of the BLAS library. A number of BLAS library implementations will be presented, and performance analysis frameworks will also be discussed to allow users to select the optimal implementation for a particular target hardware and application. The participants will have the chance to use the BLAS library to solve numerical problems in a variety of target hardware.
 
 ## Numerical libraries
 
