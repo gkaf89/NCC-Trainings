@@ -1,7 +1,6 @@
 site_name: SuperComputing Luxembourg - National Competence Center
 nav:
     - Trainings organization: 'index.md'
-<<<<<<< HEAD:Courses/mkdocs.yml
     - Courses:
       - Parallel Programming:
         - CPU:
@@ -64,22 +63,7 @@ nav:
     - Calender:
         - Past Events: 'calender/past.md'
         - Future Events: 'calender/future.md'
-          
-=======
-    - MOOC-EUMaster4HPC:
-        - OpenMP:
-          - Introduction: 'MOOC/openacc-intro.md'
-        - MPI:
-          - Introduction: 'MOOC/openacc-intro.md'
-        - CUDA:
-          - Introduction: 'MOOC/openacc-intro.md'
-        - OpenACC:
-          - Introduction: 'MOOC/openacc-intro.md'
-        - OpenMP Offloading:
-          - Week 1: 
-            - Week 1: 'MOOC/OpenMP-Offloading/week1-day1.md'	  
-                   
->>>>>>> origin:mkdocs.yml
+                             
 markdown_extensions:
   - attr_list
   - md_in_html
