@@ -63,7 +63,7 @@ nav:
     - Calender:
         - Past Events: 'calender/past.md'
         - Future Events: 'calender/future.md'
-
+          
 markdown_extensions:
   - attr_list
   - md_in_html
