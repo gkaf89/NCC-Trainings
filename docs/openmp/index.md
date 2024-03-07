@@ -30,7 +30,7 @@ Participants from this course will learn Multicore (shared memory) CPU programmi
 ### Prerequisites 
 Priority will be given to users with good experience with C/C++ and/or FORTRAN. No prior parallel programming experience is needed.
 
-### GPU Compute Resource
+### CPU Compute Resource
 Participants attending the event will be given access to the [MeluXina supercomputer](https://luxprovide.lu/) during the session.
 To learn more about MeluXina, please consult the Meluxina overview and the [MeluXina – Getting Started Guide](https://docs.lxp.lu/).
 
