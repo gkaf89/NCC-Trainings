@@ -48,7 +48,11 @@ nav:
       - Numerical Libraries:
         - Quantum Espresso:
           - Introduction: 'openacc/index.md'
-
+      - Python:
+        - Introduction to Python:
+          - Introduction: 'python/index.md'
+      
+      
     - Bootcamp:
         - AI:
           - Introduction: 'Bootcamps/ai/introduction.md'
