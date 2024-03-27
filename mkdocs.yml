@@ -218,7 +218,7 @@ plugins:
 #      prebuild_index: false
   - minify:
       minify_html: true
-  - info
+#  - info
   - glightbox
   - git-revision-date-localized:
       type: datetime
