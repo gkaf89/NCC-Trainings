@@ -48,9 +48,8 @@ nav:
       - Numerical Libraries:
         - Quantum Espresso:
           - Introduction: 'openacc/index.md'
-      - Python:
-        - Introduction to Python:
-          - Introduction: 'python/index.md'
+      - Python in the HPC:
+        - Jupyter server and parallel libraries: 'python/index.md'
       
       
     - Bootcamp:

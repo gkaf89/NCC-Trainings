@@ -27,7 +27,7 @@ The workshop is designed for individuals who are interested in advancing their s
 ##  Requirements
 
 - Having an HPC account to access the cluster.
-- Basic knowledge on SLURM (beginners HPC school).
+- Basic knowledge on SLURM.
 - A basic understanding of Python programming.
 - Familiarity with Jupyter Notebook (installed and configured).
 - A basic understanding of Numpy and linear algebra.
