@@ -50,7 +50,9 @@ nav:
           - Introduction: 'openacc/index.md'
       - Python in the HPC:
         - Jupyter server and parallel libraries: 'python/index.md'
-      
+      - Environment management:
+        - Introduction to environment management with Conda: 'environment/conda.md'
+#        - Best practices in environmen management: 'environment/best-practises.md'
       
     - Bootcamp:
         - AI:
@@ -215,6 +217,7 @@ plugins:
 #      prebuild_index: false
   - minify:
       minify_html: true
+#  - info
   - glightbox
   - git-revision-date-localized:
       type: datetime
@@ -263,7 +266,7 @@ extra:
             using our <a href="https://github.com/NCCLUX/NCC-Trainings/issues/new?title=[Feedback]+{title}+-+{url}" target="_blank" rel="noopener">feedback form</a>.
 
 
-copyright: Copyright &copy; 2023 <a href="https://ezhilmathik.github.io/personal-site/">Ezhilmathi Krishnasamy</a> and <a href="https://supercomputing.lu/">SuperComputing Luxembourg</a>
+copyright: Copyright &copy; 2023 <a href="https://supercomputing.lu/">SuperComputing Luxembourg</a>
 
 
 
