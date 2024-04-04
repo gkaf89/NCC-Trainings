@@ -4,18 +4,7 @@ that can fit into the shared memory of the Nvidia GPU.
 Shared memory from the GPUs, which has a good bandwidth within the GPUs compared to access to the global memory.
 
 
-![](../figures/memory-white.png){width="450", align=left}
-![](../figures/memory-1.png){width="375", align=right}
-
-
-
-<br/><br/><br/>
-
-<br/><br/><br/>
-
-<br/><br/><br/>
-
-<br/><br/><br/>
+![](../figures/memory-2.png){align=middle}
 
 
  - This is very similar to the previous example; however, we just need to allocate the small block matrix into shared memory.
