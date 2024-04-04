@@ -18,21 +18,21 @@
 - 3.2 After that, go to the project directory.
   ```
   [u100490@login02 ~]$ cd /project/home/p200117
-  [u100490@login02 p200117]$ pwd
+  [u100490@login02p200301]$ pwd
   /project/home/p200117
   ```
   
 #### 4. And please create your own working folder under the project directory
 - 4.1 For example, here is the user with `u100490`:
   ```
-  [u100490@login02 p200117]$ mkdir $USER
+  [u100490@login02p200301]$ mkdir $USER
   ### or 
-  [u100490@login02 p200117]$ mkdir u100490  
+  [u100490@login02p200301]$ mkdir u100490  
   ```
 #### 5. Now it is time to move into your home directory
 - 5.1 For example, with user home directory `u100490` 
   ```
-  [u100490@login02 p200117]$cd u100490
+  [u100490@login02p200301]$cd u100490
   ```
 
 #### 6. Now it is time to copy the folder which has examples and source files to your home directory
@@ -44,21 +44,21 @@
   /project/home/p200117/u100490/CUDA
   [u100490@login03 CUDA]$ ls -lthr
   total 20K
-  -rw-r-----. 1 u100490 p200117   51 Mar 13 15:50 module.sh
-  drwxr-s---. 2 u100490 p200117 4.0K Mar 13 15:50 Vector-addition
-  drwxr-s---. 2 u100490 p200117 4.0K Mar 13 15:50 Unified-memory
+  -rw-r-----. 1 u100490p200301   51 Mar 13 15:50 module.sh
+  drwxr-s---. 2 u100490p200301 4.0K Mar 13 15:50 Vector-addition
+  drwxr-s---. 2 u100490p200301 4.0K Mar 13 15:50 Unified-memory
   ...
   ...
   ```
 #### 7. Until now you are in the login node, now its time to do the dry run test
 - 7.1 Reserve the interactive node for running/testing CUDA applications 
   ```
-  $ salloc -A p200117 --res training_part1 --partition=gpu --qos default -N 1 -t 01:00:00
+  $ salloc -A p200301 --res training_part1 --partition=gpu --qos default -N 1 -t 01:00:00
   ```
   
     ??? "check if your reservation is allocated"
         ```
-        [u100490@login03 ~]$ salloc -A p200117 --res training_part1 --partition=gpu --qos default -N 1 -t 01:00:00
+        [u100490@login03 ~]$ salloc -A p200301 --res training_part1 --partition=gpu --qos default -N 1 -t 01:00:00
         salloc: Pending job allocation 296848
         salloc: job 296848 queued and waiting for resources
         salloc: job 296848 has been allocated resources
@@ -71,7 +71,7 @@
  ```
  [u100490@mel2131 ~]$ squeue -u u100490
              JOBID PARTITION     NAME     USER    ACCOUNT    STATE       TIME   TIME_LIMIT  NODES NODELIST(REASON)
-            304381       gpu interact  u100490    p200117  RUNNING       0:37     01:00:00      1 mel2131
+            304381       gpu interact  u100490   p200301  RUNNING       0:37     01:00:00      1 mel2131
  ```
 
 #### 8. Now we need to check simple CUDA application, if that is going to work for you:
@@ -126,12 +126,12 @@ Hello-world.cu  module.sh
 #### 11. Similarly for the hands-on session, we need to do the node reservation:
  - 10.1 For example, reservation
  ```
- $ salloc -A p200117 --res training_part2 --partition=gpu --qos default -N 1 -t 02:30:00
+ $ salloc -A p200301 --res training_part2 --partition=gpu --qos default -N 1 -t 02:30:00
  ```
 
     ??? "check if your reservation is allocated"
         ```
-        [u100490@login03 ~]$ salloc -A p200117 --res training_part2 --partition=gpu --qos default -N 1 -t 02:30:00
+        [u100490@login03 ~]$ salloc -A p200301 --res training_part2 --partition=gpu --qos default -N 1 -t 02:30:00
         salloc: Pending job allocation 296848
         salloc: job 296848 queued and waiting for resources
         salloc: job 296848 has been allocated resources
