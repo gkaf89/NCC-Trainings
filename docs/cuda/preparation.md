@@ -18,21 +18,21 @@
 - 3.2 After that, go to the project directory.
   ```
   [u100490@login02 ~]$ cd /project/home/p200117
-  [u100490@login02p200301]$ pwd
+  [u100490@login02 p200301]$ pwd
   /project/home/p200117
   ```
   
 #### 4. And please create your own working folder under the project directory
 - 4.1 For example, here is the user with `u100490`:
   ```
-  [u100490@login02p200301]$ mkdir $USER
+  [u100490@login02 p200301]$ mkdir $USER
   ### or 
-  [u100490@login02p200301]$ mkdir u100490  
+  [u100490@login02 p200301]$ mkdir u100490  
   ```
 #### 5. Now it is time to move into your home directory
 - 5.1 For example, with user home directory `u100490` 
   ```
-  [u100490@login02p200301]$cd u100490
+  [u100490@login02 p200301]$cd u100490
   ```
 
 #### 6. Now it is time to copy the folder which has examples and source files to your home directory
@@ -44,9 +44,9 @@
   /project/home/p200117/u100490/CUDA
   [u100490@login03 CUDA]$ ls -lthr
   total 20K
-  -rw-r-----. 1 u100490p200301   51 Mar 13 15:50 module.sh
-  drwxr-s---. 2 u100490p200301 4.0K Mar 13 15:50 Vector-addition
-  drwxr-s---. 2 u100490p200301 4.0K Mar 13 15:50 Unified-memory
+  -rw-r-----. 1 u100490 p200301   51 Mar 13 15:50 module.sh
+  drwxr-s---. 2 u100490 p200301 4.0K Mar 13 15:50 Vector-addition
+  drwxr-s---. 2 u100490 p200301 4.0K Mar 13 15:50 Unified-memory
   ...
   ...
   ```
@@ -85,7 +85,8 @@ Hello-world.cu  module.sh
 #### 9. Finally, we need to load the compiler to test the GPU CUDA codes
  - 9.1 We need a Nvidia HPC SDK compiler for compiling and testing CUDA code
  ```
- $ module load OpenMPI/4.1.4-NVHPC-22.7-CUDA-11.7.0
+ $ module load OpenMPI/4.1.5-NVHPC-23.7-CUDA-11.7.0
+ $ export NVCC_APPEND_FLAGS='-allow-unsupported-compiler'
  ### or
  $ source module.sh
  ```
