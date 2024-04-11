@@ -300,7 +300,7 @@ There are three aspects of environment management that you should consider when 
 
 ### Storage limitations in HPC systems
 
-Regardless of installation method, _when you install software in user space you are using up your storage quota_. Conda environment managers download and store a sizable amount of data and a large number of files to provided packages to the various environments. Even though the package data are shared between the various environments, they still consume space in your or your project's account. There are [limits in the storage space and number of files](../../filesystems/quotas/#current-usage) that are available to projects and users in a cluster. Since Conda packages are self managed, _you need to clean unused data yourself_.
+Regardless of installation method, _when you install software in user space you are using up your storage quota_. Conda environment managers download and store a sizable amount of data and a large number of files to provided packages to the various environments. Even though the package data are shared between the various environments, they still consume space in your or your project's account. There are [limits in the storage space and number of files](https://hpc-docs.uni.lu/filesystems/quotas/#current-usage) that are available to projects and users in a cluster. Since Conda packages are self managed, _you need to clean unused data yourself_.
 
 ### Updating the package manager and the environment
 
