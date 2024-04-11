@@ -134,22 +134,40 @@ to ensure that it does not interfere with any other operations. In contrast to [
 
 Micromamba supports almost all the subcommands of Conda. For more details see the [official documentation](https://mamba.readthedocs.io/en/latest/user_guide/micromamba.html).
 
-??? example "Creating an environment for R"
-
-    Assume for instance that we want to install R. Create an environment call `R-project` and activate it:
-    ```bash
-    micromamba create --name R-project
-    micromamba activate R-project
-    ```
-    The basic functionality of the R software environment is contained in the `r-base` package. Calling
-    ```bash
-    micromamba install --channel conda-forge r-base
-    ```
-    or
-    ```bash
-    micromamba install conda-forge::r-base
-    ```
-    will install all the components required to run standalone R scripts. More involved scripts need functionality defined in various R packages. The R packages are prepended with a prefix 'r-' in the conda-forge channel. Thus, `plm` becomes `r-plm` and so on. After all the required packages have been installed, the environment is ready for use.
+??? example "Creating environments with Micromamba"
+    === "Environment for Python"
+        To install Python, create an environment named for instance `python-project` and activate it:
+        ```bash
+        micromamba create --name python-project
+        micromamba activate python-project
+        ```
+        The interpreter and basic modules for Python (e.g. `venv`) are included in the `python` package of the conda-forge channel. Installing `python` with the command
+        ```bash
+        micromamba install --channel conda-forge python
+        ```
+        or
+        ```bash
+        micromamba install conda-forge::python
+        ```
+        will install the Python interpreter (REPL)  and the components required to run simple Python scripts. More involved scripts may require functionality provided in various Python packages. Search Python packages in the conda-forge channel with the name with which they appear in [PyPI](https://pypi.org/). For instance the Conda package `numpy` provide the same functionality with the PyPI package `numpy`.
+           
+    === "Environment for R"
+        To install R, create an environment named for instance `R-project` and activate it:
+        ```bash
+        micromamba create --name R-project
+        micromamba activate R-project
+        ```
+        The basic functionality of the R software environment is contained in the `r-base` package of the conda-forge channel. Installing `r-base` with the command
+        ```bash
+        micromamba install --channel conda-forge r-base
+        ```
+        or
+        ```bash
+        micromamba install conda-forge::r-base
+        ```
+        will install the R interpreter and the components required to run simple standalone R scripts. More involved scripts may required functionality provided in various R packages. The R packages in the conda-forge channel are prepended with a prefix 'r-'. Thus, `plm` becomes `r-plm` and so on.
+    
+    Install any required package _while your environment is active_ with the `install` subcommand.
 
 ### Using environments in submission scripts
 
