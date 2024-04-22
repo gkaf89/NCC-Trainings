@@ -10,6 +10,11 @@ nav:
           - Introduction: 'openacc/index.md'
       - Julia:
         - Introduction: 'julia/index.md'
+      - Numerical Libraries:
+        - Quantum Espresso:
+          - Introduction: 'openacc/index.md'              
+      - Other Accelerators:
+            - Introduction: 'openacc/index.md'        
       - Parallel Programming:
         - CPU:
           - OpenMP:
@@ -43,13 +48,11 @@ nav:
               - Optimize Loops: 'openacc/exercise-3.md'
               - Unified Memory: 'openacc/exercise-4.md'
               - Profiling and Performance: 'openacc/profiling.md'
-      - Python:
-        - Introduction to Python:
-          - Introduction: 'python/index.md'
-      - Sorftware Environment Management:
-        - Introduction to Conda and Singularity:
-          - Introduction: 'environment/conda.md'
-#        - Best practices in environmen management: 'environment/best-practises.md'
+      - Python in the HPC:
+        - Jupyter server and parallel libraries: 'python/index.md'              
+      - Software Environment Management:
+        - Introduction to Conda: 'environment/conda.md'
+        #- Best practices in environmen management: 'environment/best-practises.md'
       
     - Bootcamp:
         - AI:
