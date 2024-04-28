@@ -17,9 +17,9 @@
   ```
 - 3.2 After that, go to the project directory.
   ```
-  [u100490@login02 ~]$ cd /project/home/p200117
+  [u100490@login02 ~]$ cd /project/home/p200301
   [u100490@login02 p200301]$ pwd
-  /project/home/p200117
+  /project/home/p200301
   ```
   
 #### 4. And please create your own working folder under the project directory
@@ -38,10 +38,10 @@
 #### 6. Now it is time to copy the folder which has examples and source files to your home directory
 - 6.1 For example, with user home directory `u100490`
   ```
-  [u100490@login03 u100490]$ cp -r /project/home/p200117/CUDA .
+  [u100490@login03 u100490]$ cp -r /project/home/p200301/CUDA .
   [u100490@login03 u100490]$ cd CUDA/
   [u100490@login03 CUDA]$ pwd
-  /project/home/p200117/u100490/CUDA
+  /project/home/p200301/u100490/CUDA
   [u100490@login03 CUDA]$ ls -lthr
   total 20K
   -rw-r-----. 1 u100490 p200301   51 Mar 13 15:50 module.sh
@@ -145,7 +145,7 @@ Hello-world.cu  module.sh
  - 12.1 For example, `Hello World` example, we do the following steps:
  ```
  [u100490@mel2063 CUDA]$ pwd
- /project/home/p200117/u100490/CUDA
+ /project/home/p200301/u100490/CUDA
  [u100490@mel2063 CUDA]$ ls
  [u100490@mel2063 CUDA]$ ls
  Dry-run-test  Matrix-multiplication  Profiling      Unified-memory
