@@ -85,6 +85,7 @@ Hello-world.cu  module.sh
 #### 9. Finally, we need to load the compiler to test the GPU CUDA codes
  - 9.1 We need a Nvidia HPC SDK compiler for compiling and testing CUDA code
  ```
+ $ module load env/staging/2023.1
  $ module load OpenMPI/4.1.5-NVHPC-23.7-CUDA-11.7.0
  $ export NVCC_APPEND_FLAGS='-allow-unsupported-compiler'
  ### or
@@ -93,14 +94,16 @@ Hello-world.cu  module.sh
 
     ??? "check if the module is loaded properly"
         ```
+	[u100490@mel2131 ~]$ module load env/staging/2023.1
         [u100490@mel2131 ~]$ module load OpenMPI/4.1.4-NVHPC-22.7-CUDA-11.7.0
+	[u100490@mel2131 ~]$ export NVCC_APPEND_FLAGS='-allow-unsupported-compiler'
         [u100490@mel2131 ~]$ module list
  
         Currently Loaded Modules:
         1) env/release/2022.1           (S)   6) numactl/2.0.14-GCCcore-11.3.0  11) libpciaccess/0.16-GCCcore-11.3.0  16) GDRCopy/2.3-GCCcore-11.3.0                  21) knem/1.1.4.90-GCCcore-11.3.0
         2) lxp-tools/myquota/0.3.1      (S)   7) CUDA/11.7.0                    12) hwloc/2.7.1-GCCcore-11.3.0        17) UCX-CUDA/1.13.1-GCCcore-11.3.0-CUDA-11.7.0  22) OpenMPI/4.1.4-NVHPC-22.7-CUDA-11.7.0
         3) GCCcore/11.3.0                     8) NVHPC/22.7-CUDA-11.7.0         13) OpenSSL/1.1                       18) libfabric/1.15.1-GCCcore-11.3.0
-        4) zlib/1.2.12-GCCcore-11.3.0         9) XZ/5.2.5-GCCcore-11.3.0        14) libevent/2.1.12-GCCcore-11.3.0    19) PMIx/4.2.2-GCCcore-11.3.0
+        4) zlib/1.2.12-GCCcore-11.3.0         9) XZ/5.2.5-GCCcore-11.3.0        14) libevent/2.1.12-GCCcore-11.3.0    19) PMIx/4.2.2-GCCcore-11.	3.0
         5) binutils/2.38-GCCcore-11.3.0      10) libxml2/2.9.13-GCCcore-11.3.0  15) UCX/1.13.1-GCCcore-11.3.0         20) xpmem/2.6.5-36-GCCcore-11.3.0
   
         Where:
