@@ -55,6 +55,7 @@
   ```
   $ salloc -A p200301 --res eurocc2-gpu-course-morning --partition=gpu --qos default -N 1 -t 01:00:00
   ```
+  
     ??? "check if your reservation is allocated"
         ```
         [u100490@login03 ~]$ salloc -A p200301 --res training_part1 --partition=gpu --qos default -N 1 -t 01:00:00
