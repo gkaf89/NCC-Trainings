@@ -134,7 +134,7 @@ free(c);
     === "Serial-version"
         ```c
         //-*-C++-*-
-        // Matrix-multiplication.c
+        // Matrix-multiplication.cc
         
         #include<iostream>
         #include<cuda.h>
@@ -473,7 +473,7 @@ free(c);
     === "Serial-version"
         ```c
         // compilation
-        $ gcc Matrix-multiplication.c -o Matrix-Multiplication-CPU
+        $ g++ Matrix-multiplication.cc -o Matrix-Multiplication-CPU
         
         // execution 
         $ ./Matrix-Multiplication-CPU
