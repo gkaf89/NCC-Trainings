@@ -410,4 +410,11 @@ These can be achieved with CUDA threads.
 
     - Could you resize the **`BLOCK_SIZE`** number and check the solution's correctness?
     - Can you also create a different kind of thread block and matrix size and check the solution's correctness?
-    - Please try with `cudaFuncSetCacheConfig` and check if you can successfully execute the application. 
+    - Please try with `cudaFuncSetCacheConfig` and check if you can successfully execute the application.
+
+      ```
+      cudaFuncCachePreferNone: no preference for shared memory or L1 (default)
+      cudaFuncCachePreferShared: prefer larger shared memory and smaller L1 cache
+      cudaFuncCachePreferL1: prefer larger L1 cache and smaller shared memory
+      cudaFuncCachePreferEqual: prefer equal size L1 cache and shared memory
+      ```
