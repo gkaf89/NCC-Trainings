@@ -127,7 +127,7 @@ Hello-world.cu  module.sh
  ```
 
 #### 11. Similarly for the hands-on session, we need to do the node reservation:
- - 10.1 For example, reservation
+ - 11.1 For example, reservation
  ```
  $ salloc -A p200301 --res gpu-course-afternoon --partition=gpu --qos default -N 1 -t 02:30:00
  ```
