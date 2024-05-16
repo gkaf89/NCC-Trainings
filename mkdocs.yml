@@ -2,19 +2,19 @@ site_name: SuperComputing Luxembourg - National Competence Center
 nav:
     - Trainings organization: 'index.md'
     - Courses:
-      - AI with HPC:
-        - Distributed Deep Learning:
-          - Introduction: 'openacc/index.md'
-      - Computational Chemistry:
-        - Quantum Espresso:
-          - Introduction: 'openacc/index.md'
-      - Julia:
-        - Introduction: 'julia/index.md'
-      - Numerical Libraries:
-        - Quantum Espresso:
-          - Introduction: 'openacc/index.md'              
-      - Other Accelerators:
-            - Introduction: 'openacc/index.md'        
+#      - AI with HPC:
+#        - Distributed Deep Learning:
+#          - Introduction: 'openacc/index.md'
+#      - Computational Chemistry:
+#        - Quantum Espresso:
+#          - Introduction: 'openacc/index.md'
+#      - Julia:
+#        - Introduction: 'julia/index.md'
+#      - Numerical Libraries:
+#        - Quantum Espresso:
+#          - Introduction: 'openacc/index.md'              
+#      - Other Accelerators:
+#            - Introduction: 'openacc/index.md'        
       - Parallel Programming:
         - CPU:
           - OpenMP:
@@ -65,9 +65,9 @@ nav:
     - Instructions for Educators:
         - Introduction: 'education/introduction.md'
         - Requirements: 'education/requirements.md'
-    - Calender:
-        - Past Events: 'calender/past.md'
-        - Future Events: 'calender/future.md'
+    - Calendar:
+        - Past Events: 'calendar/past.md'
+        - Future Events: 'calendar/future.md'
                              
 markdown_extensions:
   - attr_list
