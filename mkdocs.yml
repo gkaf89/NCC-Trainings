@@ -66,8 +66,8 @@ nav:
         - Introduction: 'education/introduction.md'
         - Requirements: 'education/requirements.md'
     - Calendar:
-        - Past Events: 'calendar/past.md'
         - Future Events: 'calendar/future.md'
+        - Past Events: 'calendar/past.md'	
                              
 markdown_extensions:
   - attr_list
