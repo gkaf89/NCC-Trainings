@@ -1,4 +1,4 @@
-# Introduction to OpenMP Programming for Shared Memory Parallel Architecture 
+# Introduction to OpenMP Programming for Shared Memory Parallel Architecture
 
 <figure markdown>
 [![](../figures/OpenMP-first-page.png)](https://github.com/NCCLUX/NCC-Trainings/blob/eb4fd80c4e791b577ce14c592bf4ba635ce9d9c8/Courses/docs/openmp/Training_OpenMP_Formatted.pdf)
@@ -33,4 +33,11 @@ Priority will be given to users with good experience with C/C++ and/or FORTRAN. 
 ### CPU Compute Resource
 Participants attending the event will be given access to the [MeluXina supercomputer](https://luxprovide.lu/) during the session.
 To learn more about MeluXina, please consult the Meluxina overview and the [MeluXina – Getting Started Guide](https://docs.lxp.lu/).
+
+### Course Organization and Registration
+Format - Online <br />
+Previous event: 31st May, 2023 <br />
+Next Event: xx, September, 2024
+
+[Registration: xx, September, 2024](https://supercomputing.lu/events){ .md-button .md-button--primary }
 

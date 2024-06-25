@@ -35,3 +35,10 @@ No GPU programming knowledge is required; however, knowing the OpenMP programmin
 ### GPU Compute Resource
 Participants attending the event will be given access to the [MeluXina supercomputer](https://luxprovide.lu/) during the session.
 To learn more about MeluXina, please consult the Meluxina overview and the [MeluXina – Getting Started Guide](https://docs.lxp.lu/).
+
+### Course Organization and Registration
+Format - Online <br />
+Previous events: 19th September, 2023 <br />
+Next Event: xx, November, 2024
+
+[Registration: xx, November, 2024](https://supercomputing.lu/events){ .md-button .md-button--primary }

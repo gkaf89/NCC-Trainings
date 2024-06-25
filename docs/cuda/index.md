@@ -32,3 +32,9 @@ Participants attending the event will be given access to the [MeluXina superco
 To learn more about MeluXina, please consult the Meluxina overview and the [MeluXina – Getting Started Guide](https://docs.lxp.lu/).
 
 
+### Course Organization and Registration
+Format - Online <br />
+Previous events: 27th March, 2023 and 30th, April, 2024 <br />
+Next Event: xx, December, 2024
+
+[Registration: xx, December, 2024](https://supercomputing.lu/events){ .md-button .md-button--primary }
