@@ -1,4 +1,6 @@
-If you are an educator and would like to provide a course, please read the following instructions:
+If you are an educator and would like to provide a course with us, <u>[please contact us](https://supercomputing.lu/contact-us){ .md-button }<u>:
+ 
+please read the following instructions:
 
 The following are the website and git repository for providing the training events under EuroCC (Luxembourg).
 
