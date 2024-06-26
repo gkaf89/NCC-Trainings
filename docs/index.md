@@ -2,7 +2,6 @@ Most of our courses are organised online.
 
 ##<u><p style="text-align: center;">[Courses](openmp/index.md){ .md-button }</p></u>
 
-
 Courses are primarily designed for just one day.
 It is mainly considered an effective way of learning rather than focusing on more than one training day.
 Courses are mainly focused on parallel programming on CPUs and GPUs and acceleration of your scientific software on supercomputers. For example, OpenMP, MPI, OpenACC, CUDA, and OpenMP Offloading using programming languages such as C/C++ and FORTRAN. Plus, also we focus on Python, R, Matlab and Julia to parallelize your application. Regarding the software acceleration, GROMACS, CFD and FEM software, material science and bioinformatics, etc., will be offered. 

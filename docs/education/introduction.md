@@ -1,4 +1,4 @@
-If you are an educator and would like to provide a course with us, <u>[please contact us](https://supercomputing.lu/contact-us){ .md-button }<u>:
+If you are an educator and would like to provide a course with us, <u>[please contact us <i class="fas fa-envelope"></i>](https://supercomputing.lu/contact-us)<u>:
  
 please read the following instructions:
 
