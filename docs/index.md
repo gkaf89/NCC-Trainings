@@ -1,6 +1,6 @@
 Most of our courses are organised online.
 
-##<u>[Courses](openmp/index.md){ .md-button }</u>
+##<u><p style="text-align: center;">[Courses](openmp/index.md){ .md-button }</p></u>
 
 
 Courses are primarily designed for just one day.
@@ -12,14 +12,14 @@ Courses are mainly focused on parallel programming on CPUs and GPUs and accelera
      - lecture (introduction and focus on the course topic)
      - practicals (hands-on session)
      
-##<u>[Bootcamps](Bootcamps/ai/introduction.md){ .md-button }</u>
+##<u><p style="text-align: center;">[Bootcamps](Bootcamps/ai/introduction.md){ .md-button }</p></u>
 
 Bootcamps are usually one- or two-day events designed to teach scientists and researchers how to start quickly accelerating codes on modern processors (for example, GPUs).
 Participants will be introduced to available libraries, programming models, and platforms.
 They will learn the basics of parallel (CPU, GPU and hybrid) programming through extensive hands-on
 collaboration based on real-life codes using the parallel programming model.
 
-##<u>[Hackathons](Hackathons/hpda/introduction.md){ .md-button }</u>
+##<u><p style="text-align: center;">[Hackathons](Hackathons/hpda/introduction.md){ .md-button }</p></u>
 
 Hackathons are dedicated for a longer duration; it could be up to one or two months. During the hackathons, participants mainly focus on the HPC problems (HPC, AI and HPDA) that come from industry, particularly local Luxembourg industries. Participants will be grouped into many and each group member will get mentors from organizers (for example, Nvidia) and also from experts from supercomputing NCC Luxembourg. At the end of the event, there will also be a winner and prize for outstanding contribution.
 
