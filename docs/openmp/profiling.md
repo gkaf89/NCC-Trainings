@@ -1,11 +1,11 @@
-Profiling is an important task to be considered when a computer code is written. Writing parallel code is less challenging, but making it more efficient on a given parallel architecture is challenging. Moreover,  from the programming and programmer’s perspective, we want to know where the code spends most of its time. In particular, we would like to know if the code (given algorithm) is compute bound, memory bound, cache misses, memory leak, proper vectorisation, cache misses, register spilling, or hot spot (time-consuming part in the code). Plenty of tools are available to profile a scientific code (computer code for doing arithmetic computing using processors). However, Here, we will focus few of the widely used tools.
+Profiling is an important task to be considered when a computer code is written. Writing parallel code is less challenging, but making it more efficient on a given parallel architecture is challenging. Moreover,  from the programming and programmer’s perspective, we want to know where the code spends most of its time. In particular, we would like to know if the code (given algorithm) is compute bound, memory bound, cache misses, memory leak, proper vectorisation, cache misses, register spilling, or hot spot (time-consuming part in the code). Plenty of tools are available to profile a scientific code (computer code for doing arithmetic computing using processors). However, we will focus on a few of the widely used tools.
 
  - [AMD uProf](https://www.amd.com/content/dam/amd/en/documents/developer/uprof-v4.0-gaGA-user-guide.pdf)
  - [ARM Forge](https://developer.arm.com/documentation/101136/22-1-3/Performance-Reports?lang=en)
  - [Intel tools](https://www.intel.com/content/www/us/en/developer/tools/oneapi/vtune-profiler.html)
 
 ####<u>[ARM Forge](https://developer.arm.com/documentation/101136/22-1-3/Performance-Reports?lang=en)</u>
-Arm Forge is another standard commercial tool for debugging, profiling, and analysing scientific code on the massively parallel computer architecture. They have a separate toolset for each category with the common environment: DDT for debugging, MAP for profiling, and performance reports for analysis. It also supports the MPI, UPC, CUDA, and OpenMP programming models for a different architecture with different variety of compilers. DDT and MAP will launch the GUI, where we can interactively debug and profile the code. Whereas `perf-report` will provide the analysis results in `.html` and `.txt` files.
+Arm Forge is another standard commercial tool for debugging, profiling, and analysing scientific code on the massively parallel computer architecture. They have a separate toolset for each category with the common environment: DDT for debugging, MAP for profiling, and performance reports for analysis. It also supports the MPI, UPC, CUDA, and OpenMP programming models for different architectures with a variety of compilers. DDT and MAP will launch the GUI, where we can interactively debug and profile the code. Meanwhile, `perf-report` will provide the analysis results in `.html` and `.txt` files.
 
 
 ??? Info "Example: ARM Forge"
@@ -168,8 +168,8 @@ tuning in the code. `survey`: analyse and explore an idea about where to add eff
 
 ##### Intel VTune
 
- - Identifying the time consuming part in the code.
- - And also identify the cache misses and latency.
+ - Identify the time-consuming part of the code.
+ - Also, identify cache misses and latency.
 
 
 ??? Info "Example: Intel VTune"
@@ -181,7 +181,7 @@ tuning in the code. `survey`: analyse and explore an idea about where to add eff
         # execute the code and collect the hotspots
         $ amplxe-cl -collect hotspots -r amplifier_result ./a.out
         $ amplxe-gui
-        # open the GUI of VTune amplifier
+        # open the GUI of the VTune amplifier
         ```
 
     === "FORTRAN"
@@ -191,7 +191,7 @@ tuning in the code. `survey`: analyse and explore an idea about where to add eff
         # execute the code and collect the hotspots
         $ amplxe-cl -collect hotspots -r amplifier_result ./a.out
         $ amplxe-gui
-        # open the GUI of VTune amplifier
+        # open the GUI of the VTune amplifier
         ```
 	
     <figure markdown>
