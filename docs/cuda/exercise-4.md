@@ -1,14 +1,14 @@
 In this example, we try shared memory matrix multiplication.
 This is achieved by blocking the global matrix into a small block matrix (tiled matrix)
 that can fit into the shared memory of the Nvidia GPU.
-Shared memory from the GPUs, which has a good bandwidth within the GPUs compared to access to the global memory.
+Shared memory from the GPUs has good bandwidth within the GPUs compared to access to the global memory.
 
 
 ![](../figures/memory-2.png){align=middle}
 
 
  - This is very similar to the previous example; however, we just need to allocate the small block matrix into shared memory.
- The below example shows the blocking size for `a` and `b` matrices respectively for global `A` and `B` matrices. 
+ The below example shows the blocking size for `a' and `b` matrices, respectively, for global `A` and `B` matrices. 
 ```
   // Shared memory allocation for the block matrix  
   __shared__ int a_block[BLOCK_SIZE][BLOCK_SIZE];
@@ -17,7 +17,7 @@ Shared memory from the GPUs, which has a good bandwidth within the GPUs compared
 
 ![](../figures/memory-hierarchy-in-gpus-1.png){align=middle}
 
- - Then we need to iterate elements within the block size and, finally with the global index. 
+ - Then, we need to iterate elements within the block size and, finally, with the global index. 
 These can be achieved with CUDA threads. 
 
 <figure markdown>
@@ -50,7 +50,7 @@ These can be achieved with CUDA threads.
         }
         ```
 
- - Different Nvidia GPUs provides different configuration, for example, [Ampere GA102 GPU Architecture, will support the following configuration:](https://www.nvidia.com/content/PDF/nvidia-ampere-ga-102-gpu-architecture-whitepaper-v2.pdf)
+ - Different Nvidia GPUs provide different configurations; for example, [Ampere GA102 GPU Architecture will support the following configuration:](https://www.nvidia.com/content/PDF/nvidia-ampere-ga-102-gpu-architecture-whitepaper-v2.pdf)
        ```
        128 KB L1 + 0 KB Shared Memory
        120 KB L1 + 8 KB Shared Memory
@@ -95,14 +95,14 @@ These can be achieved with CUDA threads.
           int row = threadIdx.x+blockDim.x*blockIdx.x;
           ...
 
-          // Allow threads only for size of rows and columns (we assume square matrix)
+          // Allow threads only for the size of rows and columns (we assume square matrix)
           if ((row < width) && (col< width))
             {
               // Save temporary value for the particular index
               float temp = 0;
               for(int i = 0; i < width / BLOCK_SIZE; ++i)
                 {
-                  // Allign the global matrix to block matrix 
+                  // Allign the global matrix to the block matrix 
                   a_block[ty][tx] = d_a[row * width + (i * BLOCK_SIZE + tx)];
                   b_block[ty][tx] = d_b[(i * BLOCK_SIZE + ty) * width + col];
 
@@ -117,7 +117,7 @@ These can be achieved with CUDA threads.
                   // Make sure all the threads are synchronized
                   ...
                }
-              // Save block matrix entry to global matrix 
+              // Save block matrix entry to the global matrix 
               ...
             }
         }
@@ -206,7 +206,7 @@ These can be achieved with CUDA threads.
            }
           if (flag==0)
             {
-            cout <<"But,two matrices are not equal" << endl;
+            cout <<"But, two matrices are not equal" << endl;
             cout <<"Matrix dimensions are assumed to be multiples of BLOCK_SIZE=16" << endl;
             }
             else
@@ -256,14 +256,14 @@ These can be achieved with CUDA threads.
           int row = threadIdx.x+blockDim.x*blockIdx.x;
           int col = threadIdx.y+blockDim.y*blockIdx.y;
 
-          // Allow threads only for size of rows and columns (we assume square matrix)
+          // Allow threads only for the size of rows and columns (we assume square matrix)
           if ((row < width) && (col< width))
             {
               // Save temporary value for the particular index
               float temp = 0;
               for(int i = 0; i < width / BLOCK_SIZE; ++i)
                  {
-                  // Allign the global matrix to block matrix 
+                  // Allign the global matrix to the block matrix 
                   a_block[ty][tx] = d_a[row * width + (i * BLOCK_SIZE + tx)];
                   b_block[ty][tx] = d_b[(i * BLOCK_SIZE + ty) * width + col];
 
@@ -277,12 +277,12 @@ These can be achieved with CUDA threads.
                     }
                     __syncthreads();
                  }
-              // Save block matrix entry to global matrix 
+              // Save block matrix entry to the global matrix 
               d_c[row*width+col] = temp;
             }
         }
 
-        // Host call (matix multiplication)
+        // Host call (matrix multiplication)
         float * cpu_matrix_mul(float *h_a, float *h_b, float *h_c, int width)   
         {                                                                 
           for(int row = 0; row < width ; ++row)                           
@@ -348,7 +348,7 @@ These can be achieved with CUDA threads.
           // Transfer data back to host memory
           cudaMemcpy(c, d_c, sizeof(float) * (N*N), cudaMemcpyDeviceToHost);
 
-          // cpu computation for verification 
+          // CPU computation for verification 
           cpu_matrix_mul(a,b,host_check,N);
 
           // Verification
@@ -366,7 +366,7 @@ These can be achieved with CUDA threads.
             }
           if (flag==0)
             {
-              cout <<"But,two matrices are not equal" << endl;
+              cout <<"But, two matrices are not equal" << endl;
               cout <<"Matrix dimensions are assumed to be multiples of BLOCK_SIZE=16" << endl;
             }
           else
@@ -396,7 +396,7 @@ These can be achieved with CUDA threads.
         
         // execution
         $ ./Matrix-multiplication-shared
-        Programme assumes that matrix size is N*N 
+        The programme assumes that the matrix size is N*N 
         Matrix dimensions are assumed to be multiples of BLOCK_SIZE=16
         Please enter the N size number
         $ 256
@@ -410,7 +410,7 @@ These can be achieved with CUDA threads.
 
     - Could you resize the **`BLOCK_SIZE`** number and check the solution's correctness?
     - Can you also create a different kind of thread block and matrix size and check the solution's correctness?
-    - Please try with `cudaFuncSetCacheConfig` and check if you can successfully execute the application.
+    - Please try using `cudaFuncSetCacheConfig` and check if you can successfully execute the application.
 
       ```
       cudaFuncCachePreferNone: no preference for shared memory or L1 (default)
