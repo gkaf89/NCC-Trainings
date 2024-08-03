@@ -44,7 +44,7 @@ At the same time, in order to enable OpenMP constructs, clauses, and environment
 
 The following compilers would support the OpenMP programming model.
 
- - [GNU](https://gcc.gnu.org/) - It is an opensource and can be used for Intel and AMD CPUs
+ - [GNU](https://gcc.gnu.org/) - It is an open source and can be used for Intel and AMD CPUs
  - [Intel](https://www.intel.com/content/www/us/en/developer/tools/oneapi/dpc-compiler.html#gs.zd201n) - It is from Intel and only optimized for Intel CPUs
  - [AOOC](https://www.amd.com/content/dam/amd/en/documents/pdfs/developer/aocc/aocc-v4.0-ga-user-guide.pdf) - Suitable for AMD CPUs, especially “Zen” core architecture.
 
@@ -83,7 +83,7 @@ The following compilers would support the OpenMP programming model.
         int main()
         {
           cout << endl;
-          cout << "Hello world from master thread"<< endl;
+          cout << "Hello world from the master thread"<< endl;
           cout << endl;
           
           return 0;
@@ -106,17 +106,17 @@ The following compilers would support the OpenMP programming model.
         using namespace std;
         int main()
         {
-          cout << "Hello world from master thread "<< endl;
+          cout << "Hello world from the master thread "<< endl;
           cout << endl;
           
           // creating the parallel region (with N number of threads)
           #pragma omp parallel
            {
-                cout << "Hello world from parallel region "<< endl;
+                cout << "Hello world from the parallel region "<< endl;
             } // parallel region is closed
             
         cout << endl;
-        cout << "end of the programme from master thread" << endl;
+        cout << "end of the programme from the master thread" << endl;
         return 0;
         }
         ```
@@ -148,7 +148,7 @@ The following compilers would support the OpenMP programming model.
         $ ./Hello-World-Serial
         
         // output
-        $ Hello world from master thread
+        $ Hello world from the master thread
         ```
 
     === "Serial-version (FORTRAN)"
@@ -160,7 +160,7 @@ The following compilers would support the OpenMP programming model.
         $ ./Hello-World-Serial
         
         // output
-        $ Hello world from master thread
+        $ Hello world from the master thread
         ```
         
     === "OpenMP-version (C/C++)"
@@ -172,13 +172,13 @@ The following compilers would support the OpenMP programming model.
         $ ./Hello-World-OpenMP
         
         // output
-        $ Hello world from parallel region
-        Hello world from parallel region
+        $ Hello world from the parallel region
+        Hello world from the parallel region
         ..
         ..
-        Hello world from parallel region
+        Hello world from the parallel region
         
-        end of the programme from master thread
+        end of the programme from the master thread
         ```
 
     === "OpenMP-version (FORTRAN)"
@@ -190,12 +190,12 @@ The following compilers would support the OpenMP programming model.
         $ ./Hello-World-OpenMP
         
         // output
-        $ Hello world from master thread
-        Hello world from parallel region
+        $ Hello world from the master thread
+        Hello world from the parallel region
         ..
         ..
-        Hello world from parallel region
-        end of the programme from master thread
+        Hello world from the parallel region
+        End of the programme from the master thread
         ```
 
 ??? question "Questions"
@@ -204,7 +204,7 @@ The following compilers would support the OpenMP programming model.
      - What happens if you do not use the OpenMP library, `#include<omp.h> or use omp_lib`?
 
 
-Although creating a parallel region would allow us to do the parallel computation, however, at the same time, we should have control over the threads being created in the parallel region, for example, how many threads are needed for a particular computation, thread number, etc. For this, we need to know a few of the important environment routines which are provided by OpenMP. The below list shows a few of the most important environment routines that should be known by the programmer for optimised OpenMP coding.
+Although creating a parallel region would allow us to do the parallel computation, however, at the same time, we should have control over the threads being created in the parallel region, for example, how many threads are needed for a particular computation, thread number, etc. For this, we need to know a few of the important environmental routines provided by OpenMP. The list below shows a few of the most important environment routines that the programmer should know about for optimised OpenMP coding.
 
 #### <u>Environment Routines (important)</u>
 
@@ -229,7 +229,7 @@ Although creating a parallel region would allow us to do the parallel computatio
         (c/c+): int omp_get_thread_num(void);
         (FORTRAN): integer function omp_get_thread_num()
 
- - To know the number processors available to the device
+ - To know the number of processors available to the device
  
         (c/c++): int omp_get_num_procs(void);
         (FROTRAN): integer function omp_get_num_procs()
@@ -242,7 +242,7 @@ Although creating a parallel region would allow us to do the parallel computatio
 
      - How can you identify the thread numbers within the parallel region?
      - What happens if you not set `omp_set_num_threads()`, for example, `omp_set_num_threads(5)|call omp_set_num_threads(5)`, what do you notice? 
-     - Alternatively, you can also set a number of threads to be used in the application while the compilation `export OMP_NUM_THREADS`; what do you see?
+     Alternatively, you can also set the number of threads to be used in the application during the compilation `export OMP_NUM_THREADS`; what do you see?
 
     === "Question (C/C++)"
 
@@ -252,7 +252,7 @@ Although creating a parallel region would allow us to do the parallel computatio
         using namespace std;
         int main()
         {
-          cout << "Hello world from master thread "<< endl;
+          cout << "Hello world from the master thread "<< endl;
           cout << endl;
                     
           // creating the parallel region (with N number of threads)
@@ -264,7 +264,7 @@ Although creating a parallel region would allow us to do the parallel computatio
             } // parallel region is closed
             
         cout << endl;
-        cout << "end of the programme from master thread" << endl;
+        cout << "end of the programme from the master thread" << endl;
         return 0;
         }
         ```
@@ -288,7 +288,7 @@ Although creating a parallel region would allow us to do the parallel computatio
         using namespace std;
         int main()
         {
-          cout << "Hello world from master thread "<< endl;
+          cout << "Hello world from the master thread "<< endl;
           cout << endl;
                     
           // creating the parallel region (with N number of threads)
@@ -301,7 +301,7 @@ Although creating a parallel region would allow us to do the parallel computatio
             } // parallel region is closed
             
         cout << endl;
-        cout << "end of the programme from master thread" << endl;
+        cout << "end of the programme from the master thread" << endl;
         return 0;
         }
         ```
