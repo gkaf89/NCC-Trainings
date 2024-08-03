@@ -4,18 +4,18 @@ Vector addition is one of the basic linear algebra routines.
 It involves adding two vectors into one where each index of the corresponding vector should be added.
 This vector addition example covers two of the most important OpenACC constructs and clauses: compute constructs and data clauses. They are:
 
- - Since the computation involves a loop, we could use, **`#pragma acc parallel loop`** or **`#pragma acc kernels loop`**
+ - Since the computation involves a loop, we could use **`#pragma acc parallel loop`** or **`#pragma acc kernels loop`**
  - And we need to transfer the data to the GPU. For this purpose, OpenACC provides a rich set of data mapping clauses in OpenACC. 
 
 Data clauses in OpenACC provide a convenient way of handling the data between CPU and GPU.
 The following list explains usage and description.
 
- - **`copy`**: create a space for a variable in the device, copy the data to the device before the region and copy the data back to the host after the region. And releases the memory of the variable in the device. 
- - **`copyin`**:   create a space for a variable in the device, copy the data to the device before the region and do not copy the data back to the host after the region. And releases the memory of the variable in the device. 
- - **`copyout`**: create a space for a variable in the device; do not copy the data to the device before the region and copy the data back to the host after the region. And releases the memory of the variable in the device. 
- - **`create`**:creates a memory of the device; do not copy from host to device or device to host. 
+ - **`copy`**: Create a space for a variable in the device, copy the data to the device before the region, copy the data back to the host after the region, and release the memory of the variable in the device. 
+ - **`copyin`**: Create a space for a variable in the device, copy the data to the device before the region, and do not copy the data back to the host after the region. Release the memory of the variable in the device. 
+ - **`copyout`**: Create a space for a variable in the device; do not copy the data to the device before the region; copy the data back to the host after the region. Release the memory of the variable in the device. 
+ - **`create`**: Creates the device's memory; do not copy from host to device or device to host. 
  - **`present`**: The listed variables are already present on the device, so no further action needs to be taken. 
- - **`deviceptr`**: this is quite useful when data has to be managed outside of the OpenACC.
+ - **`deviceptr`**: This is quite useful when data has to be managed outside of the OpenACC.
 
 <figure markdown>
 ![](../figures/OpenACC-data.png){align=middle, width=750}
@@ -40,7 +40,7 @@ The following list explains usage and description.
         !$acc end data
         ```
         
-??? "Available caluses for data"
+??? "Available clauses for data"
 
     === "C/C++ and FORTRAN"
         ```c
@@ -84,7 +84,7 @@ b = (float*)malloc(sizeof(float) * N);
 c = (float*)malloc(sizeof(float) * N);
 ```
 
- - Now we need to fill the values for the
+ - Now, we need to fill in the values for the
     arrays `a` and `b`. 
 ```c
 // Initialize host arrays
@@ -403,5 +403,5 @@ free(c);
 
 ??? Question "Question"
 
-    - Please try other data clauses for	other applications and get familiarised with them.
+    - Please try other data clauses for	different applications and get familiarised with them.
 
