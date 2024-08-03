@@ -1,5 +1,5 @@
 ####<u>Collapse</u>
-The collapse clause can be used for the nested loop; an entire part of the iteration will be divided by an available number of threads. If the outer loop is equal to the available threads, then the outer loop will be divided number of threads. The figure below shows an example of not using the `collapse` clause. Therefore, only the outer loop is parallelised; each outer loop index will have N number of inner loop iterations. 
+The collapse clause can be used for the nested loop; an entire part of the iteration will be divided by an available number of threads. If the outer loop is equal to the available threads, then the outer loop will be divided by the number of threads. The figure below shows an example of not using the `collapse` clause. Therefore, only the outer loop is parallelised; each outer loop index will have N number of inner loop iterations. 
 
 <figure markdown>
 ![](../figures/parallel-loop-acc.png){align=center width=500}
@@ -27,7 +27,7 @@ Therefore, studying this example would be good practice for solving the nested l
 </figure>
 
  - Allocating the CPU memory for A, B, and C matrices.
-   Here we notice that the matrix is stored in a
+   Here, we notice that the matrix is stored in a
    1D array because we want to consider the same function concept for CPU and GPU.
 ```c
 // Initialize the memory on the host
@@ -39,7 +39,7 @@ b  = (float*)malloc(sizeof(float) * (N*N));
 c  = (float*)malloc(sizeof(float) * (N*N));
 ```
 
- - Now we need to fill the values for the matrix A and B.
+ - Now, we need to fill in the values for the matrix A and B.
 ```c
 // Initialize host matrix
 for(int i = 0; i < (N*N); i++)
@@ -399,7 +399,7 @@ free(c);
         // output
         $ g++ Matrix-multiplication.cc -o Matrix-multiplication
         $ ./Matrix-multiplication
-        Programme assumes that matrix (square matrix) size is N*N 
+        Programme assumes that the matrix (square matrix) size is N*N 
         Please enter the N size number 
         4
         16 16 16 16 
@@ -426,7 +426,7 @@ free(c);
 	        
         // execution
         $ ./Matrix-Multiplication-GPU
-        Programme assumes that matrix (square matrix) size is N*N 
+        The programme assumes that the matrix (square matrix) size is N*N 
         Please enter the N size number
         $ 256
         
@@ -441,7 +441,7 @@ free(c);
 
 ####<u>Three levels of parallelism</u>
 
-By default, the compiler chooses the best combination of the thread blocks needed for the computation. However, sometimes, if needed as a programmer, you could also control the threads block in the program. OpenACC provides straightforward clauses that can control the threads and thread blocks in the application. 
+By default, the compiler chooses the best combination of the thread blocks needed for the computation. However, sometimes, as a programmer, you could also control the thread blocks in the program. OpenACC provides straightforward clauses that can control the threads and thread blocks in the application. 
 
 
 <figure markdown>
