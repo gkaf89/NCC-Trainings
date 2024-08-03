@@ -1,7 +1,7 @@
 
-Profiling is an essential procedure to make sure you are utilising the given architecture with a given algorithm. Sometimes, we might think we are doing efficient computation. However, it will not always be the case unless we do the proper profiling and check if all the resources are utilized properly. 
+Profiling is an essential procedure to ensure that you are utilising the given architecture with a given algorithm. Sometimes, we might think we are doing efficient computation. However, this will not always be the case unless we do the proper profiling and check if all the resources are utilized properly. 
 
-Using Nvidia HPC SDK, we could profile our OpenACC code. We could do the profiling in two ways: Command line and GUI.
+Using Nvidia HPC SDK, we could profile our OpenACC code. We could do the profiling using the Command line or the GUI.
 
 ####<u>Command Line</u>
 
@@ -40,7 +40,7 @@ Setting **`export NVCOMPILER_ACC_NOTIFY=3`** provides kernel executions and data
 ####<u>[GUI](https://docs.nvidia.com/nsight-systems/UserGuide/index.html)</u>
 The Visual Profiler is organized into views. Together, the views allow you to analyze and visualize the performance of your application. 
 The Timeline View shows CPU and GPU activity that occurred while your application was being profiled. 
-Multiple timelines can be opened in the Visual Profiler at the same time in different tabs. The following figure shows a Timeline View for a OpenACC application.
+Multiple timelines can be opened in the Visual Profiler simultaneously in different tabs. The following figure shows a Timeline View for an OpenACC application.
 
 In order to visualize the performance of your application, you should connect to the HPC machine via -X forward; 
 otherwise, you will not be able to see the GUI application. For example, on MeluXina, you should do the following.
@@ -65,13 +65,13 @@ On MeluXina, we need to add the following modules:
     module load Qt5/5.15.5-GCCcore-11.3.0
     ```
     
-Once the required modules are loaded, you can compile your application and visualize the performance of your application. 
-Finally, we need use command line **`nsys-ui`** to open GUI application and load **`timeline.nsys-rep`**. 
+Once the required modules are loaded, you can compile your application and visualize its performance. 
+Finally, we need to use the command line **`nsys-ui`** to open the GUI application and load **`timeline.nsys-rep`**. 
 
 !!! Info "Compilation and GUI"
         ```
         [u100@mel2073 Vector-addition]$ nvc -fast -acc=gpu -gpu=cc80 -Minfo=accel Vector-addition.c
-        nvc-Warning-CUDA_HOME has been deprecated. Please, use NVHPC_CUDA_HOME instead.
+        nvc-Warning-CUDA_HOME has been deprecated. Please use NVHPC_CUDA_HOME instead.
         [u100@mel2073 Vector-addition]$ nsys profile -o timeline ./a.out
         Warning: LBR backtrace method is not supported on this platform. DWARF backtrace method will be used.
         This program does the addition of two vectors 
