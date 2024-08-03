@@ -1,7 +1,7 @@
 ### Time measurement
 
-In CUDA, the execution time can be measured by using the cuda events.
-CUDA API events shall be created using `cudaEvent_t`, for example, `cudaEvent_t start, stop;`. Moreover, it can be initiated by `cudaEventCreate(&start)` for a start and similarly for stop,
+In CUDA, the execution time can be measured by using the CUDA events.
+CUDA API events shall be created using `cudaEvent_t`, for example, `cudaEvent_t start, stop;`. Moreover, it can be initiated by `cudaEventCreate(&start)` for a start, and similarly for stop,
 it can be created as `cudaEventCreate(&stop)`. 
 
 ??? "CUDA API"
@@ -13,7 +13,7 @@ it can be created as `cudaEventCreate(&stop)`.
     ```
 
 And it can be initialised to measure the timing as `cudaEventRecord(start,0)` and `cudaEventRecord(stop,0)`.
-Then the timings can be measured as float, for example, `cudaEventElapsedTime(&time, start, stop)`.
+Then the timings can be measured as floats, for example, `cudaEventElapsedTime(&time, start, stop)`.
 Finally, all the events should be destroyed using `cudaEventDestroy`, for example, `cudaEventDestroy(start)` and `cudaEventDestroy(start)`.
 
 ??? "CUDA API"
@@ -124,8 +124,8 @@ CUDA application interactive [kernel profiler](https://docs.nvidia.com/nsight-co
 Graphics application frame debugger and profiler: This is quite useful for analysing the profiling results through GUI. 
 
 - [Nsight Systems](https://developer.nvidia.com/nsight-systems):
-System-wide performance analysis tool: It is needed when we try to do heterogeneous computation profiling,
-for example, mixing MPI and OpenMP with CUDA. This will profile the system-wide application, that is, both CPU and GPU.
+System-wide performance analysis tool: This is needed when we try to do heterogeneous computation profiling,
+such as mixing MPI and OpenMP with CUDA. This will profile the system-wide application, that is, both CPU and GPU.
 To learn more about the command line options, please use **`$ nsys profile --help`**
 
     ??? example
@@ -242,8 +242,8 @@ Max.\ warps\ per\ SM}$
 
 ??? Question "Questions"
 
-     - Occupancy: can you change **`numBlocks`** and **`blockSize`** in Occupancy.cu code
-     and check how it affects or predicts the occupancy of the given Nvidia microarchitecture?
-     - Profiling: run your **`Matrix-multiplication.cu`** and **`Vector-addition.cu`** code and observe what you notice?
-     for example, how to improve the occupancy? Or maximise a GPU utilization?
-     - Timing: using CUDA events API can you measure your GPU kernel execution, and compare how fast is your GPU computation compared to CPU computation?
+     - Occupancy: can you change **`numBlocks`** and **`blockSize`** in the occupancy.cu code
+     and check how it affects or predicts the occupancy of the given Nvidia microarchitecture.
+     - Profiling: run your **`Matrix-multiplication.cu`** and **`Vector-addition.cu`** code and observe what you notice.
+     For example, how can occupancy be improved? Or maximise a GPU utilization?
+     - Timing: using CUDA events API, can you measure your GPU kernel execution and compare how fast your GPU computation is compared to CPU computation?
