@@ -2,7 +2,7 @@
 
 In our first exercise, we will look into how to offload the computation to the device (GPU).
 Because the main aim of the OpenACC is to facilitate offloading the computation using OpenACC APIs.
-OpenACC provides two kinds of variants to offload the computations to GPU. They are explained as follows,
+OpenACC provides two variants to offload the computations to GPU. They are explained as follows,
 
    - OpenACC provides two compute constructs to parallelize the computation
    - The first one is `parallel`, and the second is `kernels`
@@ -46,7 +46,7 @@ To create a parallel region in OpenACC, we use the following compute constructs:
         !$acc end parallel
         ```
 
-??? "Available caluses for parallel"
+??? "Available clauses for parallel"
 
     === "C/C++ and FORTRAN"
 	```c
@@ -90,7 +90,7 @@ To create a parallel region in OpenACC, we use the following compute constructs:
         ```
 
 
-??? "Available caluses for kernels"
+??? "Available clauses for kernels"
 
     === "C/C++ and FORTRAN"
         ```c
@@ -118,7 +118,7 @@ To create a parallel region in OpenACC, we use the following compute constructs:
 
 The following compilers would support the [OpenACC programming model](https://www.openacc.org/tools).
 
- - [GNU](https://gcc.gnu.org/) - It is an opensource and can be used for Nvidia and AMD CPUs
+ - [GNU](https://gcc.gnu.org/) - It is an open source and can be used for Nvidia and AMD CPUs
  - [Nvidia HPC SDK](https://www.intel.com/content/www/us/en/developer/tools/oneapi/dpc-compiler.html#gs.zd201n) - It is from Nvidia, and works very well for Nvidia GPUs
  - [HPE](https://buy.hpe.com/us/en/software/high-performance-computing-software/high-performance-computing-software/high-performance-computing-software/hpe-cray-programming-environment/p/1012707351) - Presently it supports the FORTRAN (not C/C++) 
 
@@ -224,7 +224,7 @@ The following compilers would support the [OpenACC programming model](https://ww
 Our second exercise is to work on how to parallelize the loop. 
 Most of the time, we would be doing the intense computation under the loop. In situations like that, it would be more efficient to parallelize the loops in the computation. 
 To start with a simple example, we will begin with printing **`Hello World from GPU`** multiple times in addition to our previous example. 
-Moreover, just adding  **`#pragma acc parallel`** or  **`#pragma acc kernels`** would not parallelize your computation, instead will make sure that the computation will be executed on the device. 
+Moreover, just adding  **`#pragma acc parallel`** or  **`#pragma acc kernels`** would not parallelize your computation; instead, it would ensure that the computation is executed on the device. 
 
     
 <figure markdown>
@@ -247,7 +247,7 @@ Moreover, just adding  **`#pragma acc parallel`** or  **`#pragma acc kernels`** 
         ```
         
 
-??? "Available caluses for loop"
+??? "Available clauses for loop"
 
     === "C/C++ and FORTRAN"
         ```c
