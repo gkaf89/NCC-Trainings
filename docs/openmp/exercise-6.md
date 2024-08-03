@@ -52,7 +52,7 @@ In this exercise, we will try to add the `simd` classes to our existing problems
           // Start measuring time
           clock_t start = clock();
 
-          // Executing vector addtion function 
+          // Executing vector addition function 
           Vector_Add(a, b, c, N);
 
           // Stop measuring time and calculate the elapsed time
@@ -123,7 +123,7 @@ In this exercise, we will try to add the `simd` classes to our existing problems
           b(i) = cos(i*1D0) * cos(i*1D0) 
         enddo
     
-        ! Call the vector add subroutine 
+        ! Call the vector addition subroutine 
         call Vector_Addition(a, b, c, n)
 
         !!Verification
@@ -190,7 +190,7 @@ In this exercise, we will try to add the `simd` classes to our existing problems
           clock_t start = clock();
 
           // ADD YOUR PARALLEL REGION HERE	
-          // Executing vector addtion function 
+          // Executing vector addition function 
           Vector_Add(a, b, c, N);
 
           // Stop measuring time and calculate the elapsed time
@@ -301,7 +301,7 @@ In this exercise, we will try to add the `simd` classes to our existing problems
         // CPU function that adds two vector 
         float * Vector_Add(float *a, float *b, float *c, int n) 
         #pragma omp for simd
-        // ADD YOUR PARALLE SIMD
+        // ADD YOUR PARALLEL SIMD
           for(int i = 0; i < n; i ++)
             {
               c[i] = a[i] + b[i];
@@ -328,7 +328,7 @@ In this exercise, we will try to add the `simd` classes to our existing problems
     
           double start = omp_get_wtime();
           #pragma omp parallel 
-          // Executing vector addtion function 
+          // Executing vector addition function 
           Vector_Add(a, b, c, N);
           double end = omp_get_wtime();
           printf("Work took %f seconds\n", end - start);
@@ -402,7 +402,7 @@ In this exercise, we will try to add the `simd` classes to our existing problems
 
         start = omp_get_wtime()
         !$omp parallel 
-        ! Call the vector add subroutine 
+        ! Call the vector addition subroutine 
         call Vector_Addition(a, b, c, n)
         !$omp end parallel
         end = omp_get_wtime()
@@ -443,7 +443,7 @@ We will explore how single, master and critical are working in the OpenMP progra
         using namespace std;
         int main()
         {
-          cout << "Hello world from master thread "<< endl;
+          cout << "Hello world from the master thread "<< endl;
           cout << endl;
                     
           // creating the parallel region (with N number of threads)
@@ -456,7 +456,7 @@ We will explore how single, master and critical are working in the OpenMP progra
             } // parallel region is closed
             
         cout << endl;
-        cout << "end of the programme from master thread" << endl;
+        cout << "end of the programme from the master thread" << endl;
         return 0;
         }
         ```
