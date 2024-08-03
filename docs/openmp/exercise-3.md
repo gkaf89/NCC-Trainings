@@ -41,7 +41,7 @@ Therefore, it is easy to parallelise.
     
     ```
     Fortran array index starts from 1
-    C/C++ arrray index starts from 0
+    C/C++ array index starts from 0
     ```
 
 #### <u>Parallel version discussion</u>
@@ -54,7 +54,7 @@ For this, we just need to add below syntax (OpenMP directives).
 | Distribute iterations over the threads | #pragma omp for | !$omp do         |
 
 
-With the help of the above syntax the loops can be easily parallelised.
+With the help of the above syntax, the loops can be easily parallelised.
 The figure below shows an example of how the loops are parallelised.
 As we can notice here, we set the `omp_set_num_threads(5)`
 for the number of parallel threads that should be used within the loops.
@@ -113,7 +113,7 @@ In total, `5` threads will do just `2` iterations in parallel for `10` elements.
 
 From understating loop parallelisation, we will continue with vector operations in parallel, that is, adding two vectors.
 It is very simple, and we just need to add the `#pragma omp parallel for` for C/C++, `!$omp parallel do` for FORTRAN.
-Could you try this by yourself? The serial code, templates and compilation command have been provided as follows.
+Could you please try this yourself? The serial code, templates, and compilation command have been provided below.
 
 
 ### <u>Questions and Solutions</u>
@@ -164,7 +164,7 @@ Could you try this by yourself? The serial code, templates and compilation comma
           // Start measuring time
           clock_t start = clock();
 
-          // Executing vector addtion function 
+          // Executing vector addition function 
           Vector_Add(a, b, c, N);
 
           // Stop measuring time and calculate the elapsed time
@@ -235,7 +235,7 @@ Could you try this by yourself? The serial code, templates and compilation comma
           b(i) = cos(i*1D0) * cos(i*1D0) 
         enddo
     
-        ! Call the vector add subroutine 
+        ! Call the vector addition subroutine 
         call Vector_Addition(a, b, c, n)
 
         !!Verification
@@ -302,7 +302,7 @@ Could you try this by yourself? The serial code, templates and compilation comma
           clock_t start = clock();
 
           // ADD YOUR PARALLEL REGION HERE	
-          // Executing vector addtion function 
+          // Executing vector addition function 
           Vector_Add(a, b, c, N);
 
           // Stop measuring time and calculate the elapsed time
@@ -413,7 +413,7 @@ Could you try this by yourself? The serial code, templates and compilation comma
         // CPU function that adds two vector 
         float * Vector_Add(float *a, float *b, float *c, int n) 
         #pragma omp for
-        // ADD YOUR PARALLE
+        // ADD YOUR PARALLEL
           for(int i = 0; i < n; i ++)
             {
               c[i] = a[i] + b[i];
@@ -442,7 +442,7 @@ Could you try this by yourself? The serial code, templates and compilation comma
           clock_t start = clock();
 
           #pragma omp parallel 
-          // Executing vector addtion function 
+          // Executing vector addition function 
           Vector_Add(a, b, c, N);
 
           // Stop measuring time and calculate the elapsed time
@@ -518,7 +518,7 @@ Could you try this by yourself? The serial code, templates and compilation comma
         enddo
 
         !$omp parallel 
-        ! Call the vector add subroutine 
+        ! Call the vector addition subroutine 
         call Vector_Addition(a, b, c, n)
         !$omp end parallel
         
