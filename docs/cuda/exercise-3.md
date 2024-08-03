@@ -1,5 +1,5 @@
 We will now look into basic matrix multiplication.
-In this example, we will perform the matrix multiplication. Matrix multiplication involves a nested loop. Again, most of the time, we might end up doing computation with a nested loop. Therefore, studying this example would be good practice for solving the nested loop in the future. 
+In this example, we will perform matrix multiplication. Matrix multiplication involves a nested loop. Again, we might end up doing computation with a nested loop most of the time. Therefore, studying this example would be good practice for solving the nested loop in the future. 
 
 <figure markdown>
 ![](../figures/mat.png){align=center width=500}
@@ -7,7 +7,7 @@ In this example, we will perform the matrix multiplication. Matrix multiplicatio
 </figure>
 
  - Allocating the CPU memory for A, B, and C matrices.
-   Here we notice that the matrix is stored in a
+   Here, we notice that the matrix is stored in a
    1D array because we want to consider the same function concept for CPU and GPU.
 ```c
 // Initialize the memory on the host
@@ -30,7 +30,7 @@ cudaMalloc((void**)&d_b, sizeof(float) * (N*N));
 cudaMalloc((void**)&d_c, sizeof(float) * (N*N));
 ```
 
- - Now we need to fill the values for the matrix A and B.
+ - Now, we need to fill in the values for the matrix A and B.
 ```c
 // Initialize host matrix
 for(int i = 0; i < (N*N); i++)
@@ -285,7 +285,7 @@ free(c);
           ...
           ...
           
-          // Transfer data from host to device memory
+          // Transfer data from a host to device memory
           cudaMemcpy(.........................);
           cudaMemcpy(.........................);
   
@@ -354,8 +354,8 @@ free(c);
           if ((row < width) && (col < width)) 
             {
               float temp = 0;
-              // each thread computes one 
-              // element of the block sub-matrix
+              // Each thread computes one 
+              // Element of the block sub-matrix
               for (int i = 0; i < width; ++i) 
                 {
                   temp += d_a[row*width+i]*d_b[i*width+col];
@@ -430,7 +430,7 @@ free(c);
           // Transfer data back to host memory
           cudaMemcpy(c, d_c, sizeof(float) * (N*N), cudaMemcpyDeviceToHost);
 
-          // cpu computation for verification 
+          // CPU computation for verification 
           cpu_matrix_mul(a,b,host_check,N);
 
           // Verification
@@ -481,7 +481,7 @@ free(c);
         // output
         $ g++ Matrix-multiplication.cc -o Matrix-multiplication
         $ ./Matrix-multiplication
-        Programme assumes that matrix (square matrix) size is N*N 
+        The programme assumes that the matrix (square matrix) size is N*N 
         Please enter the N size number 
         4
         16 16 16 16 
@@ -497,7 +497,7 @@ free(c);
         
         // execution
         $ ./Matrix-Multiplication-GPU
-        Programme assumes that matrix (square matrix) size is N*N 
+        The programme assumes that the matrix (square matrix) size is N*N 
         Please enter the N size number
         $ 256
         
@@ -508,10 +508,10 @@ free(c);
 ??? Question "Questions"
 
     - Right now, we are using the 1D array to represent the matrix. However, you can also do it with the 2D matrix.
-    Can you try with 2D array matrix multiplication with 2D thread block?
+    Can you try 2D array matrix multiplication with a 2D thread block?
     - Can you get the correct solution if you remove the **`if ((row < width) && (col < width))`**
     condition from the **`__global__ void matrix_mul(float* d_a, float* d_b, float* d_c, int width)`** function?
-    - Please try with different thread blocks and different matrix sizes.
+    - Please try using different thread blocks and different matrix sizes.
     ```
     // Thread organization
     int blockSize = 32;
