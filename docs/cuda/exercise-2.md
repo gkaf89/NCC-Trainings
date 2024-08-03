@@ -1,10 +1,10 @@
 In this example, we will continue with vector addition in GPU using the CUDA programming model. This is an excellent example to begin with because we usually need to do some arithmetic operations using matrices or vectors. For that, we need to know how to access the indexes of the matrix or vector to do the computation efficiently. In this example, we will practice SIMT computation by adding two vectors.
 
- - Memory allocation on both CPU and GPU. Because as discussed before,
-   GPU is an accelerator and can not act as a host machine. So therefore, the computation
-   has to be initiated via CPU. That means, we need to first initialise the data on the host,
-   that is CPU. At the same time, we also need to initialise the memory allocation on the GPU.
-   Because, we need to transfer the data from a CPU to GPU.
+ - Memory allocation on both CPU and GPU. As discussed before,
+   GPU is an accelerator and can not act as a host machine. Therefore, the computation
+   has to be initiated via CPU. That means we need to first initialise the data on the host,
+   that is, the CPU. At the same time, we also need to initialise the memory allocation on the GPU.
+   We need to transfer the data from a CPU to a GPU.
 
 
 <figure markdown>
@@ -34,7 +34,7 @@ cudaMalloc((void**)&d_b, sizeof(float) * N);
 cudaMalloc((void**)&d_out, sizeof(float) * N);
 ```
 
- - Now we need to fill the values for the
+ - Now, we need to fill in the values for the
     arrays a and b. 
 ```c
 // Initialize host arrays
@@ -150,7 +150,7 @@ dim3 dimBlock(16, 16, 1);
     
  - Calling the kernel function
 ```c
-// execute the CUDA kernel function 
+// Execute the CUDA kernel function 
 vector_add<<<dimGrid, dimBlock>>>(d_a, d_b, d_out, N);
 ```
 
@@ -312,7 +312,7 @@ free(out);
         __global__ void vector_add(float *a, float *b, 
         float *out, int n) 
         {     
-          // allign your thread id indexes 
+          // Allign your thread id indexes 
           int i = ........
             
           // Allow the   threads only within the size of N
@@ -346,7 +346,7 @@ free(out);
               b[i] = ....
             }
 
-          // Transfer data from host to device memory
+          // Transfer data from a host to device memory
           cudaMemcpy.....
           
           // Thread organization 
@@ -409,7 +409,7 @@ free(out);
               out[i] = a[i] + b[i];
             }
 
-          // Synchronice all the threads 
+          // Synchronize all the threads 
           __syncthreads();
         }
 
@@ -438,7 +438,7 @@ free(out);
               b[i] = 2.0f;
             }
 
-          // Transfer data from host to device memory
+          // Transfer data from a host to device memory
           cudaMemcpy(d_a, a, sizeof(float) * N, cudaMemcpyHostToDevice);
           cudaMemcpy(d_b, b, sizeof(float) * N, cudaMemcpyHostToDevice);
     
@@ -446,7 +446,7 @@ free(out);
           dim3 dimGrid(ceil(N/32), ceil(N/32), 1);
           dim3 dimBlock(32, 32, 1); 
 
-          // execute the CUDA kernel function 
+          // Execute the CUDA kernel function 
           vector_add<<<dimGrid, dimBlock>>>(d_a, d_b, d_out, N);
 
           // Transfer data back to host memory
@@ -510,5 +510,5 @@ free(out);
 
     - What happens if you remove the __syncthreads(); from the __global__ void vector_add(float *a, float *b, float *out, int n) function.
     - Can you remove the if condition if(i < n) from the __global__ void vector_add(float *a, float *b, float *out, int n) function? If so, how can you do that?
-    - Here we do not use the cudaDeviceSynchronize() in the main application. Can you figure out why we do not need to use it?
+    Here, we do not use the cudaDeviceSynchronize() in the main application. Can you figure out why we do not need to?
     - Can you create a different thread block for a larger number of arrays?
