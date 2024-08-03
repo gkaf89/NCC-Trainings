@@ -5,7 +5,7 @@
  
 !!! Note
 
-	Shared variables should be handled carefully; otherwise, it causes race conditions in the program.
+	Shared variables should be handled carefully; otherwise, they cause race conditions in the program.
 
 <figure markdown>
 ![](../figures/shared-white.png){align=center width=500}
@@ -75,7 +75,7 @@
 
           do i = 1, n
               a(i) = a(i) + i
-              print*,'value of a after the parallel region', a(i)
+              print*,'value of an after the parallel region', a(i)
           end do
 
           ! Delete the memory
@@ -178,8 +178,8 @@
 
 ??? question "Questions"
 
-     - What is the value of the varible `a` in the parallel region and after the parallel region?
-     - After the parallel region, does variable `a` has been updated or not? 
+     - What is the value of the variable `a` in the parallel region and after the parallel region?
+     - After the parallel region, has variable `a` been updated or not? 
 
 
 #### <u>Lastprivate</u>
@@ -249,8 +249,8 @@
 
 ??? question "Questions"
 
-     - What is the value of the varible `var` in the parallel region and after the parallel region?
-     - Do you think the initial value of varibale `var` is been considered within the parallel region? 
+     - What is the value of the variable `var` in the parallel region and after the parallel region?
+     - Do you think the initial value of variable `var` is considered within the parallel region? 
 
 
 #### <u>Firstprivate</u>
@@ -258,7 +258,7 @@
  - firstprivate: is similar to a private clause
  - But each thread will have an initialized copy of the variables passed
  as firstprivate
- - Available for parallel constructs, loop, sections and single
+ - Available for parallel constructs, loops, sections and single
  constructs
 
 ??? example "Examples: Firstprivate variable"
@@ -321,7 +321,7 @@
 
 ??? question "Questions"
 
-     - What is the value of the varible `var` in the parallel region and after the parallel region?
+     - What is the value of the variable `var` in the parallel region and after the parallel region?
      - Is variable `var` has been updated after the parallel region, if not why, think?
 
 
