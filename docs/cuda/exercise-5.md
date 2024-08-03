@@ -1,5 +1,5 @@
 Unified memory simplifies the explicit data movement from host to device by programmers.
-CUDA API will manage the data transfer between CPU and GPU. In this example, we will look into vector addition in GPU using the unified memory concept.
+The CUDA API will manage the data transfer between CPU and GPU. In this example, we will investigate vector addition in GPU using the unified memory concept.
 
 
 <figure markdown>
@@ -59,7 +59,7 @@ CUDA API will manage the data transfer between CPU and GPU. In this example, we 
               out[i] = a[i] + b[i];
             }
 
-          // Synchronice all the threads 
+          // Synchronize all the threads 
           __syncthreads();
         }
  
@@ -88,7 +88,7 @@ CUDA API will manage the data transfer between CPU and GPU. In this example, we 
               b[i] = 2.0f;
             }
 
-          // Transfer data from host to device memory
+          // Transfer data from a host to device memory
           cudaMemcpy(d_a, a, sizeof(float) * N, cudaMemcpyHostToDevice);
           cudaMemcpy(d_b, b, sizeof(float) * N, cudaMemcpyHostToDevice);
 
@@ -96,7 +96,7 @@ CUDA API will manage the data transfer between CPU and GPU. In this example, we 
           dim3 dimGrid(ceil(N/32), ceil(N/32), 1);
           dim3 dimBlock(32, 32, 1);
            
-          // execute the CUDA kernel function 
+          // Execute the CUDA kernel function 
           vector_add<<<dimGrid, dimBlock>>>(d_a, d_b, d_out, N);
 
           // Transfer data back to host memory
@@ -254,7 +254,7 @@ CUDA API will manage the data transfer between CPU and GPU. In this example, we 
               out[i] = a[i] + b[i];
             }
 
-          // Synchronice all the threads 
+          // Synchronize all the threads 
           __syncthreads();
         }
 
@@ -286,7 +286,7 @@ CUDA API will manage the data transfer between CPU and GPU. In this example, we 
            }
 
          /*
-         // Transfer data from host to device memory
+         // Transfer data from a host to device memory
          cudaMemcpy(d_a, a, sizeof(float) * N, cudaMemcpyHostToDevice);
          cudaMemcpy(d_b, b, sizeof(float) * N, cudaMemcpyHostToDevice);
          */
@@ -295,7 +295,7 @@ CUDA API will manage the data transfer between CPU and GPU. In this example, we 
          dim3 dimGrid(ceil(N/32), ceil(N/32), 1);
          dim3 dimBlock(32, 32, 1);
          
-         // execute the CUDA kernel function 
+         // Execute the CUDA kernel function 
          vector_add<<<dimGrid, dimBlock>>>(d_a, d_b, d_out, N);
          cudaDeviceSynchronize();
          /*
@@ -363,5 +363,5 @@ CUDA API will manage the data transfer between CPU and GPU. In this example, we 
 
     - Here in this example, we have used **`cudaDeviceSynchronize()`**; can you remove **`cudaDeviceSynchronize()`**
       and still get a correct solution? If not, why (think)?
-    - Please try with different thread blocks and array sizes. 
+    - Please try using different thread blocks and array sizes. 
 
