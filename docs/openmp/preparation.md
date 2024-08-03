@@ -3,7 +3,7 @@
 - 1.2 [Please take a look if you are using Linux/Mac](https://docs.lxp.lu/first-steps/connecting/)
 
 #### 2. Use your username to connect to MeluXina
-- 2.1 For example the below example shows the user of `u100490` 
+- 2.1 For example, the below example shows the user of `u100490` 
   ```
   $ ssh u100490@login.lxp.lu -p 8822
   ### or
@@ -49,7 +49,7 @@
   ...
   ...
   ```
-#### 7. Until now you are in the login node, now its time to do the dry run test
+#### 7. Until now, you are in the login node; now it is time to do the dry run test
 - 7.1 Reserve the interactive node for running/testing OpenMP applications 
   ```
   $ salloc -A p200117 --res intro_openmp --partition=cpu --qos default -N 1 -t 01:00:00
@@ -73,7 +73,7 @@
             304381       cpu interact  u100490    p200117  RUNNING       0:37     01:00:00      1 mel2131
  ```
 
-#### 8. Now we need to check simple OpenMP application, if that is going to work for you:
+#### 8. Now we need to check a simple OpenMP application if that is going to work for you:
  - 8.1 Go to folder `Dry-run-test`
 ```
 [u100490@login03 OpenMP]$ cd Dry-run-test/
@@ -81,7 +81,7 @@
 source.sh  Test.cc  Test.f90
 ```
 
-#### 9. Finally, we need to load the compiler to test the our OpenMP codes
+#### 9. Finally, we need to load the compiler to test our OpenMP codes
  - 9.1 We will work with GNU compiler
  ```
  $ source module.sh
@@ -116,13 +116,13 @@ source.sh  Test.cc  Test.f90
  $ ./a.out
 
  // output
- $ Hello world from master thread 
+ $ Hello world from the master thread 
    Hello world from thread id Hello world from thread id Hello world from thread 
    id Hello world from thread id Hello world from thread id 4 from the team size of 
    1 from the team size of 20 from the team size of  from the team size of 555
  ```
 
-#### 11. Similarly for the hands-on session, we need to do the node reservation:
+#### 11. Similarly, for the hands-on session, we need to do the node reservation:
  - 11.1 For example, reservation
   ```
   $ salloc -A p200117 --res intro_openmp --partition=cpu --qos default -N 1 -t 02:30:00
@@ -139,8 +139,8 @@ source.sh  Test.cc  Test.f90
         salloc: Nodes mel2131 are ready for job
         ```
 
-#### 12. We will continue with our Hands on exercise
- - 12.1 For example, `Hello World` example, we do the following steps:
+#### 12. We will continue with our Hands-on exercise
+ - 12.1 For example, in the `Hello World` example, we do the following steps:
 
 ```
 [u100490@mel2063 OpenMP]$ pwd
