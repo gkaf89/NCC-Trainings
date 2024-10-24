@@ -12,4 +12,5 @@
 
 ### 1) [Introduction to GPU programming using CUDA, 30th, April, 2024](../cuda/index.md)
 
-### 2) [Introduction to GPU programming using CUDA, 30th, April, 2024](../cuda/index.md)
+### 2) [Python in the HPC, July, 2024](../python/index.md)
+
