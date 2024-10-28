@@ -178,8 +178,8 @@
 
 ??? question "Questions"
 
-     - What is the value of the variable `a` in the parallel region and after the parallel region?
-     - After the parallel region, has variable `a` been updated or not? 
+     - What is the value of the variable `c` in the parallel region and after the parallel region?
+     - After the parallel region, has variable `c` been updated or not? 
 
 
 #### <u>Lastprivate</u>
