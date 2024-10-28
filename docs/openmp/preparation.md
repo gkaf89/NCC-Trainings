@@ -52,12 +52,12 @@
 #### 7. Until now, you are in the login node; now it is time to do the dry run test
 - 7.1 Reserve the interactive node for running/testing OpenMP applications 
   ```
-  $ salloc -A p200117 --res intro_openmp --partition=cpu --qos default -N 1 -t 01:00:00
+  $ salloc -A p200117 --res eurocc2-cpu-course-morning --partition=cpu --qos default -N 1 -t 01:00:00
   ```
   
     ??? "check if your reservation is allocated"
         ```
-        [u100490@login03 ~]$ salloc -A p200117 --res intro_openmp --partition=cpu --qos default -N 1 -t 01:00:00
+        [u100490@login03 ~]$ salloc -A p200117 --res eurocc2-cpu-course-morning --partition=cpu --qos default -N 1 -t 01:00:00
         salloc: Pending job allocation 296848
         salloc: job 296848 queued and waiting for resources
         salloc: job 296848 has been allocated resources
@@ -125,12 +125,12 @@ source.sh  Test.cc  Test.f90
 #### 11. Similarly, for the hands-on session, we need to do the node reservation:
  - 11.1 For example, reservation
   ```
-  $ salloc -A p200117 --res intro_openmp --partition=cpu --qos default -N 1 -t 02:30:00
+  $ salloc -A p200117 --res eurocc2-cpu-course-afternoon --partition=cpu --qos default -N 1 -t 02:30:00
   ```
   
     ??? "check if your reservation is allocated"
         ```
-        [u100490@login03 ~]$ salloc -A p200117 --res intro_openmp --partition=cpu --qos default -N 1 -t 02:30:00
+        [u100490@login03 ~]$ salloc -A p200117 --res eurocc2-cpu-course-afternoon --partition=cpu --qos default -N 1 -t 02:30:00
         salloc: Pending job allocation 296848
         salloc: job 296848 queued and waiting for resources
         salloc: job 296848 has been allocated resources

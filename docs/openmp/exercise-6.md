@@ -154,6 +154,7 @@ In this exercise, we will try to add the `simd` classes to our existing problems
         #include <math.h>
         #include <assert.h>
         #include <time.h>
+        #include <omp.h>
         
         #define N 5120
         #define MAX_ERR 1e-6
@@ -294,14 +295,16 @@ In this exercise, we will try to add the `simd` classes to our existing problems
         #include <math.h>
         #include <assert.h>
         #include <time.h>
+        #include <omp.h>
         
         #define N 5120
         #define MAX_ERR 1e-6
 
         // CPU function that adds two vector 
         float * Vector_Add(float *a, float *b, float *c, int n) 
-        #pragma omp for simd
+        {
         // ADD YOUR PARALLEL SIMD
+        #pragma omp for simd
           for(int i = 0; i < n; i ++)
             {
               c[i] = a[i] + b[i];
@@ -440,6 +443,7 @@ We will explore how single, master and critical are working in the OpenMP progra
         ```c
         #include<iostream>
         #include<omp.h>
+        #include <omp.h>
         using namespace std;
         int main()
         {

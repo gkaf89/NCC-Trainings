@@ -411,9 +411,10 @@ Could you please try this yourself? The serial code, templates, and compilation 
         #define MAX_ERR 1e-6
 
         // CPU function that adds two vector 
-        float * Vector_Add(float *a, float *b, float *c, int n) 
-        #pragma omp for
+        float * Vector_Add(float *a, float *b, float *c, int n)
+        {
         // ADD YOUR PARALLEL
+        #pragma omp for
           for(int i = 0; i < n; i ++)
             {
               c[i] = a[i] + b[i];
@@ -440,9 +441,9 @@ Could you please try this yourself? The serial code, templates, and compilation 
     
           // Start measuring time
           clock_t start = clock();
-
-          #pragma omp parallel 
+          
           // Executing vector addition function 
+          #pragma omp parallel 
           Vector_Add(a, b, c, N);
 
           // Stop measuring time and calculate the elapsed time

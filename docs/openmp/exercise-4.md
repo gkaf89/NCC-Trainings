@@ -12,7 +12,7 @@
 
 ??? Info "Example - Loop scheduling clauses"
 
-    === "Serial(C/C++)"
+    === "C/C++"
 
         ```c
         #pragma omp parallel for schedule(static)
@@ -31,7 +31,7 @@
           }
         ```  
         
-    === "FORTRAN(C/C++)"
+    === "FORTRAN"
     
         ```c
         !$omp parallel do schedule(static)
@@ -64,7 +64,7 @@
         ```c
         #include <iostream>
         #include <omp.h>
-        
+        using namespace std;
         int main()
         {
          int N = 10;
@@ -132,7 +132,7 @@
         ```c
         #include <iostream>
         #include <omp.h>
-        
+        using namespace std;
         int main()
         {
          int N = 10;
@@ -199,7 +199,7 @@
         ```c
         #include <iostream>
         #include <omp.h>
-        
+        using namespace std;
         int main()
         {
          int N = 10;
@@ -262,7 +262,7 @@
         ```c
         #include <iostream>
         #include <omp.h>
-        
+        using namespace std;
         int main()
         {
          int N = 10;
@@ -342,7 +342,7 @@
         ```c
         #include <iostream>
         #include <omp.h>
-        
+        using namespace std;
         int main()
         {
          int N = 10;
