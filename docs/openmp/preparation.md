@@ -17,47 +17,47 @@
   ```
 - 3.2 After that, go to the project directory.
   ```
-  [u100490@login02 ~]$ cd /project/home/p200117
-  [u100490@login02 p200117]$ pwd
-  /project/home/p200117
+  [u100490@login02 ~]$ cd /project/home/p200301
+  [u100490@login02 p200301]$ pwd
+  /project/home/p200301
   ```
   
 #### 4. And please create your own working folder under the project directory
 - 4.1 For example, here is the user with `u100490`:
   ```
-  [u100490@login02 p200117]$ mkdir $USER
+  [u100490@login02 p200301]$ mkdir $USER
   ### or 
-  [u100490@login02 p200117]$ mkdir u100490  
+  [u100490@login02 p200301]$ mkdir u100490  
   ```
 #### 5. Now it is time to move into your home directory
 - 5.1 For example, with user home directory `u100490` 
   ```
-  [u100490@login02 p200117]$cd u100490
+  [u100490@login02 p200301]$cd u100490
   ```
 
 #### 6. Now it is time to copy the folder which has examples and source files to your home directory
 - 6.1 For example, with user home directory `u100490`
   ```
-  [u100490@login03 u100490]$ cp -r /project/home/p200117/OpenMP .
+  [u100490@login03 u100490]$ cp -r /project/home/p200301/OpenMP .
   [u100490@login03 u100490]$ cd OpenMP/
   [u100490@login03 OpenMP]$ pwd
-  /project/home/p200117/u100490/OpenMP
+  /project/home/p200301/u100490/OpenMP
   [u100490@login03 OpenMP]$ ls -lthr
-  drwxr-s---. 2 u100490 p200117 4.0K May 27 21:42 Data-Sharing-Attribute
-  drwxr-s---. 2 u100490 p200117 4.0K May 28 00:35 Parallel-Region
-  drwxr-s---. 2 u100490 p200117 4.0K May 30 18:26 Dry-run-test
+  drwxr-s---. 2 u100490 p200301 4.0K May 27 21:42 Data-Sharing-Attribute
+  drwxr-s---. 2 u100490 p200301 4.0K May 28 00:35 Parallel-Region
+  drwxr-s---. 2 u100490 p200301 4.0K May 30 18:26 Dry-run-test
   ...
   ...
   ```
 #### 7. Until now, you are in the login node; now it is time to do the dry run test
 - 7.1 Reserve the interactive node for running/testing OpenMP applications 
   ```
-  $ salloc -A p200117 --res eurocc2-cpu-course-morning --partition=cpu --qos default -N 1 -t 01:00:00
+  $ salloc -A p200301 --res eurocc2-cpu-course-morning --partition=cpu --qos default -N 1 -t 01:00:00
   ```
   
     ??? "check if your reservation is allocated"
         ```
-        [u100490@login03 ~]$ salloc -A p200117 --res eurocc2-cpu-course-morning --partition=cpu --qos default -N 1 -t 01:00:00
+        [u100490@login03 ~]$ salloc -A p200301 --res eurocc2-cpu-course-morning --partition=cpu --qos default -N 1 -t 01:00:00
         salloc: Pending job allocation 296848
         salloc: job 296848 queued and waiting for resources
         salloc: job 296848 has been allocated resources
@@ -70,7 +70,7 @@
  ```
  [u100490@mel2131 ~]$ squeue -u u100490
              JOBID PARTITION     NAME     USER    ACCOUNT    STATE       TIME   TIME_LIMIT  NODES NODELIST(REASON)
-            304381       cpu interact  u100490    p200117  RUNNING       0:37     01:00:00      1 mel2131
+            304381       cpu interact  u100490    p200301  RUNNING       0:37     01:00:00      1 mel2131
  ```
 
 #### 8. Now we need to check a simple OpenMP application if that is going to work for you:
@@ -125,12 +125,12 @@ source.sh  Test.cc  Test.f90
 #### 11. Similarly, for the hands-on session, we need to do the node reservation:
  - 11.1 For example, reservation
   ```
-  $ salloc -A p200117 --res eurocc2-cpu-course-afternoon --partition=cpu --qos default -N 1 -t 02:30:00
+  $ salloc -A p200301 --res eurocc2-cpu-course-afternoon --partition=cpu --qos default -N 1 -t 02:30:00
   ```
   
     ??? "check if your reservation is allocated"
         ```
-        [u100490@login03 ~]$ salloc -A p200117 --res eurocc2-cpu-course-afternoon --partition=cpu --qos default -N 1 -t 02:30:00
+        [u100490@login03 ~]$ salloc -A p200301 --res eurocc2-cpu-course-afternoon --partition=cpu --qos default -N 1 -t 02:30:00
         salloc: Pending job allocation 296848
         salloc: job 296848 queued and waiting for resources
         salloc: job 296848 has been allocated resources
@@ -144,16 +144,16 @@ source.sh  Test.cc  Test.f90
 
 ```
 [u100490@mel2063 OpenMP]$ pwd
-/project/home/p200117/u100490/OpenMP
+/project/home/p200301/u100490/OpenMP
 [u100490@mel2063 OpenMP]$ ls
 [u100490@mel2063 OpenMP]$ ls
-drwxr-s---. 2 u100490 p200117 4.0K May 27 21:42 Data-Sharing-Attribute
-drwxr-s---  2 u100490 p200117 4.0K May 28 00:35 Parallel-Region
-drwxr-s---  2 u100490 p200117 4.0K May 28 23:45 Worksharing-Constructs-Schedule
-drwxr-s---. 2 u100490 p200117 4.0K May 29 00:57 Worksharing-Constructs-Other
-drwxr-s---. 2 u100490 p200117 4.0K May 29 18:07 Worksharing-Constructs-Loop
-drwxr-s---. 2 u100490 p200117 4.0K May 30 18:25 SIMD-Others
-drwxr-s---. 2 u100490 p200117 4.0K May 30 18:37 Dry-run-test
--rw-r-----  1 u100490 p200117  241 May 30 18:41 module.sh
+drwxr-s---. 2 u100490 p200301 4.0K May 27 21:42 Data-Sharing-Attribute
+drwxr-s---  2 u100490 p200301 4.0K May 28 00:35 Parallel-Region
+drwxr-s---  2 u100490 p200301 4.0K May 28 23:45 Worksharing-Constructs-Schedule
+drwxr-s---. 2 u100490 p200301 4.0K May 29 00:57 Worksharing-Constructs-Other
+drwxr-s---. 2 u100490 p200301 4.0K May 29 18:07 Worksharing-Constructs-Loop
+drwxr-s---. 2 u100490 p200301 4.0K May 30 18:25 SIMD-Others
+drwxr-s---. 2 u100490 p200301 4.0K May 30 18:37 Dry-run-test
+-rw-r-----  1 u100490 p200301  241 May 30 18:41 module.sh
 [u100490@mel2063 OpenMP]$ source module.sh
 ```
