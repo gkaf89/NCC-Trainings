@@ -37,7 +37,7 @@ To learn more about MeluXina, please consult the Meluxina overview and the [Melu
 ### Course Organization and Registration
 Format - Online <br />
 Previous event: 31st May, 2023 <br />
-Next Event: xx, September, 2024
+Next Event: 29th, October, 2024
 
-[Registration: xx, September, 2024](https://supercomputing.lu/events){ .md-button .md-button--primary }
+[Registration: 29th, October, 2024](https://supercomputing.lu/events){ .md-button .md-button--primary }
 
