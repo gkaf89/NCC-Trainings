@@ -1,7 +1,7 @@
 # Introduction to OpenMP Programming for Shared Memory Parallel Architecture
 
 <figure markdown>
-[![](../figures/OpenMP-first-page.png)](https://github.com/NCCLUX/NCC-Trainings/blob/eb4fd80c4e791b577ce14c592bf4ba635ce9d9c8/Courses/docs/openmp/Training_OpenMP_Formatted.pdf)
+[![](../figures/OpenMP-first-page.png)](https://github.com/NCCLUX/NCC-Trainings/blob/10fd99240a7f6c7ce8068dd113b459928a62241f/docs/openmp/Training_OpenMP_2024.pdf)
 <figcaption></figcaption>
 </figure>
 
