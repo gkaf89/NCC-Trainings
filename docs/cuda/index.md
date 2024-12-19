@@ -35,6 +35,6 @@ To learn more about MeluXina, please consult the Meluxina overview and the [Melu
 ### Course Organization and Registration
 Format - Online <br />
 Previous events: 27th March, 2023 and 30th, April, 2024 <br />
-Next Event: xx, December, 2024
+Next Event: 21st, January, 2025
 
-[Registration: xx, December, 2024](https://supercomputing.lu/events){ .md-button .md-button--primary }
+[Registration: 21st, January, 2025](https://eur01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fevents.eurocc.lu%2Fintroduction-to-gpu-programming-using-cuda&data=05%7C02%7Cezhilmathi.krishnasamy%40uni.lu%7C496380009d3f4a6cee6e08dd200e344b%7C445a9c950f9d49539db1bc4a45dd1220%7C0%7C0%7C638701967579041656%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=MKBauwEbrb2Lq6sPjbAgjvlKtBrER6RFK3hGcSuQrMI%3D&reserved=0){ .md-button .md-button--primary }
