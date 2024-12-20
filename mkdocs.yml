@@ -52,7 +52,8 @@ nav:
         - Jupyter server and parallel libraries: 'python/index.md'              
       - Software Environment Management:
         - Introduction to Conda: 'environment/conda.md'
-        #- Best practices in environmen management: 'environment/best-practises.md'
+      - Numerical libraries: 'numerical-libraries/index.md'
+      - MPI for Python: 'mpi-python/index.md'
       
     - Bootcamp:
         - AI:
