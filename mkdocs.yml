@@ -52,7 +52,7 @@ nav:
         - Jupyter server and parallel libraries: 'python/index.md'              
       - Software Environment Management:
         - Introduction to Conda: 'environment/conda.md'
-      - Numerical libraries: 'numerical-libraries/index.md'
+      - Numerical Libraries: 'numerical-libraries/index.md'
       - MPI for Python: 'mpi-python/index.md'
       
     - Bootcamp:
