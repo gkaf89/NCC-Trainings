@@ -1,10 +1,6 @@
-In this example, we will continue with vector addition in GPU using the CUDA programming model. This is an excellent example to begin with because we usually need to do some arithmetic operations using matrices or vectors. For that, we need to know how to access the indexes of the matrix or vector to do the computation efficiently. In this example, we will practice SIMT computation by adding two vectors.
+In this tutorial, we will explore vector addition on the GPU using the CUDA programming model. This example is ideal for beginners, as we often need to perform arithmetic operations with matrices and vectors. To do so effectively, it's crucial to understand how to access the indices of these structures for efficient computation. In this session, we will focus on SIMT (Single Instruction, Multiple Threads) computation by adding two vectors.
 
- - Memory allocation on both CPU and GPU. As discussed before,
-   GPU is an accelerator and can not act as a host machine. Therefore, the computation
-   has to be initiated via CPU. That means we need to first initialise the data on the host,
-   that is, the CPU. At the same time, we also need to initialise the memory allocation on the GPU.
-   We need to transfer the data from a CPU to a GPU.
+- Memory allocation on both the CPU and GPU is essential. As previously discussed, the GPU serves as an accelerator and cannot function as a host machine. Therefore, computation must be initiated via the CPU. This necessitates initializing the data on the host (the CPU) first. Simultaneously, we must allocate memory on the GPU and transfer the data from the CPU to the GPU.
 
 
 <figure markdown>
@@ -508,7 +504,7 @@ free(out);
 
 ??? Question "Questions"
 
-    - What happens if you remove the __syncthreads(); from the __global__ void vector_add(float *a, float *b, float *out, int n) function.
+    - What happens if you remove the __syncthreads(); from the __global__ void vector_add(float *a, float *b, float *out, int n) function?
     - Can you remove the if condition if(i < n) from the __global__ void vector_add(float *a, float *b, float *out, int n) function? If so, how can you do that?
     Here, we do not use the cudaDeviceSynchronize() in the main application. Can you figure out why we do not need to?
     - Can you create a different thread block for a larger number of arrays?
