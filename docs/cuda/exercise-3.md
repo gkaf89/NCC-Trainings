@@ -1,5 +1,5 @@
 We will now look into basic matrix multiplication.
-In this example, we will perform matrix multiplication. Matrix multiplication involves a nested loop. Again, we might end up doing computation with a nested loop most of the time. Therefore, studying this example would be good practice for solving the nested loop in the future. 
+In this tutorial, we will explore the process of matrix multiplication, a fundamental operation in linear algebra. Matrix multiplication is executed through a nested loop structure, which is a common approach for numerous computational tasks involving matrices. Mastering this example will provide valuable insight and practical experience in handling nested loops, a crucial skill for solving complex problems in future applications. 
 
 <figure markdown>
 ![](../figures/mat.png){align=center width=500}
