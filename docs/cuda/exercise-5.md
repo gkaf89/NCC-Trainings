@@ -1,5 +1,4 @@
-Unified memory simplifies the explicit data movement from host to device by programmers.
-The CUDA API will manage the data transfer between CPU and GPU. In this example, we will investigate vector addition in GPU using the unified memory concept.
+Unified memory streamlines the data transfer process between the host (CPU) and the device (GPU), minimizing the need for explicit data movement by programmers. The CUDA API facilitates this data management, effectively handling the transfer of data between the CPU and GPU. In this tutorial, we will explore the concept of unified memory through a practical example of vector addition performed on the GPU.
 
 
 <figure markdown>
@@ -9,7 +8,7 @@ The CUDA API will manage the data transfer between CPU and GPU. In this example,
 
 
  - Just one memory allocation is enough [`cudaMallocManaged()`](https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__MEMORY.html#group__CUDART__MEMORY_1gd228014f19cc0975ebe3e0dd2af6dd1b).
- The below table summarises the required steps needed for the unified memory concept.
+ The table below summarises the required steps needed for the unified memory concept.
 
 
 |__Without unified memory__|__With unified memory__|
@@ -152,7 +151,7 @@ The CUDA API will manage the data transfer between CPU and GPU. In this example,
               out[i] = a[i] + b[i];
             }
 
-          // Synchronice all the threads 
+          // Synchronize all the threads 
           __syncthreads();
         }
 
@@ -182,7 +181,7 @@ The CUDA API will manage the data transfer between CPU and GPU. In this example,
            }
 
          /*
-         // Transfer data from host to device memory
+         // Transfer data from a host to device memory
          cudaMemcpy(d_a, a, sizeof(float) * N, cudaMemcpyHostToDevice);
          cudaMemcpy(d_b, b, sizeof(float) * N, cudaMemcpyHostToDevice);
          */
