@@ -1,7 +1,7 @@
 ### Time measurement
 
 In CUDA, the execution time can be measured by using the CUDA events.
-CUDA API events shall be created using `cudaEvent_t`, for example, `cudaEvent_t start, stop;`. Moreover, it can be initiated by `cudaEventCreate(&start)` for a start, and similarly for stop,
+CUDA API events shall be created using `cudaEvent_t`, for example, `cudaEvent_t start, stop;`. Moreover, it can be initiated by `cudaEventCreate(&start)` for a start, and similarly, for stop,
 it can be created as `cudaEventCreate(&stop)`. 
 
 ??? "CUDA API"
@@ -14,7 +14,7 @@ it can be created as `cudaEventCreate(&stop)`.
 
 And it can be initialised to measure the timing as `cudaEventRecord(start,0)` and `cudaEventRecord(stop,0)`.
 Then the timings can be measured as floats, for example, `cudaEventElapsedTime(&time, start, stop)`.
-Finally, all the events should be destroyed using `cudaEventDestroy`, for example, `cudaEventDestroy(start)` and `cudaEventDestroy(start)`.
+Finally, all events should be destroyed using `cudaEventDestroy`, such as `cudaEventDestroy(start)` and `cudaEventDestroy(start)`.
 
 ??? "CUDA API"
     ```
@@ -245,5 +245,5 @@ Max.\ warps\ per\ SM}$
      - Occupancy: can you change **`numBlocks`** and **`blockSize`** in the occupancy.cu code
      and check how it affects or predicts the occupancy of the given Nvidia microarchitecture.
      - Profiling: run your **`Matrix-multiplication.cu`** and **`Vector-addition.cu`** code and observe what you notice.
-     For example, how can occupancy be improved? Or maximise a GPU utilization?
+     For example, how can occupancy be improved? Or maximize GPU utilization?
      - Timing: using CUDA events API, can you measure your GPU kernel execution and compare how fast your GPU computation is compared to CPU computation?
