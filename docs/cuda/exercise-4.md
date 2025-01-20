@@ -1,14 +1,11 @@
-In this example, we try shared memory matrix multiplication.
-This is achieved by blocking the global matrix into a small block matrix (tiled matrix)
-that can fit into the shared memory of the Nvidia GPU.
-Shared memory from the GPUs has good bandwidth within the GPUs compared to access to the global memory.
+In this tutorial, we will explore the concept of shared memory matrix multiplication. This technique involves partitioning the global matrix into smaller tiled matrices that are designed to fit into the shared memory of Nvidia GPUs. Utilizing shared memory is advantageous, as it offers significantly higher bandwidth compared to access to global memory, thereby enhancing performance in computational tasks.
 
 
 ![](../figures/memory-2.png){align=middle}
 
 
  - This is very similar to the previous example; however, we just need to allocate the small block matrix into shared memory.
- The below example shows the blocking size for `a' and `b` matrices, respectively, for global `A` and `B` matrices. 
+ The example below shows the blocking size for `a` and `b` matrices, respectively, for global `A` and `B` matrices. 
 ```
   // Shared memory allocation for the block matrix  
   __shared__ int a_block[BLOCK_SIZE][BLOCK_SIZE];
