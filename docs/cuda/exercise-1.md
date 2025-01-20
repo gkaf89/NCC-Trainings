@@ -1,19 +1,19 @@
-Now, our first exercise would be to print out the Hello World from GPU.
+Now, our first exercise would be to print out "Hello World" from the GPU.
 To do that, we need to do the following things:
 
- - Run a part or entire application on the GPU
- - Call the CUDA function on a device
- - It should be called using function qualifier **`__global__`**
- - Calling the device function on the main program:
- - C/C++ example, **`c_function()`**
- - CUDA example, **`cuda_function<<<1,1>>>()`** (just using 1 thread)
- - **`<<< >>>`**, specify the threads blocks within the bracket
- - Make sure to synchronize the threads
- - **`__syncthreads()`** synchronizes all the threads within a thread block
- - **`CudaDeviceSynchronize()`** synchronizes a kernel call in host
- - Most of the CUDA APIs are synchronized calls by default (but sometimes
-   it is good to call explicit synchronized calls to avoid errors
-   in the computation)
+- Run a part or the entire application on the GPU.
+- Call the CUDA function on a device.
+- It should be called using the function qualifier **`__global__`**.
+- Call the device function in the main program:
+- C/C++ example, **`c_function()`**.
+- CUDA example, **`cuda_function<<<1,1>>>()`** (just using 1 thread).
+- **`<<< >>>`**, specify the thread blocks within the brackets.
+- Make sure to synchronize the threads.
+- **`__syncthreads()`** synchronizes all the threads within a thread block.
+- **`CudaDeviceSynchronize()`** synchronizes a kernel call on the host.
+- Most of the CUDA APIs are synchronized calls by default, but sometimes
+it is good to call explicit synchronized calls to avoid errors
+in the computation.
 
 ### <u>Questions and Solutions</u>
 
