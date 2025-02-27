@@ -50,21 +50,21 @@ nav:
                         - Unified Memory: 'openacc/exercise-4.md'
                         - Profiling and Performance: 'openacc/profiling.md'
         - Python in the HPC:
-            - Jupyter server and parallel libraries: 'python/index.md'              
+            - Jupyter server and parallel libraries: 'python/index.md'
         - Software Environment Management:
             - User space environment management:
                 - Introduction to Conda: 'environment/conda.md'
                 - Package management in R: 'environment/R.md'
 #           - Best practices in environment management: 'environment/best-practises.md'
-#               - Containers in HPC systems
+#           - Containers in HPC systems
     - Bootcamp:
         - AI:
             - Introduction: 'Bootcamps/ai/introduction.md'
             - Preparation: 'Bootcamps/ai/preparation.md'
             - Hands-on: 'Bootcamps/ai/handson.md'
     - Hackathons:
-          - HPDA:
-              - Introduction: 'Hackathons/hpda/introduction.md'
+        - HPDA:
+            - Introduction: 'Hackathons/hpda/introduction.md'
     - Instructions for Educators:
           - Introduction: 'education/introduction.md'
           - Requirements: 'education/requirements.md'
@@ -224,10 +224,10 @@ plugins:
 
 # Extra stylesheets (incl. Twitter Bootstrap)
 extra_css:
-    - https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css
+#   - https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css
     - stylesheets/extra.css
 #   - stylesheets/bootstrap.min.css
-    - https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css
+#   - https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css
 
 extra:
     social:
