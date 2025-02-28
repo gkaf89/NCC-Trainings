@@ -51,12 +51,13 @@ nav:
                         - Profiling and Performance: 'openacc/profiling.md'
         - Python in the HPC:
             - Jupyter server and parallel libraries: 'python/index.md'
-        - Software Environment Management:
-            - User space environment management:
-                - Introduction to Conda: 'environment/conda.md'
-                - Package management in R: 'environment/R.md'
-#           - Best practices in environment management: 'environment/best-practises.md'
-#           - Containers in HPC systems
+        - Environment management and containers:
+            - Introduction: 'environment/index.md'
+            - Environment managers: 'environment/conda.md'
+            - Package management in R: 'environment/R.md'
+            - Containers: 'environment/containers.md'
+#               - Best practices in environment management: 'environment/best-practises.md'
+#               - Containers in HPC systems:
     - Bootcamp:
         - AI:
             - Introduction: 'Bootcamps/ai/introduction.md'
