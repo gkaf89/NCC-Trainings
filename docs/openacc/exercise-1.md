@@ -1,18 +1,17 @@
 #### <u>Compute Constructs</u>
 
-In our first exercise, we will look into how to offload the computation to the device (GPU).
-Because the main aim of the OpenACC is to facilitate offloading the computation using OpenACC APIs.
-OpenACC provides two variants to offload the computations to GPU. They are explained as follows,
 
-   - OpenACC provides two compute constructs to parallelize the computation
-   - The first one is `parallel`, and the second is `kernels`
-   - Both of these parallel constructs perform more or less the same
-   - However, `kernels` will have more control over the parallel region
-   - Therefore, as a programmer, if you are very familiar with what you are doing in the parallel region,
-     you may use `parallel`; otherwise, it is better to use `kernels`
-   - Because the compiler will take care of the safe parallelization under the `kernels` construct 
+In this initial exercise, we will explore the process of offloading computational tasks to a device, specifically the GPU (Graphics Processing Unit). The primary objective of OpenACC is to streamline this offloading using its dedicated APIs.
 
-At the same time, in order to enable OpenACC constructs, clauses, and environment variables. etc., we need to include the OpenACC library as follows:
+OpenACC offers two primary constructs for offloading computations to the GPU, which we will discuss in detail:
+
+1. **Parallel Construct (`parallel`)**: This construct allows for the parallelization of computations across multiple processing units. It is a suitable choice for programmers who possess a strong understanding of their code's parallel behavior.
+
+2. **Kernels Construct (`kernels`)**: This alternative also enables parallelization but provides greater control over the parallel region. It is generally recommended for programmers who may not be as familiar with the intricacies of parallel execution, as the compiler will manage the complexities of safe parallelization within this construct.
+
+Both constructs serve similar purposes in facilitating computation on the GPU; however, the choice between them depends on the programmer's comfort level with parallel programming. If you have significant experience and knowledge of the computations being executed in parallel, you may opt for the `parallel` construct. In contrast, for those who prefer a more managed approach to ensure safety and correctness in parallel execution, using `kernels` is advisable.
+
+To effectively utilize OpenACC constructs, clauses, and environment variables, it is essential to include the OpenACC library in your code. This inclusion enables access to the full range of OpenACC features and functionalities.
 
 !!! Info "OpenACC library"
 
@@ -30,7 +29,7 @@ At the same time, in order to enable OpenACC constructs, clauses, and environmen
 </figure>
 
 
-To create a parallel region in OpenACC, we use the following compute constructs:
+To create a parallel region in OpenACC, we utilize the following compute constructs:
 
 !!! Info "Parallel Constructs"
 
@@ -113,14 +112,14 @@ To create a parallel region in OpenACC, we use the following compute constructs:
         default( none | present )
         ```
 
+#### <u>Compilers Supporting OpenACC Programming Model</u>
 
-#### <u>Compilers</u>
+The following compilers provide support for the [OpenACC programming model](https://www.openacc.org/tools), which facilitates the development of parallel applications across various architectures:
 
-The following compilers would support the [OpenACC programming model](https://www.openacc.org/tools).
-
- - [GNU](https://gcc.gnu.org/) - It is an open source and can be used for Nvidia and AMD CPUs
- - [Nvidia HPC SDK](https://www.intel.com/content/www/us/en/developer/tools/oneapi/dpc-compiler.html#gs.zd201n) - It is from Nvidia, and works very well for Nvidia GPUs
- - [HPE](https://buy.hpe.com/us/en/software/high-performance-computing-software/high-performance-computing-software/high-performance-computing-software/hpe-cray-programming-environment/p/1012707351) - Presently it supports the FORTRAN (not C/C++) 
+- **[GNU Compiler Collection (GCC)](https://gcc.gnu.org/)**: This is an open-source compiler that supports both Nvidia and AMD CPUs, making it a versatile choice for developers looking to implement OpenACC.
+- **[Nvidia HPC SDK](https://www.intel.com/content/www/us/en/developer/tools/oneapi/dpc-compiler.html#gs.zd201n)**: Developed by Nvidia, this compiler is specifically optimized for Nvidia GPUs. It offers robust support for the OpenACC programming model, enabling efficient utilization of GPU resources.
+- **[HPE Compiler](https://buy.hpe.com/us/en/software/high-performance-computing-software/high-performance-computing-software/high-performance-computing-software/hpe-cray-programming-environment/p/1012707351)**: Currently, this compiler supports FORTRAN but does not have support for C/C++. It is designed for high-performance computing applications and works well with the OpenACC model.
+  
 
 !!! Info "Examples (GNU, Nvidia HPC SDK and HPE): Compilation"
 
@@ -221,11 +220,11 @@ The following compilers would support the [OpenACC programming model](https://ww
 
 #### <u>Loop</u>
 
-Our second exercise is to work on how to parallelize the loop. 
-Most of the time, we would be doing the intense computation under the loop. In situations like that, it would be more efficient to parallelize the loops in the computation. 
-To start with a simple example, we will begin with printing **`Hello World from GPU`** multiple times in addition to our previous example. 
-Moreover, just adding  **`#pragma acc parallel`** or  **`#pragma acc kernels`** would not parallelize your computation; instead, it would ensure that the computation is executed on the device. 
+In our second exercise, we will delve into the principles of loop parallelization, a crucial technique in high-performance computing that significantly enhances the efficiency of intensive computations. When dealing with computationally heavy operations within loops, it is often advantageous to parallelize these loops to leverage the full capabilities of multi-core processors or GPUs.
 
+To illustrate this concept, we will begin with a straightforward example: printing **`Hello World from GPU`** multiple times. This will serve as a basis for understanding how to implement loop parallelization effectively.
+
+It is important to note that simply adding directives such as **`#pragma acc parallel`** or **`#pragma acc kernels`** is insufficient for achieving parallel execution of computations. These directives are primarily designed to instruct the compiler to execute the computations on the device, but additional considerations and structure are required to fully exploit parallelization. Understanding how to appropriately organize and optimize loops for parallel execution is essential for maximizing performance in computational tasks. 
     
 <figure markdown>
 ![](../figures/acc-loop.png){align=center width=500}
