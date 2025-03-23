@@ -1,26 +1,22 @@
-####<u>Collapse</u>
-The collapse clause can be used for the nested loop; an entire part of the iteration will be divided by an available number of threads. If the outer loop is equal to the available threads, then the outer loop will be divided by the number of threads. The figure below shows an example of not using the `collapse` clause. Therefore, only the outer loop is parallelised; each outer loop index will have N number of inner loop iterations. 
+#### <u>Collapse Clause</u>
+
+The collapse clause is an important feature for optimizing nested loops in parallel computing. When applied, it allows the entire section of the iteration to be divided among the available number of threads. Specifically, if the number of iterations in the outer loop matches the number of available threads, the outer loop can be effectively divided based on the number of threads. 
+
+As illustrated in the figure below, without the use of the `collapse` clause, only the outer loop is parallelized. This means that each iteration of the outer loop will have a corresponding N number of inner loop executions, which is not the desired outcome for efficient parallel processing.
 
 <figure markdown>
 ![](../figures/parallel-loop-acc.png){align=center width=500}
-<figcaption></figcaption>
+<figcaption>Effect of not using the `collapse` clause.</figcaption>
 </figure>
 
-This is not what we want. Instead, with the available threads, we would like to parallelise the loops as efficiently as we could.
-Moreover, most of the time, we would have more threads in a given GPU, in our case, we will test Nvidia A100 GPU.
-Therefore, when adding the `collapse` clause, we notice that the available threads execute every single iteration, as seen in the figure below.
+To optimize the utilization of threads, especially on GPUs with a higher number of threads available, such as the Nvidia A100 GPU, we implement the `collapse` clause. This adjustment enables all available threads to participate in executing every single iteration, as demonstrated in the figure below.
 
 <figure markdown>
 ![](../figures/parallel-acc-collapse.png){align=center width=500}
-<figcaption></figcaption>
+<figcaption>Effect of using the `collapse` clause.</figcaption>
 </figure>
 
-
-
-We will now look into basic matrix multiplication.
-In this example, we will perform the matrix multiplication. Matrix multiplication involves a nested loop.
-Again, most of the time, we might end up doing computation with a nested loop.
-Therefore, studying this example would be good practice for solving the nested loop in the future. 
+Next, we will examine a basic example of matrix multiplication, a computation that inherently relies on nested loops. Understanding this example will provide valuable insights into handling nested loops effectively, which is a common scenario in parallel computing.
 
 <figure markdown>
 ![](../figures/mat.png){align=center width=500}
