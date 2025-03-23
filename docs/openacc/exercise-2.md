@@ -69,6 +69,7 @@ To effectively implement the vector addition example using OpenACC, we need to f
 By incorporating these data clauses, we can effectively manage the data flow between the host and the device during the execution of the vector addition example. 
 
 In summary, follow these steps to set up the vector addition example with OpenACC: 
+
 1. Use `copyin` to transfer the initialized input vectors to the device.
 2. Perform the vector addition on the device.
 3. Use `copyout` to transfer the resulting product vector back to the host. 
