@@ -1,17 +1,13 @@
-Unified memory simplifies the explicit data movement from host to device by programmers.
-OpenACC API will manage the data transfer between CPU and GPU.
-In this example, we will look into vector addition in GPU using the unified memory concept.
-
+Unified memory simplifies the explicit data movement from the host to the device for programmers. The OpenACC API automatically manages data transfer between the CPU and the GPU. In this example, we will explore vector addition on the GPU utilizing the unified memory concept.
 
 <figure markdown>
 ![](../figures/unified-memory-white.png)
-<figcaption></figcaption> 
+<figcaption>Illustration of Unified Memory Concept</figcaption> 
 </figure>
 
+To enable unified memory in OpenACC, it is sufficient to use the compiler flag **`-gpu=managed`**.
 
- - Just using the compiler flag **`-gpu=managed`** will enable the unified memory in OpenACC.
- 
- The table below summarises the required steps needed for the unified memory concept.
+The following table summarizes the required steps for implementing the unified memory concept: 
 
 !!! Info "Unified Memory"
 
@@ -375,5 +371,5 @@ In this example, we will look into vector addition in GPU using the unified memo
 
 ??? Question "Questions"
 
-    - Do you already see any performance difference? Using unified memory?
+    - Have you noticed any performance improvements when using unified memory?
 
