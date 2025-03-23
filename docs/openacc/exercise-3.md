@@ -435,9 +435,9 @@ free(c);
     - Try to compute different matrix sizes instead of square matrices.
     ```
 
-####<u>Three levels of parallelism</u>
+####<u>Thread Levels of Parallelism</u>
 
-By default, the compiler chooses the best combination of the thread blocks needed for the computation. However, sometimes, as a programmer, you could also control the thread blocks in the program. OpenACC provides straightforward clauses that can control the threads and thread blocks in the application. 
+By default, the compiler selects the most effective configuration of thread blocks necessary for computation. However, programmers have the ability to control these thread blocks within their applications. OpenACC offers clear directives that enable the manipulation of threads and thread blocks effectively.
 
 
 <figure markdown>
@@ -451,8 +451,8 @@ By default, the compiler chooses the best combination of the thread blocks neede
 |numn_workers|Warps|fine |
 |vector_length|Threads|SIMD or vector|
 
+This table illustrates the relationship between OpenACC and CUDA in terms of parallelism levels. Understanding these distinctions is crucial for optimizing performance in parallel computing.
 
 ??? Question "Questions"
 
-    - Change the values in `num_gangs()`, `num_workers()` and `vector_length()` and
-    check if you would see any performance difference compared to the default thread used by a compiler.
+    - What happens to performance when you modify the values in `num_gangs()`, `num_workers()`, and `vector_length()` compared to the default thread settings used by the compiler?
