@@ -76,7 +76,7 @@ In summary, follow these steps to set up the vector addition example with OpenAC
 
 This approach ensures efficient data handling and optimizes the performance of the application.
 
-The following are the steps for learning vector addition example:
+Here are the steps for learning the vector addition example:
 
 <figure markdown>
 ![](../figures/vector_add-external.png){align=middle}
