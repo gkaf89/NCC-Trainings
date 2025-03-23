@@ -1,21 +1,20 @@
 #### <u>Data Clauses</u>
 
-Vector addition is one of the basic linear algebra routines.
-It involves adding two vectors into one where each index of the corresponding vector should be added.
-This vector addition example covers two of the most important OpenACC constructs and clauses: compute constructs and data clauses. They are:
+Vector addition is a fundamental operation in linear algebra that involves summing two vectors element-wise. Each component of the resulting vector is the sum of the corresponding components from the two input vectors. This example of vector addition highlights two crucial constructs and clauses in OpenACC: compute constructs and data clauses. These include:
 
- - Since the computation involves a loop, we could use **`#pragma acc parallel loop`** or **`#pragma acc kernels loop`**
- - And we need to transfer the data to the GPU. For this purpose, OpenACC provides a rich set of data mapping clauses in OpenACC. 
+- **`#pragma acc parallel loop`**: This directive is useful when the computation involves parallelizing a loop.
+- **`#pragma acc kernels loop`**: This directive also applies to loops and enables OpenACC to manage the kernels efficiently.
 
-Data clauses in OpenACC provide a convenient way of handling the data between CPU and GPU.
-The following list explains usage and description.
+Data clauses in OpenACC play a pivotal role in seamlessly transferring and managing data between the Central Processing Unit (CPU) and the Graphics Processing Unit (GPU). Below is a description of various data clauses and their usages:
 
- - **`copy`**: Create a space for a variable in the device, copy the data to the device before the region, copy the data back to the host after the region, and release the memory of the variable in the device. 
- - **`copyin`**: Create a space for a variable in the device, copy the data to the device before the region, and do not copy the data back to the host after the region. Release the memory of the variable in the device. 
- - **`copyout`**: Create a space for a variable in the device; do not copy the data to the device before the region; copy the data back to the host after the region. Release the memory of the variable in the device. 
- - **`create`**: Creates the device's memory; do not copy from host to device or device to host. 
- - **`present`**: The listed variables are already present on the device, so no further action needs to be taken. 
- - **`deviceptr`**: This is quite useful when data has to be managed outside of the OpenACC.
+- **`copy`**: Allocates space for a variable on the device, transfers data to the device at the start of the region, copies the data back to the host after the region, and subsequently releases the memory allocated on the device.
+- **`copyin`**: Allocates device memory for a variable, transfers data to the device before the region begins, and does not return the data to the host after the region. The device memory is then released. 
+- **`copyout`**: Allocates space for a variable on the device but does not copy data to the device before the region. It transfers data back to the host once the region is complete and releases the memory used on the device.
+- **`create`**: Allocates memory on the device without transferring any data from the host to the device or vice versa. 
+- **`present`**: Indicates that the listed variables already exist on the device, thus requiring no additional action for the transfer. 
+- **`deviceptr`**: Utilized for managing data outside of OpenACC, allowing for more controlled access to device pointers.
+  
+This comprehensive approach to data management enhances the efficiency of GPU computing in high-performance applications.
 
 <figure markdown>
 ![](../figures/OpenACC-data.png){align=middle, width=750}
@@ -61,10 +60,20 @@ The following list explains usage and description.
 
 
 
-We would need just two data clauses from OpenACC in the vector addition example.
-The two initialized vectors should be copied to the device from the host; for this purpose, we can use `copyin`.
-At the same time, product vectors do not need to be copied from host to device.
-However, it should be copied from device to host; for this, we could just use `copyout.` 
+To effectively implement the vector addition example using OpenACC, we need to focus on two specific data clauses. 
+
+1. **Data Transfer for Input Vectors**: The two initialized vectors must be transferred from the host to the device. To achieve this, we will utilize the `copyin` clause, which ensures that the data from the host is available on the device.
+
+2. **Data Transfer for Output Vector**: The product vector, which will store the results of the vector addition, does not require a transfer from the host to the device at the beginning of the computation. However, once the computation is complete, this vector must be transferred back from the device to the host. For this purpose, we will use the `copyout` clause.
+
+By incorporating these data clauses, we can effectively manage the data flow between the host and the device during the execution of the vector addition example. 
+
+In summary, follow these steps to set up the vector addition example with OpenACC: 
+1. Use `copyin` to transfer the initialized input vectors to the device.
+2. Perform the vector addition on the device.
+3. Use `copyout` to transfer the resulting product vector back to the host. 
+
+This approach ensures efficient data handling and optimizes the performance of the application.
 
 The following are the steps for learning vector addition example:
 
