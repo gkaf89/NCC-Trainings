@@ -348,8 +348,12 @@ In this example, we consider a square matrix; `M=N` is equal for both `A` and `B
              }
 
            // Fuction call 
+           clock_t start = clock();
            Matrix_Multiplication(a, b, c, N);
-  
+           clock_t end = clock();
+           double elapsed = (double)(end - start)/CLOCKS_PER_SEC;
+           printf("Time measured: %.3f seconds.\n", elapsed);
+           
            // Verification
            for(int i = 0; i < N; i++)
               {
@@ -603,7 +607,7 @@ In this example, we consider a square matrix; `M=N` is equal for both `A` and `B
         void Matrix_Multiplication(float *a, float *b, float *c, int width)   
         { 
           float sum = 0;
-          #pragma pragma omp for collapse(2) reduction (+:sum)
+          #pragma omp parallel for collapse(2) 
           for(int row = 0; row < width ; ++row)                           
             {                                                             
               for(int col = 0; col < width ; ++col)
@@ -639,10 +643,13 @@ In this example, we consider a square matrix; `M=N` is equal for both `A` and `B
                 a[i] = 1.0f;
                 b[i] = 2.0f;
               }
-           omp_set_number_threads(256);
+           omp_set_num_threads(omp_get_max_threads());
            // Function call 
+           double start = omp_get_wtime();
            Matrix_Multiplication(a, b, c, N);
-  
+           ouble end = omp_get_wtime();
+           printf("Time measured: %.3f seconds.\n", end - start);
+           
            // Verification
            for(int i = 0; i < N; i++)
               {

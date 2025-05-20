@@ -131,7 +131,7 @@ Could you please try this yourself? The serial code, templates, and compilation 
         #include <assert.h>
         #include <time.h>
         
-        #define N 5120
+        #define N 5120 // 500000000
         #define MAX_ERR 1e-6
 
         // CPU function that adds two vector 
@@ -407,7 +407,7 @@ Could you please try this yourself? The serial code, templates, and compilation 
         #include <assert.h>
         #include <time.h>
         
-        #define N 5120
+        #define N 5120 //500000000
         #define MAX_ERR 1e-6
 
         // CPU function that adds two vector 
@@ -440,17 +440,15 @@ Could you please try this yourself? The serial code, templates, and compilation 
             }
     
           // Start measuring time
-          clock_t start = clock();
+          double start = omp_get_wtime();
           
           // Executing vector addition function 
-          // #pragma omp parallel 
           Vector_Add(a, b, c, N);
 
           // Stop measuring time and calculate the elapsed time
-          clock_t end = clock();
-          double elapsed = (double)(end - start)/CLOCKS_PER_SEC;
-        
-          printf("Time measured: %.3f seconds.\n", elapsed);
+          double end = omp_get_wtime();
+              
+          printf("Time measured: %.3f seconds.\n", end - start);
   
           // Verification
           for(int i = 0; i < N; i++)
