@@ -414,7 +414,7 @@ Could you please try this yourself? The serial code, templates, and compilation 
         float * Vector_Add(float *a, float *b, float *c, int n)
         {
         // ADD YOUR PARALLEL
-        #pragma omp for
+        #pragma omp parallel for num_threads(256)
           for(int i = 0; i < n; i ++)
             {
               c[i] = a[i] + b[i];
@@ -443,7 +443,7 @@ Could you please try this yourself? The serial code, templates, and compilation 
           clock_t start = clock();
           
           // Executing vector addition function 
-          #pragma omp parallel 
+          // #pragma omp parallel 
           Vector_Add(a, b, c, N);
 
           // Stop measuring time and calculate the elapsed time
