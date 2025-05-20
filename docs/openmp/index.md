@@ -1,7 +1,7 @@
 # Introduction to OpenMP Programming Model
 
 <figure markdown>
-[![](../figures/OpenMP-Front-Page-2025.png)](https://github.com/NCCLUX/NCC-Trainings/blob/51c7648ca265b69ed268f4e8f98e8a62ba15686a/docs/openmp/OpenMP-2024.pdf)
+[![](../figures/OpenMP-Front-Page-2025.png)](https://github.com/NCCLUX/NCC-Trainings/blob/1bc9f885e9349b5291b93206d41be29f2aab4a0d/docs/openmp/Training_OpenMP_2025.pdf)
                                              
 <figcaption></figcaption>
 </figure>
