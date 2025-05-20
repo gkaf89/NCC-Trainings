@@ -603,7 +603,7 @@ In this example, we consider a square matrix; `M=N` is equal for both `A` and `B
         void Matrix_Multiplication(float *a, float *b, float *c, int width)   
         { 
           float sum = 0;
-          #pragma for loop collapse(2) reduction (+:sum)
+          #pragma pragma omp for collapse(2) reduction (+:sum)
           for(int row = 0; row < width ; ++row)                           
             {                                                             
               for(int col = 0; col < width ; ++col)
@@ -639,7 +639,7 @@ In this example, we consider a square matrix; `M=N` is equal for both `A` and `B
                 a[i] = 1.0f;
                 b[i] = 2.0f;
               }
-           #pragma omp parallel
+           omp_set_number_threads(256);
            // Function call 
            Matrix_Multiplication(a, b, c, N);
   
