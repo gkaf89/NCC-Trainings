@@ -260,7 +260,7 @@ The reduction clauses are data-sharing attribute clauses that can be used to per
 ####<u>Matrix Multiplication</u>
 
 
-In this example, we consider a square matrix; `M=N` is equal for both `A` and `B` matrices. Even though we deal here with a 2D matrix, we create a 1D array to represent a 2D matrix. In this example,  we must use the `collapse` clause since matrix multiplication deals with 3 loops. The first 2 outer loops will take rows of the `A` matrix and columns of the `B` matrix. Therefore, these two loops can be easily parallelised. But then we need to sum the value of those two outer loops value finally; this is where we should use the `reduction` clause. 
+In this example, we consider a square matrix; `M=N` is equal for both `A` and `B` matrices. Even though we deal here with a 2D matrix, we create a 1D array to represent a 2D matrix. In this example,  we must use the `collapse` clause since matrix multiplication deals with 3 loops. The first 2 outer loops will take rows of the `A` matrix and columns of the `B` matrix. Therefore, these two loops can be easily parallelised.
 
 
 ??? "matrix multiplication function call"
@@ -271,7 +271,7 @@ In this example, we consider a square matrix; `M=N` is equal for both `A` and `B
            {                                                             
              for(int col = 0; col < width ; ++col)
                {
-                 sum=0;
+                 float sum=0;
                  for(int i = 0; i < width ; ++i)                         
                    {                                                     
                      sum += a[row*width+i] * b[i*width+col];      
@@ -285,6 +285,7 @@ In this example, we consider a square matrix; `M=N` is equal for both `A` and `B
         ```c
         do row = 0, width-1
            do col = 0, width-1
+              real(8) :: sum
               sum=0
               do i = 0, width-1
                  sum = sum + (a((row*width)+i+1) * b((i*width)+col+1))
@@ -310,12 +311,11 @@ In this example, we consider a square matrix; `M=N` is equal for both `A` and `B
         
         void Matrix_Multiplication(float *a, float *b, float *c, int width)   
         { 
-          float sum = 0;
           for(int row = 0; row < width ; ++row)                           
             {                                                             
               for(int col = 0; col < width ; ++col)
                 {
-                  sum=0;
+                  float sum=0;
                   for(int i = 0; i < width ; ++i)                         
                     {                                                     
                       sum += a[row*width+i] * b[i*width+col];      
@@ -388,11 +388,11 @@ In this example, we consider a square matrix; `M=N` is equal for both `A` and `B
         real(8), intent(in), dimension(:) :: a
         real(8), intent(in), dimension(:) :: b
         real(8), intent(out), dimension(:) :: c
-        real(8) :: sum = 0
         integer :: i, row, col, width
 
         do row = 0, width-1
            do col = 0, width-1
+              real(8) :: sum
               sum=0
                do i = 0, width-1
                  sum = sum + (a((row*width)+i+1) * b((i*width)+col+1))
@@ -461,12 +461,11 @@ In this example, we consider a square matrix; `M=N` is equal for both `A` and `B
         
         void Matrix_Multiplication(float *a, float *b, float *c, int width)   
         { 
-          float sum = 0;
           for(int row = 0; row < width ; ++row)                           
             {                                                             
               for(int col = 0; col < width ; ++col)
                 {
-                  sum=0;
+                  float sum=0;
                   for(int i = 0; i < width ; ++i)                         
                     {                                                     
                       sum += a[row*width+i] * b[i*width+col];      
@@ -532,11 +531,11 @@ In this example, we consider a square matrix; `M=N` is equal for both `A` and `B
         real(8), intent(in), dimension(:) :: a
         real(8), intent(in), dimension(:) :: b
         real(8), intent(out), dimension(:) :: c
-        real(8) :: sum = 0
         integer :: i, row, col, width
         !!! ADD LOOP PARALLELISATION
         do row = 0, width-1
            do col = 0, width-1
+              real(8) :: sum
               sum=0
                do i = 0, width-1
                  sum = sum + (a((row*width)+i+1) * b((i*width)+col+1))
@@ -606,13 +605,12 @@ In this example, we consider a square matrix; `M=N` is equal for both `A` and `B
         
         void Matrix_Multiplication(float *a, float *b, float *c, int width)   
         { 
-          float sum = 0;
-          #pragma omp parallel for collapse(2) 
+          #pragma omp for collapse(2) 
           for(int row = 0; row < width ; ++row)                           
             {                                                             
               for(int col = 0; col < width ; ++col)
                 {
-                  sum=0;
+                  float sum=0;
                   for(int i = 0; i < width ; ++i)                         
                     {                                                     
                       sum += a[row*width+i] * b[i*width+col];      
@@ -646,6 +644,7 @@ In this example, we consider a square matrix; `M=N` is equal for both `A` and `B
            omp_set_num_threads(omp_get_max_threads());
            // Function call 
            double start = omp_get_wtime();
+           #pragma omp parallel
            Matrix_Multiplication(a, b, c, N);
            ouble end = omp_get_wtime();
            printf("Time measured: %.3f seconds.\n", end - start);
@@ -680,12 +679,12 @@ In this example, we consider a square matrix; `M=N` is equal for both `A` and `B
             real(8), intent(in), dimension(:) :: a
             real(8), intent(in), dimension(:) :: b
             real(8), intent(out), dimension(:) :: c
-            real(8) :: sum = 0
             integer :: i, row, col, width
         
-            !$omp do collapse(2) reduction(+:sum)
+            !$omp do collapse(2)
             do row = 0, width-1
                do col = 0, width-1
+                  real(8) :: sum
                   sum=0
                   do i = 0, width-1
                      sum = sum + (a((row*width)+i+1) * b((i*width)+col+1))

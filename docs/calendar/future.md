@@ -7,3 +7,5 @@
 ### 3) Numerical Libraries (Georgios), xxx, 2025
 
 ### 4) MPI for Python (Oscar), xxx, 2025
+
+### 5) [Introduction to OpenACC Programming Model, 25th March, 2025](../openacc/index.md) [Registration](https://events.eurocc.lu/introduction-to-openacc-heterogeneous-computing){ .md-button .md-button--primary }
