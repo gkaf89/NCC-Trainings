@@ -414,7 +414,7 @@ Could you please try this yourself? The serial code, templates, and compilation 
         float * Vector_Add(float *a, float *b, float *c, int n)
         {
         // ADD YOUR PARALLEL
-        #pragma omp parallel for num_threads(256)
+        #pragma omp parallel for
           for(int i = 0; i < n; i ++)
             {
               c[i] = a[i] + b[i];
@@ -439,6 +439,8 @@ Could you please try this yourself? The serial code, templates, and compilation 
               b[i] = 2.0f;
             }
     
+          omp_set_num_threads(omp_get_max_threads());
+          
           // Start measuring time
           double start = omp_get_wtime();
           
