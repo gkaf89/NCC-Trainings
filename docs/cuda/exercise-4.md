@@ -1,4 +1,4 @@
-In this tutorial, we will explore the concept of shared memory matrix multiplication. This technique involves partitioning the global matrix into smaller tiled matrices that are designed to fit into the shared memory of Nvidia GPUs. Utilizing shared memory is advantageous, as it offers significantly higher bandwidth compared to access to global memory, thereby enhancing performance in computational tasks.
+In this tutorial, we will explore the concept of shared memory matrix multiplication. This technique involves partitioning the global matrix into smaller tiled matrices that are designed to fit into the shared memory of Nvidia GPUs. Utilizing shared memory is advantageous, as it offers significantly higher bandwidth compared to accessing global memory, thereby enhancing performance in computational tasks.
 
 
 ![](../figures/memory-2.png){align=middle}
@@ -406,7 +406,7 @@ These can be achieved with CUDA threads.
 ??? Question "Questions"
 
     - Could you resize the **`BLOCK_SIZE`** number and check the solution's correctness?
-    - Can you also create a different kind of thread block and matrix size and check the solution's correctness?
+    - Can you also create a different kind of thread block and matrix size, and check the solution's correctness?
     - Please try using `cudaFuncSetCacheConfig` and check if you can successfully execute the application.
 
       ```
