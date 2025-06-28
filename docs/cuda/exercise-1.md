@@ -8,7 +8,7 @@ To do that, we need to do the following things:
 - C/C++ example, **`c_function()`**.
 - CUDA example, **`cuda_function<<<1,1>>>()`** (just using 1 thread).
 - **`<<< >>>`**, specify the thread blocks within the brackets.
-- Make sure to synchronize the threads.
+- Ensure that the threads are synchronized.
 - **`__syncthreads()`** synchronizes all the threads within a thread block.
 - **`CudaDeviceSynchronize()`** synchronizes a kernel call on the host.
 - Most of the CUDA APIs are synchronized calls by default, but sometimes
