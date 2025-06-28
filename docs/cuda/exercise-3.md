@@ -19,7 +19,7 @@ b   = (float*)malloc(sizeof(float) * (N*N));
 c   = (float*)malloc(sizeof(float) * (N*N));
 ```
 
- - Allocating the GPU memory for A, B, and C matrix
+ - Allocating the GPU memory for A, B, and C matrices
 ```c
 // Initialize the memory on the device
 float *d_a, *d_b, *d_c;
@@ -30,7 +30,7 @@ cudaMalloc((void**)&d_b, sizeof(float) * (N*N));
 cudaMalloc((void**)&d_c, sizeof(float) * (N*N));
 ```
 
- - Now, we need to fill in the values for the matrix A and B.
+ - Now, we need to fill in the values for the matrices A and B.
 ```c
 // Initialize host matrix
 for(int i = 0; i < (N*N); i++)
@@ -40,7 +40,7 @@ for(int i = 0; i < (N*N); i++)
    }
 ```
 
-- Transfer initialized A and B matrix
+- Transfer initialized A and B matrices
 from CPU to GPU
 ```c
 cudaMemcpy(d_a, a, sizeof(float) * (N*N), cudaMemcpyHostToDevice);
@@ -105,7 +105,7 @@ matrix_mul<<<dimGrid,dimBlock>>>(d_a, d_b, d_c, N);
             ```
 
  - Copy back computed value from GPU to CPU;
-   transfer the data back to GPU (from device to host).
+   transfer the data back to the GPU (from device to host).
    Here is the C matrix that contains the product of the two matrices.
 ```c
 // Transfer data back to host memory
