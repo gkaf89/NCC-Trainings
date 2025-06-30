@@ -53,7 +53,7 @@
 #### 7. Until now, you are in the login node; now it is time to do the dry run test
 - 7.1 Reserve the interactive node for running/testing CUDA applications 
   ```
-  $ salloc -A p200776 --res gpu-ncc-luxembourg-morning --partition=gpu --qos default -N 1 -t 01:00:00
+  $ salloc -A p200776 --res p200776-training-morning --partition=gpu --qos default -N 1 -t 01:00:00
   ```
   
     ??? "check if your reservation is allocated"
@@ -130,7 +130,7 @@ Hello-world.cu  module.sh
 #### 11. Similarly, for the hands-on session, we need to do the node reservation:
  - 11.1 For example, reservation
  ```
- $ salloc -A p200776 --res gpu-ncc-luxembourg-afternoon --partition=gpu --qos default -N 1 -t 02:30:00
+ $ salloc -A p200776 --res p200776-training-afternoon --partition=gpu --qos default -N 1 -t 02:15:00
  ```
 
     ??? "check if your reservation is allocated"
