@@ -56,17 +56,17 @@
   $ salloc -A p200776 --res p200776-training-morning --partition=gpu --qos default -N 1 -t 01:00:00
   ```
   
-    ??? "check if your reservation is allocated"
-        ```
-        [u100490@login03 ~]$ salloc -A p200776 --res gpu-ncc-luxembourg-morning --partition=gpu --qos default -N 1 -t 01:00:00
-        salloc: Pending job allocation 296848
-        salloc: job 296848 queued and waiting for resources
-        salloc: job 296848 has been allocated resources
-        salloc: Granted job allocation 296848
-        salloc: Waiting for resource configuration
-        salloc: Nodes mel2131 are ready for job
-        ```
-     
+  ??? "check if your reservation is allocated"
+     ```
+     [u100490@login03 ~]$ salloc -A p200776 --res p200776-training-morning --partition=gpu --qos default -N 1 -t 01:00:00
+     salloc: Pending job allocation 296848
+     salloc: job 296848 queued and waiting for resources
+     salloc: job 296848 has been allocated resources
+     salloc: Granted job allocation 296848
+     salloc: Waiting for resource configuration
+     salloc: Nodes mel2131 are ready for job
+     ```
+    
  - 7.2 You can also check if you got the interactive node for your computations, for example, here with the user `u100490`:
  ```
  [u100490@mel2131 ~]$ squeue -u u100490
