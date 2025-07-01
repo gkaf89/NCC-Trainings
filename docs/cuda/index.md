@@ -1,7 +1,7 @@
 # Introduction to GPU programming using CUDA
 
 <figure markdown>
-[![](../figures/CUDA-Jan-2025-Front-Page.png)](https://github.com/NCCLUX/NCC-Trainings/blob/f5d853e67621ea426175f452f37d9a0e37ccd549/docs/cuda/Training_CUDA_January_2025.pdf)
+[![](../figures/CUDA-July-2025-Front-Page.png)](https://github.com/NCCLUX/NCC-Trainings/blob/51353a7037c33f6cee41a10b6180d8db7c98354b/docs/cuda/Training_CUDA_July_2025.pdf)
 <figcaption></figcaption>
 </figure>
 
