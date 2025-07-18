@@ -53,10 +53,10 @@ nav:
         - Python in the HPC:
             - Jupyter server and parallel libraries: 'python/index.md'
         - Environment management and containers:
-            - Introduction: 'environment/index.md'
-            - Environment managers: 'environment/conda.md'
-            - Package management in R: 'environment/R.md'
-            - Containers: 'environment/containers.md'
+            - Introduction: 'courses/containerization/index.md'
+            - Containers: 'courses/containerization/containers.md'
+            - Environment managers: 'courses/containerization/conda.md'
+#           - Package management in R: 'courses/containerization/R.md'
 #               - Best practices in environment management: 'environment/best-practises.md'
 #               - Containers in HPC systems:
     - Bootcamp:
