@@ -37,7 +37,7 @@ The first one is to use the `Mole.build()` method to initialize a molecule, in t
 ```python
 from pyscf import gto
 mol = gto.Mole()
-mol.build (
+mol.build(
     atom = '''O 0 0 0; H 0 1 0; H 0 0 1''',
     basis = '''sto-3g''')
 ```
@@ -45,8 +45,8 @@ mol.build (
 To confirm that the molecular geometry and basis sets have been set up properly, you can run:
 
 ```python
-print (mol.atom)
-print (mol.basis)
+print(mol.atom)
+print(mol.basis)
 ```
 
 The second one is to assign the geometry, basis, to the `Mole` object, followed by calling the `build()` method:
@@ -62,8 +62,8 @@ mol.build()
 In this case as well, you can confirm that the molecular geometry and basis sets have been set up correctly by running:
 
 ```python
-print (mol.atom)
-print (mol.basis)
+print(mol.atom)
+print(mol.basis)
 ```
 
 The third way is to use the shortcut functions `pyscf.M()` or `Mole.M()`. These functions pass all the arguments to the `build()` method:
@@ -176,7 +176,7 @@ _Perform a HF calculation of the hydrogen fluoride ($\mathit{HF}$) molecule to c
 ```python
 import pyscf
 
-mol = pyscf.M (
+mol = pyscf.M(
     atom = 'H 0 0 0; F 0 0 1.1',
     basis = 'ccpvdz',
     symmetry = True,
