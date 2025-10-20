@@ -6,7 +6,12 @@
 ## Lecture slides
 
 <figure markdown>
-[![Lecture slides](images/Hartree-Fock.png){: style='border:1px solid #000000' width='90%'}](files/Hartree-Fock.pdf)
+[![Lecture slides: Hartree-Fock](images/Hartree-Fock.png){: style='border:1px solid #000000' width='90%'}](files/Hartree-Fock.pdf)
+<figcaption></figcaption>
+</figure>
+
+<figure markdown>
+[![Lecture slides: DFT](images/DFT.png){: style='border:1px solid #000000' width='90%'}](files/DFT.pdf)
 <figcaption></figcaption>
 </figure>
 
