@@ -278,7 +278,7 @@ Install `geomeTRIC` and `PyBerny`.
     pip install pyberny
 
 ``` {.python language="Python"}
-from pyscf import gto, scf
+from pyscf import gto, dft
 from pyscf.geomopt.geometric_solver import optimize
 from pyscf.geomopt.berny_solver import optimize
 
