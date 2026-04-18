@@ -1,4 +1,5 @@
 site_name: SuperComputing Luxembourg - National Competence Center
+site_url: https://ncclux.github.io/NCC-Trainings/
 
 nav:
     - Trainings organization: 'index.md'
