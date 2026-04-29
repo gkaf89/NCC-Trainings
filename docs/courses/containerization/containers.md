@@ -54,7 +54,7 @@ Before working on containers for HPC systems let's explore how `chroot`, a funda
 Your isolated environment is now created in `${HOME}/jail`. You can change to the `jail` environment with the command:
 ```console
 $ sudo chroot ${HOME}/jail /bin/bash
-bash-5.2# 
+bash-5.2#
 ```
 
 Any program running in the isolated environment cannot name and thus cannot access files outside the environment. Thus the term _jail_ is often used to describe an isolated environment created with `chroot`.

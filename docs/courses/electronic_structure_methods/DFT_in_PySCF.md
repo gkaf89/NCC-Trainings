@@ -152,7 +152,7 @@ and looks up the plain atomic symbol.
 In the following example, the `6-31G` basis set will be assigned to the
 atom `H1`, but the `STO-3G` basis will be used for the atom `H2`:
 
-    mol.atom = ‘8 0 0 0; H1 0 1 0; H2 0 0 1’ 
+    mol.atom = ‘8 0 0 0; H1 0 1 0; H2 0 0 1’
     mol.basis = {‘O’: ‘sto-3g’, ‘H’: ‘sto-3g’, ‘H1’: ‘6-31G’}
 
 #### Basis sets format {#basis-sets-format .unnumbered}

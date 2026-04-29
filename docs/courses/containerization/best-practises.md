@@ -70,7 +70,7 @@ UL HPC provides support _only_ for the Micromamba package manager.
 A complete guide regarding Micromamba installation can be found in the [official documentation](https://mamba.readthedocs.io/en/latest/micromamba-installation.html). To install micromamaba in the HPC clusters, log in to Aion or Iris. Working on a login node, run the installation script,
 ```bash
 "${SHELL}" <(curl -L micro.mamba.pm/install.sh)
-``` 
+```
 which will install the executable and setup the environment. There are 4 options to select during the installation of Micromamba:
 
 - The directory for the installation of the binary file:
@@ -338,7 +338,7 @@ total 1.3M
 ```
 Looking into the libraries of the `gaussian_regression` environment, there is a hard link to the MPFR library:
 ```
-gkaf@ulhpc-laptop:~/micromamba$ ls -lahFi envs/gaussian_regression/lib/libmpfr.so.6.2.1 
+gkaf@ulhpc-laptop:~/micromamba$ ls -lahFi envs/gaussian_regression/lib/libmpfr.so.6.2.1
 5286433 -rwxrwxr-x 7 gkaf gkaf 1.3M Oct 22 21:47 envs/gaussian_regression/lib/libmpfr.so.6.2.1*
 ```
 You can use the `-i` flag in `ls` to print the inode number of a file. Hard links have the same inode number, meaning that they are essentially the same file.
@@ -378,7 +378,7 @@ All _project environment management tools_ and most _system environment manageme
 
 The _project environment management tools_ in particular often automate the function of updating the text file describing the environment in order to automatically initialize the environment when initializing a new instance of the project. Thus project environments are very useful in storing a distributing research projects, since they automate the reproducibility of the project setup.
 
-The overarching theory for environment management tools such as Conda is simple. However, there are implementation details which affect how environment management tools are used. In the following section we present some case studies about practical issues you may encounter with few environment management tools. 
+The overarching theory for environment management tools such as Conda is simple. However, there are implementation details which affect how environment management tools are used. In the following section we present some case studies about practical issues you may encounter with few environment management tools.
 
 
 ### Using `pip` for Python package management
@@ -546,7 +546,7 @@ You should now be in your normal operating system environment.
 
 In some cases Conda is used to manage the environment and other tools are used to install pacakges. There are a few reasons why you may want to manage packages with different tools.
 
-- You may want to use a project environment management tool. For instance, you may install Python with Conda and use project environments managed with [Virtualenv](https://virtualenv.pypa.io/en/latest/), [Pipenv](https://pipenv.pypa.io/en/latest) and [Poetry](https://python-poetry.org/). In the case of R you may install R with Conda and manage project environments with [Packrat](https://rstudio.github.io/packrat/). 
+- You may want to use a project environment management tool. For instance, you may install Python with Conda and use project environments managed with [Virtualenv](https://virtualenv.pypa.io/en/latest/), [Pipenv](https://pipenv.pypa.io/en/latest) and [Poetry](https://python-poetry.org/). In the case of R you may install R with Conda and manage project environments with [Packrat](https://rstudio.github.io/packrat/).
 
 - In some cases packages are not available through Conda, but they may be available through other source code or binary distributions. A typical example is Julia where packages are only available trough the [Pkg](https://pkgdocs.julialang.org/v1/) package manager. Similarly, many less popular packages are available through PyPI and can be installed with `pip`, but they are not available through a Conda channel.
 
@@ -676,7 +676,7 @@ The `pip` package manager is in fact able to install packages directly on the Co
 ```
 $ micromamba activate mkdocs-coda
 (mkdocs-conda) $ pip list --format=freeze
-pip==24.0 
+pip==24.0
 setuptools==69.2.0
 wheel==0.43.0
 ```
@@ -850,7 +850,7 @@ $ micromamba run --name mkdocs-conda python -m venv --system-site-packages ~/env
 ```
 The resulting configuration configuration file
 ```
-$ cat ~/environments/mkdocs/pyvenv.cfg 
+$ cat ~/environments/mkdocs/pyvenv.cfg
 home = /home/gkaf/micromamba/envs/mkdocs-conda/bin
 include-system-site-packages = true
 version = 3.12.2
@@ -923,7 +923,7 @@ we can see that `pip` lists all the packages irrespective of whether they are in
 Let's consider the installation of the [PySPQR](https://github.com/yig/PySPQR) module that wraps the SuiteSparseQR decomposition function for use with SciPy. Installing this software is challenging because
 
 - the PySPQR package is not available through Conda channels, and
-- installing PySPQR (`sparseqr`) directly in a `venv` fails. 
+- installing PySPQR (`sparseqr`) directly in a `venv` fails.
 
 
 The PySPQR package is a source code package and its installation in a `venv` requires linking with the [SuiteSparse](https://people.engr.tamu.edu/davis/suitesparse.html) library. We can install SparseSuite in our system (e.g. `apt-get install libsuitesparse-dev` in Debian), but we will avoid modifying system libraries and use a Conda environment instead.
@@ -1156,7 +1156,7 @@ The initialization command creates,
 Therefore, start R within the project directory `~/Document/packrat`, to activate the project environment. After initializing the project or whenever you start R in the project directory, the `packrat` directory and its subdirectories will be the only ones appearing in the library paths:
 ```R
 > .libPaths()
-[1] "/mnt/irisgpfs/users/<user name>/Documents/project/packrat/lib/x86_64-pc-linux-gnu/4.0.5"    
+[1] "/mnt/irisgpfs/users/<user name>/Documents/project/packrat/lib/x86_64-pc-linux-gnu/4.0.5"
 [2] "/mnt/irisgpfs/users/<user name>/Documents/project/packrat/lib-ext/x86_64-pc-linux-gnu/4.0.5"
 [3] "/mnt/irisgpfs/users/<user name>/Documents/project/packrat/lib-R/x86_64-pc-linux-gnu/4.0.5"
 ```

@@ -20,28 +20,28 @@
           {
             c[i] = a[i] + b[i];
           }
-          
+
         //or
-        
-        #pragma omp parallel 
+
+        #pragma omp parallel
         #pragma omp for schedule(static)
         for(int i = 0; i < n; i ++)
           {
             c[i] = a[i] + b[i];
           }
-        ```  
-        
+        ```
+
     === "FORTRAN"
-    
+
         ```c
         !$omp parallel do schedule(static)
         do i = 1, n
           c(i) = a(i) + b(i)
         end do
         !$omp end parallel do
-        
+
         //or
-        
+
         !$omp parallel
         !$omp do schedule(static)
         do i = 1, n
@@ -53,7 +53,7 @@
 	
 #### <u>Static</u>
 
- - The number of iterations are divided by chunksize. 
+ - The number of iterations are divided by chunksize.
  - If the chunksize is not provided, a number of iterations will be divided by the size of the team of threads.
     - e.g., n=100, numthreads=5; each thread will execute the 20 iterations in parallel.
  - This is useful when the computational cost is similar to each iteration.
@@ -69,27 +69,27 @@
         {
          int N = 10;
          omp_set_num_threads(5);
-         
+
         #pragma omp parallel for schedule(static)
         for(int i = 0; i < N; i++)
            {
-            cout << " Thread id" << " " << omp_get_thread_num() << endl;    
-           }  
+            cout << " Thread id" << " " << omp_get_thread_num() << endl;
+           }
           return 0;
         }
         ```
 
 
     === "OpenMP(FORTRAN)"
-        
+
         ```c
         program main
         use omp_lib
         implicit none
-        
-        integer :: n, i  
+
+        integer :: n, i
         n = 10
-        
+
         call omp_set_num_threads(5)
 
         !$omp parallel
@@ -99,10 +99,10 @@
         end do
         !$omp end do
         !$omp end parallel
-        
+
         end program main
         ```
-        
+
     === "Output"
         ```c
         Thread id           0
@@ -118,7 +118,7 @@
         ```
 
     - What happens if you would set the chunksize, for example, `schedule(static,4)`? What do you notice?
- 
+
 #### <u>Dynamic</u>
 
  - The number of iterations are divided by chunksize.
@@ -137,27 +137,27 @@
         {
          int N = 10;
          omp_set_num_threads(5);
-         
+
         #pragma omp parallel for schedule(dynamic)
         for(int i = 0; i < N; i++)
            {
-            cout << " Thread id" << " " << omp_get_thread_num() << endl;    
-           }  
+            cout << " Thread id" << " " << omp_get_thread_num() << endl;
+           }
           return 0;
         }
         ```
 
 
     === "OpenMP(FORTRAN)"
-        
+
         ```c
         program main
         use omp_lib
         implicit none
-        
-        integer :: n, i  
+
+        integer :: n, i
         n = 10
-        
+
         call omp_set_num_threads(5)
 
         !$omp parallel
@@ -167,25 +167,25 @@
         end do
         !$omp end do
         !$omp end parallel
-        
+
         end program main
         ```
-        
+
     === "Output"
         ```c
-        Thread id  Thread id 20 Thread id 
+        Thread id  Thread id 20 Thread id
         4 Thread id 2
         Thread id 2
         Thread id 2
         Thread id 2
         Thread id 2
         Thread id
-        Thread id 1 
+        Thread id 1
         3
         ```
     - What happens if you would set the chunksize, for example, schedule(dynamic,4)? What do you notice?
     - Do you notice if the iterations are divided by the chunksize that we set?
-    
+
 #### <u>Guided</u>
 
  - Similar to dynamic scheduling, the number of iterations are divided by chunksize.
@@ -204,27 +204,27 @@
         {
          int N = 10;
          omp_set_num_threads(5);
-         
+
         #pragma omp parallel for schedule(guided)
         for(int i = 0; i < N; i++)
            {
-            cout << " Thread id" << " " << omp_get_thread_num() << endl;    
-           }  
+            cout << " Thread id" << " " << omp_get_thread_num() << endl;
+           }
           return 0;
         }
         ```
 
 
     === "OpenMP(FORTRAN)"
-        
+
         ```c
         program main
         use omp_lib
         implicit none
-        
-        integer :: n, i  
+
+        integer :: n, i
         n = 10
-        
+
         call omp_set_num_threads(5)
 
         !$omp parallel
@@ -234,15 +234,15 @@
         end do
         !$omp end do
         !$omp end parallel
-        
+
         end program main
         ```
-        
+
     === "Output"
         ```c
         Thread id Thread id   Thread id0 41
         Thread id 0
-        
+
         Thread id 4
         Thread id 4
         Thread id 2
@@ -254,7 +254,7 @@
 
 #### <u>Auto</u>
 
- - Here the compiler chooses the best combination of the chunksize to be used. 
+ - Here the compiler chooses the best combination of the chunksize to be used.
 
 ??? example "Examples and Question: auto"
 
@@ -267,27 +267,27 @@
         {
          int N = 10;
          omp_set_num_threads(5);
-         
+
         #pragma omp parallel for schedule(auto)
         for(int i = 0; i < N; i++)
            {
-            cout << " Thread id" << " " << omp_get_thread_num() << endl;    
-           }  
+            cout << " Thread id" << " " << omp_get_thread_num() << endl;
+           }
           return 0;
         }
         ```
 
 
     === "OpenMP(FORTRAN)"
-        
+
         ```c
         program main
         use omp_lib
         implicit none
-        
-        integer :: n, i  
+
+        integer :: n, i
         n = 10
-        
+
         call omp_set_num_threads(5)
 
         !$omp parallel
@@ -297,13 +297,13 @@
         end do
         !$omp end do
         !$omp end parallel
-        
+
         end program main
         ```
-        
+
     === "Output"
         ```c
-        Thread id Thread id Thread id    Thread id0 34 Thread id 
+        Thread id Thread id Thread id    Thread id0 34 Thread id
         Thread id 0
         1
          Thread id 1
@@ -311,10 +311,10 @@
          Thread id 3
         2
          Thread id 2
-        
+
          Thread id 4
         ```
-    - What would you choose for your application, auto, dynamic, guided, or static? If you are going to choose either one of them, then have a valid reason. 
+    - What would you choose for your application, auto, dynamic, guided, or static? If you are going to choose either one of them, then have a valid reason.
 
 
 #### <u>[Runtime](https://www.openmp.org/spec-html/5.0/openmpse49.html#x288-20520006.1)</u>
@@ -327,12 +327,12 @@
     === "Compilation"
 
         ```c
-        setenv OMP_SCHEDULE="guided,4" 
-        setenv OMP_SCHEDULE="dynamic" 
+        setenv OMP_SCHEDULE="guided,4"
+        setenv OMP_SCHEDULE="dynamic"
         setenv OMP_SCHEDULE="nonmonotonic:dynamic,4"
         // or
-        export OMP_SCHEDULE="guided,4" 
-        export OMP_SCHEDULE="dynamic" 
+        export OMP_SCHEDULE="guided,4"
+        export OMP_SCHEDULE="dynamic"
         export OMP_SCHEDULE="nonmonotonic:dynamic,4"
         ```
 	
@@ -347,26 +347,26 @@
         {
          int N = 10;
          omp_set_num_threads(5);
-         
+
         #pragma omp parallel for schedule(runtime)
         for(int i = 0; i < N; i++)
            {
-            cout << " Thread id" << " " << omp_get_thread_num() << endl;    
-           }  
+            cout << " Thread id" << " " << omp_get_thread_num() << endl;
+           }
           return 0;
         }
         ```
 
     === "OpenMP(FORTRAN)"
-        
+
         ```c
         program main
         use omp_lib
         implicit none
-        
-        integer :: n, i  
+
+        integer :: n, i
         n = 10
-        
+
         call omp_set_num_threads(5)
 
         !$omp parallel
@@ -376,17 +376,17 @@
         end do
         !$omp end do
         !$omp end parallel
-        
+
         end program main
         ```
 	
     === "Compilation"
-        
+
         ```c
         export OMP_SCHEDULE="dynamic,3"
         // check if you have exported the environment value
         $ env | grep OMP_SCHEDULE
-        $ OMP_SCHEDULE=dynamic,3 
+        $ OMP_SCHEDULE=dynamic,3
         // if you want to unset
         $ unset OMP_SCHEDULE
         $ env | grep OMP_SCHEDULE

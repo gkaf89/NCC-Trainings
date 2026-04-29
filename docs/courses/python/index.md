@@ -8,13 +8,13 @@ The workshop is designed for individuals who are interested in advancing their s
 
 ## Agenda
 
-### First day: Using Jupyter notebook on HPC infrastructure, profiling and using Numpy effectively 
+### First day: Using Jupyter notebook on HPC infrastructure, profiling and using Numpy effectively
 
 - Setting up a Jupyter notebook on an HPC node
 - Taking time and profiling python code
 - Numpy basics for replacing python loops for efficient computations
 
-### Second day: Improving performance with python parallel packages 
+### Second day: Improving performance with python parallel packages
 
 - Use case understanding and Python implementation
 - Numpy implementation

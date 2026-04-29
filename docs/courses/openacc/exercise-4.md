@@ -2,12 +2,12 @@ Unified memory simplifies the explicit data movement from the host to the device
 
 <figure markdown>
 ![](figures/unified-memory-white.png)
-<figcaption>Illustration of Unified Memory Concept</figcaption> 
+<figcaption>Illustration of Unified Memory Concept</figcaption>
 </figure>
 
 To enable unified memory in OpenACC, it is sufficient to use the compiler flag **`-gpu=managed`**.
 
-The following table summarizes the required steps for implementing the unified memory concept: 
+The following table summarizes the required steps for implementing the unified memory concept:
 
 !!! Info "Unified Memory"
 
@@ -35,8 +35,8 @@ The following table summarizes the required steps for implementing the unified m
 ??? example "Examples: Vector Addition"
 
     === "OpenACC-template"
-    
-        ```c  
+
+        ```c
         // Vector-addition-template.c
 	
         #include <stdio.h>
@@ -51,13 +51,13 @@ The following table summarizes the required steps for implementing the unified m
         #define MAX_ERR 1e-6
 
 
-        // GPU function that adds two vectors 
-        // function that adds two vector 
-        void Vector_Addition(float *restrict a, float *restrict b, float *restrict c, int n) 
+        // GPU function that adds two vectors
+        // function that adds two vector
+        void Vector_Addition(float *restrict a, float *restrict b, float *restrict c, int n)
         {
 
         // add here either parallel or kernel and do need to add data map clauses
-        #pragma acc 
+        #pragma acc
         for(int i = 0; i < n; i ++)
            {
              c[i] = a[i] + b[i];
@@ -67,32 +67,32 @@ The following table summarizes the required steps for implementing the unified m
         int main()
         {
           // Initialize the memory on the host
-          float *restrict a, *restrict b, *restrict c;       
-  
+          float *restrict a, *restrict b, *restrict c;
+
           // Allocate host memory
           a = (float*)malloc(sizeof(float) * N);
           b = (float*)malloc(sizeof(float) * N);
           c = (float*)malloc(sizeof(float) * N);
-  
+
           // Initialize host arrays
           for(int i = 0; i < N; i++)
             {
               a[i] = 1.0f;
               b[i] = 2.0f;
             }
-    
+
           // Start measuring time
           clock_t start = clock();
 
-          // Executing CPU function 
+          // Executing CPU function
           Vector_Addition(a, b, c, N);
 
           // Stop measuring time and calculate the elapsed time
           clock_t end = clock();
           double elapsed = (double)(end - start)/CLOCKS_PER_SEC;
-        
+
           printf("Time measured: %.3f seconds.\n", elapsed);
-  
+
           // Verification
           for(int i = 0; i < N; i++)
             {
@@ -100,21 +100,21 @@ The following table summarizes the required steps for implementing the unified m
             }
 
           printf("PASSED\n");
-    
+
           // Deallocate host memory
-          free(a); 
-          free(b); 
+          free(a);
+          free(b);
           free(c);
-   
+
           return 0;
         }
         ```
 	
     === "OpenACC-version"
-    
-        ```c  
+
+        ```c
         // Vector-addition-openacc.c
-        
+
         #include <stdio.h>
         #include <stdlib.h>
         #include <math.h>
@@ -126,8 +126,8 @@ The following table summarizes the required steps for implementing the unified m
         #define MAX_ERR 1e-6
 
 
-        // function that adds two vector 
-        void Vector_Addition(float *restrict a, float *restrict b, float *restrict c, int n) 
+        // function that adds two vector
+        void Vector_Addition(float *restrict a, float *restrict b, float *restrict c, int n)
         {
         #pragma acc kernels loop
         for(int i = 0; i < n; i ++)
@@ -139,32 +139,32 @@ The following table summarizes the required steps for implementing the unified m
         int main()
         {
           // Initialize the memory on the host
-          float *restrict a, *restrict b, *restrict c;       
-  
+          float *restrict a, *restrict b, *restrict c;
+
           // Allocate host memory
           a = (float*)malloc(sizeof(float) * N);
           b = (float*)malloc(sizeof(float) * N);
           c = (float*)malloc(sizeof(float) * N);
-  
+
           // Initialize host arrays
           for(int i = 0; i < N; i++)
             {
               a[i] = 1.0f;
               b[i] = 2.0f;
             }
-    
+
           // Start measuring time
           clock_t start = clock();
 
-          // Executing CPU function 
+          // Executing CPU function
           Vector_Addition(a, b, c, N);
 
           // Stop measuring time and calculate the elapsed time
           clock_t end = clock();
           double elapsed = (double)(end - start)/CLOCKS_PER_SEC;
-          
+
           printf("Time measured: %.3f seconds.\n", elapsed);
-  
+
           // Verification
           for(int i = 0; i < N; i++)
             {
@@ -172,28 +172,28 @@ The following table summarizes the required steps for implementing the unified m
             }
 
           printf("PASSED\n");
-    
+
           // Deallocate host memory
-          free(a); 
-          free(b); 
+          free(a);
+          free(b);
           free(c);
-   
+
           return 0;
         }
         ```
 
 
     === "OpenACC-template (FORTRAN)"
-    
+
         ```c
         !! Vector-addition-openacc.f90
-        
+
         module Vector_Addition_Mod
           implicit none
         contains
          subroutine Vector_Addition(a, b, c, n)
             ! Input vectors
-            real(8), intent(in), dimension(:) :: a                        
+            real(8), intent(in), dimension(:) :: a
             real(8), intent(in), dimension(:) :: b
             real(8), intent(out), dimension(:) :: c
             integer :: i, n
@@ -204,71 +204,71 @@ The following table summarizes the required steps for implementing the unified m
             !$acc.....
           end subroutine Vector_Addition
         end module Vector_Addition_Mod
-        
+
         program main
           use openacc
           use Vector_Addition_Mod
           implicit none
-          
+
           ! Input vectors
           real(8), dimension(:), allocatable :: a
-          real(8), dimension(:), allocatable :: b 
+          real(8), dimension(:), allocatable :: b
           ! Output vector
           real(8), dimension(:), allocatable :: c
-          
-          integer :: n, i             
+
+          integer :: n, i
           print *, "This program does the addition of two vectors "
-          print *, "Please specify the vector size = " 
-          read *, n  
-          
+          print *, "Please specify the vector size = "
+          read *, n
+
           ! Allocate memory for vector
           allocate(a(n))
           allocate(b(n))
           allocate(c(n))
-          
-          ! Initialize content of input vectors, 
+
+          ! Initialize content of input vectors,
           ! vector a[i] = sin(i)^2 vector b[i] = cos(i)^2
           do i = 1, n
              a(i) = sin(i*1D0) * sin(i*1D0)
-             b(i) = cos(i*1D0) * cos(i*1D0) 
+             b(i) = cos(i*1D0) * cos(i*1D0)
           enddo
-          
-          ! Call the vector add subroutine 
+
+          ! Call the vector add subroutine
           call Vector_Addition(a, b, c, n)
-          
+
           !!Verification
           do i = 1, n
-             if (abs(c(i)-(a(i)+b(i))==0.00000)) then 
+             if (abs(c(i)-(a(i)+b(i))==0.00000)) then
              else
                 print *, "FAIL"
              endif
           enddo
           print *, "PASS"
-          
+
           ! Delete the memory
           deallocate(a)
           deallocate(b)
           deallocate(c)
-          
+
         end program main		
         ```
-        
+
 
     === "OpenACC-version (FORTRAN)"
-    
-        ```c  
+
+        ```c
         !! Vector-addition-openacc.f90
-        
+
         module Vector_Addition_Mod
           implicit none
         contains
          subroutine Vector_Addition(a, b, c, n)
             ! Input vectors
-            real(8), intent(in), dimension(:) :: a                        
+            real(8), intent(in), dimension(:) :: a
             real(8), intent(in), dimension(:) :: b
             real(8), intent(out), dimension(:) :: c
             integer :: i, n
-            !$acc parallel loop 
+            !$acc parallel loop
             do i = 1, n
                c(i) = a(i) + b(i)
             end do
@@ -280,53 +280,53 @@ The following table summarizes the required steps for implementing the unified m
           use openacc
           use Vector_Addition_Mod
           implicit none
-  
+
           ! Input vectors
           real(8), dimension(:), allocatable :: a
-          real(8), dimension(:), allocatable :: b 
+          real(8), dimension(:), allocatable :: b
           ! Output vector
           real(8), dimension(:), allocatable :: c
-  
-          integer :: n, i             
+
+          integer :: n, i
           print *, "This program does the addition of two vectors "
-          print *, "Please specify the vector size = " 
-          read *, n  
-  
+          print *, "Please specify the vector size = "
+          read *, n
+
           ! Allocate memory for vector
           allocate(a(n))
           allocate(b(n))
           allocate(c(n))
-  
-          ! Initialize content of input vectors, 
+
+          ! Initialize content of input vectors,
           ! vector a[i] = sin(i)^2 vector b[i] = cos(i)^2
           do i = 1, n
              a(i) = sin(i*1D0) * sin(i*1D0)
-             b(i) = cos(i*1D0) * cos(i*1D0) 
+             b(i) = cos(i*1D0) * cos(i*1D0)
           enddo
-    
-          ! Call the vector add subroutine 
+
+          ! Call the vector add subroutine
           call Vector_Addition(a, b, c, n)
 
           !!Verification
           do i = 1, n
-             if (abs(c(i)-(a(i)+b(i))==0.00000)) then 
+             if (abs(c(i)-(a(i)+b(i))==0.00000)) then
              else
                 print *, "FAIL"
              endif
           enddo
           print *, "PASS"
-  
+
           ! Delete the memory
           deallocate(a)
           deallocate(b)
           deallocate(c)
-  
+
         end program main
         ```
 
 
 ??? "Compilation and Output"
-        
+
     === "OpenACC-version"
         ```c
         // compilation
@@ -341,7 +341,7 @@ The following table summarizes the required steps for implementing the unified m
 
         // execution
         $ ./Vector-Addition-GPU
-        
+
         // output
         $ ./Vector-addition-GPU
         PASSED
@@ -357,13 +357,13 @@ The following table summarizes the required steps for implementing the unified m
              12, Generating implicit copyin(a(:n)) [if not already present]
                  Generating implicit copyout(c(:n)) [if not already present]
                  Generating implicit copyin(b(:n)) [if not already present
-                 	 
-        // execution		 
+                 	
+        // execution		
         $ ./Vector-Addition-GPU
-        
+
         // output
-        This program does the addition of two vectors 
-        Please specify the vector size = 
+        This program does the addition of two vectors
+        Please specify the vector size =
         1000000
         PASS
         ```

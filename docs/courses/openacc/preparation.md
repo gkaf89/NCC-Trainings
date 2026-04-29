@@ -3,14 +3,14 @@
 - 1.2 [Please take a look if you are using Linux/Mac](https://docs.lxp.lu/first-steps/connecting/)
 
 #### 2. Use your username to connect to MeluXina
-- 2.1 For example, the below example shows the user of `u100490` 
+- 2.1 For example, the below example shows the user of `u100490`
   ```
   $ ssh u100490@login.lxp.lu -p 8822
   ### or
-  $ ssh meluxina 
+  $ ssh meluxina
   ```
 #### 3. Once you have logged in
-- 3.1 Once you have logged in, you will be in a default home directory 
+- 3.1 Once you have logged in, you will be in a default home directory
   ```
   [u100490@login02 ~]$ pwd
   /home/users/u100490
@@ -21,16 +21,16 @@
   [u100490@login02 p201030]$ pwd
   /project/home/p201030
   ```
-  
+
 #### 4. And please create your own working folder under the project directory
 - 4.1 For example, here is the user with `u100490`:
   ```
   [u100490@login02 p201030]$ mkdir $USER
-  ### or 
-  [u100490@login02 p201030]$ mkdir u100490  
+  ### or
+  [u100490@login02 p201030]$ mkdir u100490
   ```
 #### 5. Now it is time to move into your home directory
-- 5.1 For example, with user home directory `u100490` 
+- 5.1 For example, with user home directory `u100490`
   ```
   [u100490@login02 p201030]$cd u100490
   ```
@@ -51,11 +51,11 @@
   ...
   ```
 #### 7. Until now, you are in the login node; now it is time to do the dry run test
-- 7.1 Reserve the interactive node for running/testing OpenACC applications 
+- 7.1 Reserve the interactive node for running/testing OpenACC applications
   ```
   $ salloc -A p201030 --res gpu-openacc-morning --partition=gpu --qos default -N 1 -t 01:00:00
   ```
-  
+
     ??? "check if your reservation is allocated"
         ```
         [u100490@login03 ~]$ salloc -A p201030 --res gpu-openacc-morning --partition=gpu --qos default -N 1 -t 01:00:00
@@ -66,7 +66,7 @@
         salloc: Waiting for resource configuration
         salloc: Nodes mel2131 are ready for job
         ```
-     
+
  - 7.2 You can also check if you got the interactive node for your computations, for example, here with the user `u100490`:
  ```
  [u100490@mel2131 ~]$ squeue -u u100490
@@ -78,7 +78,7 @@
  - 8.1 Go to folder `Dry-run-test`
 ```
 [u100490@login03 OpenACC]$ cd Dry-run-test/
-[u100490@login03 Dry-run-test]$ ls 
+[u100490@login03 Dry-run-test]$ ls
 Hello-world.cu  module.sh
 ```
 
@@ -94,7 +94,7 @@ Hello-world.cu  module.sh
     	```
         [u100490@mel2129 OpenACC]$ module load OpenMPI/5.0.3-NVHPC-24.9-CUDA-12.6.0
         [u100490@mel2129 OpenACC]$ ml
-        
+
         Currently Loaded Modules:
         1) env/release/2024.1            (S)   7) CUDA/12.6.0                         13) OpenSSL/3                                   19) PMIx/5.0.2-GCCcore-13.3.0
         2) lxp-tools/myquota/0.3.3       (S)   8) NVHPC/24.9-CUDA-12.6.0              14) libevent/2.1.12-GCCcore-13.3.0              20) PRRTE/3.0.5-GCCcore-13.3.0
@@ -107,7 +107,7 @@ Hello-world.cu  module.sh
         ```
 
 
-#### 10. Please compile and test your CUDA application 
+#### 10. Please compile and test your CUDA application
  - 10.1 For example, Dry-run-test
  ```
  // compilation

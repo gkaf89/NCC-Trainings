@@ -18,29 +18,29 @@ Arm Forge is another standard commercial tool for debugging, profiling, and anal
         $ map --profile --no-mpi ./a.out
         # open the profiled result in GUI
         $ map xyz.map
-        
+
         # for debugging
         $ ddt ./a .out
-        
+
         # for profiling
         $ map ./a .out
-        
+
         # for analysis
         $ perf-report ./a .out
         ```
 
     === "FORTRAN"
     	```c
-        # compilation 
+        # compilation
         $ gfortran test.f90 -fopenmp
         # execute and profile the code
         $ map --profile --no-mpi ./a.out
         # open the profiled result in GUI
         $ map xyz.map
-        
+
         # for debugging
         $ ddt ./a .out
-        
+
         # for profiling
         $ map ./a .out
 
@@ -57,7 +57,7 @@ Arm Forge is another standard commercial tool for debugging, profiling, and anal
 ##### Intel Application Snapshot
 Intel Application Performance Snapshot tool helps to find essential performance factors and the metrics of CPU utilisation, memory access efficiency, and vectorisation.
 `aps -help` will list out profiling metrics options in APS
-     
+
 <figure markdown>
 ![](figures/APS_OpenMP_flow_chart.png){align=center}
 <figcaption></figcaption>
@@ -69,7 +69,7 @@ Intel Application Performance Snapshot tool helps to find essential performance 
         ```c
         # compilation
         $ icc -qopenmp test.c
-        
+
         # code execution
         $ aps --collection-mode=all -r report_output ./a.out
         $ aps-report -g report_output                        # create a .html file
@@ -81,7 +81,7 @@ Intel Application Performance Snapshot tool helps to find essential performance 
     	```c
         # compilation
         $ ifort -qopenmp test.f90
-        
+
         # code execution
         $ aps --collection-mode=all -r report_output ./a.out
         $ aps-report -g report_output                        # create a .html file
@@ -164,7 +164,7 @@ tuning in the code. `survey`: analyse and explore an idea about where to add eff
     ![](figures/Advisor.png){align=center}
     <figcaption></figcaption>
     </figure>
-    
+
 
 ##### Intel VTune
 
@@ -198,7 +198,7 @@ tuning in the code. `survey`: analyse and explore an idea about where to add eff
     ![](figures/Vtune.png){align=center}
     <figcaption></figcaption>
     </figure>
-    
+
     `amplxe-cl` will list out the analysis types and `amplxe-cl -hlep` report will list out available reports in VTune.
 
 
