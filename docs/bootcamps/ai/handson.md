@@ -25,4 +25,3 @@ Further more information can be found in the [official Bootcamp repository](http
 
 - 01:30 PM – 04:45 PM: Tropical cycle detection (challenge)
 - 04:45 PM – 05:00 PM: Wrap up and QA
-

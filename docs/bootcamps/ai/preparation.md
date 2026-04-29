@@ -7,12 +7,12 @@ Details for:
 - [Windows users](https://docs.lxp.lu/first-steps/connecting/), and
 - [Linux/Mac users](https://docs.lxp.lu/first-steps/connecting/).
 
-
 ## 2. Use your username to connect to MeluXina
 
 For exmaple the below example shows the user of `u100490`
-```
-$ ssh u100490@login.lxp.lu -p 8822
+
+```console
+ssh u100490@login.lxp.lu -p 8822
 ```
 
 ## 3. Ensure that you can access your home and project directories
@@ -21,7 +21,7 @@ $ ssh u100490@login.lxp.lu -p 8822
 
 Once you have logged in, you will be in a default home directory. Check with the following command.
 
-```
+```console
 [u100490@login02 ~]$ pwd
 /home/users/u100490
 ```
@@ -30,7 +30,7 @@ Once you have logged in, you will be in a default home directory. Check with the
 
 Change to the project directory for Nvidia Bootcamp activities.
 
-```
+```console
 [u100490@login02 ~]$ cd /project/home/p200117
 [u100490@login02 p200117]$ pwd
 /project/home/p200117
@@ -40,7 +40,7 @@ Change to the project directory for Nvidia Bootcamp activities.
 
 Please create your own working folder under the project directory. For example, here it is the process for user with user name `u100490`.
 
-```
+```console
 [u100490@login02 p200117]$ mkdir "${USER}"
 ```
 
@@ -48,7 +48,7 @@ Please create your own working folder under the project directory. For example, 
 
 Now copy `climate.simg` and `climate.sh` from project directory to your user directory. For example, here is the process for user `u100490`.
 
-```
+```console
 [u100490@login02 p200117]$ cp /project/home/p200117/climate.simg /project/home/p200117/u100490
 [u100490@login02 p200117]$ cp /project/home/p200117/climate.sh /project/home/p200117/u100490
 ```
@@ -57,7 +57,7 @@ Now copy `climate.simg` and `climate.sh` from project directory to your user dir
 
 Copy `cfd.simg` and `cfd.sh` from project directory to your user directory. For example, here is the process for user `u100490`.
 
-```
+```console
 [u100490@login02 p200117]$ cp /project/home/p200117/cfd.simg /project/home/p200117/u100490
 [u100490@login02 p200117]$ cp /project/home/p200117/cfd.sh /project/home/p200117/u100490
 ```
@@ -66,7 +66,7 @@ Copy `cfd.simg` and `cfd.sh` from project directory to your user directory. For 
 
 Go to your home directory and check if all the necessary files are there (`.simg` and `.sh`). For example, here is the process for user `u100490`.
 
-```
+```console
 [u100490@login02 p200117]$ cd u100490
 [u100490@login02 u100490]$ pwd
 [u100490@login02 u100490]$ /project/home/p200117/u100490
@@ -84,7 +84,7 @@ Follow the in instruction below step-by-step.
 
 - Launch the service:
 
-  ```
+  ```console
   [u100490@login02 u100490]$ salloc -A p200117 --res gpudev -q dev -N 1 -t 01:00:0
   [u100490@mel2123 u100490]$ mkdir -p $PROJECT/$USER/workspace-climate
   [u100490@mel2123 u100490]$ module load Singularity-CE/3.10.2-GCCcore-11.3.0
@@ -112,7 +112,7 @@ Follow the in instruction below step-by-step.
 
 - Connect to the service. For instance, if the service is running on node `mel2123` then use the command:
 
-  ```
+  ```console
   ssh -L8080:mel2123:8888 u100490@login.lxp.lu -p 8822
   ```
 
@@ -120,7 +120,7 @@ Follow the in instruction below step-by-step.
 
 - Copy and paste `localhost:8080` to your browser either to Chrome or Firefox.
 
-  ```
+  ```console
   http://localhost:8080
   ```
 
@@ -131,7 +131,8 @@ You should now have access to the service.
 If have missed the dry run session, then please go through the steps from 1-4.
 
 - Now it is time to edit your batch script (`climate.sh`) before launching your Jupyter notebook. Please follow the following steps.
-  ```
+
+  ```console
   [u100490@login02 u100490]$ emacs(emacs -nw)/vim climate.sh
   #!/bin/bash -l
   #SBATCH --partition=gpu
@@ -158,7 +159,7 @@ If have missed the dry run session, then please go through the steps from 1-4.
 
 - Once you have modified your `climate.sh`, please launch your batch script as below.
 
-  ```
+  ```console
   [u100490@login03 u100490]$ sbatch climate.sh
   Submitted batch job 276009
   [u100490@login03 u100490]$ squeue
@@ -168,7 +169,7 @@ If have missed the dry run session, then please go through the steps from 1-4.
 
 - You have now initiated your singularity container which will help you to open the Jupyter nootebook.
 
-  ```
+  ```console
   [u100490@login03 u100490]$ ls -lthr
   total 7.2G
   -rwxr-x---. 1 u100490 p200117 7.2G Feb  3 14:53 climate.simg
@@ -180,7 +181,7 @@ If have missed the dry run session, then please go through the steps from 1-4.
 
 - You can also check if everything is OK by executing the command below.
 
-  ```
+  ```console
   [u100490@login03 u100490]$ head -30 slurm-276009.out
   INFO:    Converting SIF file to temporary sandbox...
   INFO:    Cleaning up image...
@@ -205,7 +206,7 @@ If have missed the dry run session, then please go through the steps from 1-4.
 
 - Connect to the service. For instance, if the service is running on node `mel2077` then use the command:
 
-  ```
+  ```console
   ssh -L8080:mel2077:8888 u100490@login.lxp.lu -p 8822
   ```
 
@@ -213,6 +214,6 @@ If have missed the dry run session, then please go through the steps from 1-4.
 
 - Copy and paste `localhost:8080` to your browser either to Chrome or Firefox.
 
-  ```
+  ```console
   http://localhost:8080
   ```

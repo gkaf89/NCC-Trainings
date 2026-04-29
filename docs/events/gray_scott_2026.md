@@ -1,5 +1,7 @@
 # Gray Scott summer school 2026
 
+## The Gray Scott summer school
+
 <!--Gray_Scott_start-->
 
 {%

@@ -1,5 +1,7 @@
 # SCynergy 2026
 
+## The SCynergy event
+
 <!--SCynergy_start-->
 
 {%
@@ -8,7 +10,7 @@
     end='<!--SCynergy_intro_end-->'
 %}
 
-The following sessions were presented in 2026 from SuperComputing Luxembourg, the National Competence Center.
+The following sessions were presented in 2026 by the University of Luxembourg and the National Competence Center.
 
 ### An introduction to HPC: Basic concepts and techniques
 
