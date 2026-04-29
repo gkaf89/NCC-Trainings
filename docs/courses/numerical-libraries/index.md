@@ -38,7 +38,7 @@ Participants will have access to the MeluXina supercomputer CPU and GPU partitio
 
 This half-day course will be conducted online in Central European Time (CET) on February 14th, 2025 (9:00 AM – 13:00 PM CET).
 
-### Schedule: 
+### Schedule:
  - 9:00 AM – 9:50 AM: Lecture Part 1: The data structure and algorithms of BLAS and LAPACK
  - 9:50 AM – 10:00 AM: Break
  - 10:00 AM – 10:50 AM: Lecture Part 2: Practical aspects of working with libraries
@@ -51,4 +51,4 @@ This half-day course will be conducted online in Central European Time (CET) on 
 ## Important: Limited spots are available!
 
 Contact people for more info: <br />
-Georgios KAFANAS, georgios.kafanas@uni.lu 
+Georgios KAFANAS, georgios.kafanas@uni.lu

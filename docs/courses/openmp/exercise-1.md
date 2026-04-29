@@ -18,7 +18,7 @@ To create a parallel region, we use the following parallel constructs:
         ```
     === "FORTRAN"
         ```
-        !$omp parallel 
+        !$omp parallel
         ```
 
 The above figure illustrates the parallel region behaviour;
@@ -61,13 +61,13 @@ The following compilers would support the OpenMP programming model.
         ```c
         $ icc test.c -qopenmp
         $ icpc test.cc -qopenmp
-        $ ifort test.f90 -qopenmp        
+        $ ifort test.f90 -qopenmp
         ```
     === "AOOC"
         ```c
         $ clang test.c -fopenmp
         $ clang++ test.cc -fopenmp
-        $ flang test.f90 -fopenmp        
+        $ flang test.f90 -fopenmp
         ```
 
 ### <u>Questions and Solutions</u>
@@ -79,13 +79,13 @@ The following compilers would support the OpenMP programming model.
         ``` c
         #include<iostream>
         using namespace std;
-        
+
         int main()
         {
           cout << endl;
           cout << "Hello world from the master thread"<< endl;
           cout << endl;
-          
+
           return 0;
         }
         ```
@@ -93,9 +93,9 @@ The following compilers would support the OpenMP programming model.
     === "Serial-version (FORTRAN)"
         ``` fortran
         program Hello_world_Serial
-        
+
         print *, 'Hello world from master thread'
-        
+
         end program
         ```
 	
@@ -108,13 +108,13 @@ The following compilers would support the OpenMP programming model.
         {
           cout << "Hello world from the master thread "<< endl;
           cout << endl;
-          
+
           // creating the parallel region (with N number of threads)
           #pragma omp parallel
            {
                 cout << "Hello world from the parallel region "<< endl;
             } // parallel region is closed
-            
+
         cout << endl;
         cout << "end of the programme from the master thread" << endl;
         return 0;
@@ -133,7 +133,7 @@ The following compilers would support the OpenMP programming model.
         !$omp end parallel
 
         print *,'end of the programme from master thread'
-        
+
         end program
         ```
 
@@ -143,10 +143,10 @@ The following compilers would support the OpenMP programming model.
         ```c
         // compilation
         $ g++ Hello-world-Serial.cc -o Hello-World-Serial
-        
-        // execution 
+
+        // execution
         $ ./Hello-World-Serial
-        
+
         // output
         $ Hello world from the master thread
         ```
@@ -155,29 +155,29 @@ The following compilers would support the OpenMP programming model.
         ```c
         // compilation
         $ gfortran Hello-world-Serial.f90 -o Hello-World-Serial
-        
-        // execution 
+
+        // execution
         $ ./Hello-World-Serial
-        
+
         // output
         $ Hello world from the master thread
         ```
-        
+
     === "OpenMP-version (C/C++)"
         ```c
         // compilation
         $ g++ -fopenmp Hello-world-OpenMP.cc -o Hello-World-OpenMP
-        
+
         // execution
         $ ./Hello-World-OpenMP
-        
+
         // output
         $ Hello world from the parallel region
         Hello world from the parallel region
         ..
         ..
         Hello world from the parallel region
-        
+
         end of the programme from the master thread
         ```
 
@@ -185,10 +185,10 @@ The following compilers would support the OpenMP programming model.
         ```c
         // compilation
         $ gfortran -fopenmp Hello-world-OpenMP.f90 -o Hello-World-OpenMP
-        
+
         // execution
         $ ./Hello-World-OpenMP
-        
+
         // output
         $ Hello world from the master thread
         Hello world from the parallel region
@@ -200,7 +200,7 @@ The following compilers would support the OpenMP programming model.
 
 ??? question "Questions"
 
-     - What do you notice from those examples? Can you control parallel region printout, that is, how many times it should be printed or executed?     
+     - What do you notice from those examples? Can you control parallel region printout, that is, how many times it should be printed or executed?
      - What happens if you do not use the OpenMP library, `#include<omp.h> or use omp_lib`?
 
 
@@ -209,9 +209,9 @@ Although creating a parallel region would allow us to do the parallel computatio
 #### <u>Environment Routines (important)</u>
 
  - Define the number of threads to be used within the parallel region
- 
+
         (C/C++): void omp_set_num_threads(int num_threads);
-        (FORTRAN): subroutine omp_set_num_threads(num_threads) 
+        (FORTRAN): subroutine omp_set_num_threads(num_threads)
         integer num_threads
 
  - To get the number of threads in the current parallel region
@@ -230,7 +230,7 @@ Although creating a parallel region would allow us to do the parallel computatio
         (FORTRAN): integer function omp_get_thread_num()
 
  - To know the number of processors available to the device
- 
+
         (c/c++): int omp_get_num_procs(void);
         (FROTRAN): integer function omp_get_num_procs()
 
@@ -241,7 +241,7 @@ Although creating a parallel region would allow us to do the parallel computatio
 ??? question "Questions"
 
      - How can you identify the thread numbers within the parallel region?
-     - What happens if you not set `omp_set_num_threads()`, for example, `omp_set_num_threads(5)|call omp_set_num_threads(5)`, what do you notice? 
+     - What happens if you not set `omp_set_num_threads()`, for example, `omp_set_num_threads(5)|call omp_set_num_threads(5)`, what do you notice?
      Alternatively, you can also set the number of threads to be used in the application during the compilation `export OMP_NUM_THREADS`; what do you see?
 
     === "Question (C/C++)"
@@ -254,7 +254,7 @@ Although creating a parallel region would allow us to do the parallel computatio
         {
           cout << "Hello world from the master thread "<< endl;
           cout << endl;
-                    
+
           // creating the parallel region (with N number of threads)
           #pragma omp parallel
            {
@@ -262,7 +262,7 @@ Although creating a parallel region would allow us to do the parallel computatio
                 << " from the team size of "
                 << endl;
             } // parallel region is closed
-            
+
         cout << endl;
         cout << "end of the programme from the master thread" << endl;
         return 0;
@@ -273,11 +273,11 @@ Although creating a parallel region would allow us to do the parallel computatio
         ``` fortran
         program Hello_world_OpenMP
         use omp_lib
-                
-        !$omp parallel 
-        !! print *, 
+
+        !$omp parallel
+        !! print *,
         !$omp end parallel
-        
+
         end program
         ```
 	
@@ -290,7 +290,7 @@ Although creating a parallel region would allow us to do the parallel computatio
         {
           cout << "Hello world from the master thread "<< endl;
           cout << endl;
-                    
+
           // creating the parallel region (with N number of threads)
           #pragma omp parallel
            {
@@ -299,7 +299,7 @@ Although creating a parallel region would allow us to do the parallel computatio
                 << omp_get_num_threads()
                 << endl;
             } // parallel region is closed
-            
+
         cout << endl;
         cout << "end of the programme from the master thread" << endl;
         return 0;
@@ -310,18 +310,18 @@ Although creating a parallel region would allow us to do the parallel computatio
         ``` fortran
         program Hello_world_OpenMP
         use omp_lib
-                
-        !$omp parallel 
+
+        !$omp parallel
         print *, 'Hello world from thread id ', omp_get_thread_num(), 'from the team size of', omp_get_num_threads()
         !$omp end parallel
-        
+
         end program
         ```
-        
+
     === "Answer"
         ``` c
         $ export OMP_NUM_THREADS=10
-        // or 
+        // or
         $ setenv OMP_NUM_THREADS 4
         // or
         $ OMP NUM THREADS=4 ./omp code.exe
@@ -340,7 +340,7 @@ Although creating a parallel region would allow us to do the parallel computatio
         1 from the team size of 10
         6 from the team size of 10
         ```
-        
+
     === "Solution Output (FORTRAN)"
 
         ```c
@@ -366,21 +366,21 @@ The main aim is to do the parallel computation to speed up computation on a give
 
     === "C/C++"
         ```
-        double start; 
-        double end; 
-        start = omp_get_wtime(); 
-        ... work to be timed ... 
-        end = omp_get_wtime(); 
+        double start;
+        double end;
+        start = omp_get_wtime();
+        ... work to be timed ...
+        end = omp_get_wtime();
         printf("Work took %f seconds\n", end - start);
         ```
 	
     === "FORTRAN"
         ```
-        DOUBLE PRECISION START, END 
-        START = omp_get_wtime() 
-        ... work to be timed ... 
-        END = omp_get_wtime() 
-        PRINT *, "Work took", END - START, "seconds"        
+        DOUBLE PRECISION START, END
+        START = omp_get_wtime()
+        ... work to be timed ...
+        END = omp_get_wtime()
+        PRINT *, "Work took", END - START, "seconds"
         ```
 
 

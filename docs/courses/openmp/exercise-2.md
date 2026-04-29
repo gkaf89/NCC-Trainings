@@ -2,7 +2,7 @@
 
  - All the threads have access to the shared variable.
  - By default, in the parallel region, all the variables are considered shared variables except the loop iteration counter variables.
- 
+
 !!! Note
 
 	Shared variables should be handled carefully; otherwise, they cause race conditions in the program.
@@ -14,56 +14,56 @@
 ??? example "Examples: Shared variable"
 
     === "(C/C++)"
-    
+
         ```c
         #include <iostream>
         #include <omp.h>
-        
+
         using namespace std;
-        
+
         int main()
         {
           // Array size
           int N = 10;
-          
+
           // Initialize the variables
           float *a;
-          
+
           // Allocate the memory
           a  = (float*)malloc(sizeof(float) * N);
-          
+
           //#pragma omp parallel for
-          // or 
+          // or
         #pragma omp parallel for shared(a)
           for (int i = 0; i < N; i++)
             {
-              a[i] = a[i] + i;  
+              a[i] = a[i] + i;
               cout << "value of a in the parallel region" << a[i] << endl;
             }
-            
+
           for (int i = 0; i < N; i++)
             cout << "value of a after the parallel region " << a[i] << endl;
-            
+
           return 0;
         }
         ```
 	
     === "(FORTRAN)"
-    
+
         ```c
         program main
           use omp_lib
           implicit none
-          
+
           ! Input vectors
           real(8), dimension(:), allocatable :: a
-          
+
           integer :: n, i
           n=10
-          
+
           ! Allocate memory for vector
           allocate(a(n))
-          
+
           !$omp parallel shared(a)
           !$omp do
           do i = 1, n
@@ -80,14 +80,14 @@
 
           ! Delete the memory
           deallocate(a)
-          
+
         end program main
         ```
 
 ??? question "Questions"
 
      - Does the value of vector `a` change after the parallel loop, if not why, think?
-     - Do we really need to mention `shared(a)`, is it neccessary? 
+     - Do we really need to mention `shared(a)`, is it neccessary?
 
 #### <u>Private variable</u>
 
@@ -106,26 +106,26 @@
 ??? example "Examples: Private variable"
 
     === "(C/C++)"
-    
+
         ```c
         #include <iostream>
         #include <omp.h>
-        
+
         using namespace std;
-        
+
         int main()
         {
           // Array size
           int N = 10;
-          
+
           // Initialize the variables
           float *a,b,c;
           b = 1.0;
           c = 2.0;
-	  
+	
           // Allocate the memory
           a  = (float*)malloc(sizeof(float) * N);
-          
+
         #pragma omp parallel for private(b,c)
           for (int i = 0; i < N; i++)
             {
@@ -133,32 +133,32 @@
               c = b + 10 * i;
               cout << "value of c in the parallel region " << c << endl;
             }
-          
+
           cout << "value of c after the parallel region " << c << endl;	
-                        
+
           return 0;
         }
         ```	
 
     === "(FORTRAN)"
-    
+
         ```c
         program main
           use omp_lib
           implicit none
-          
+
           ! Input vectors
           real(8), dimension(:), allocatable :: a
-          
+
           real(8) :: b, c
-          integer :: n, i  
+          integer :: n, i
           n=10
           b=1.0
           c=2.0
-          
+
           ! Allocate memory for vector
           allocate(a(n))
-          
+
           !$omp parallel private(b,c) shared(a)
           !$omp do
           do i = 1, n
@@ -169,17 +169,17 @@
           !$omp end do
           !$omp end parallel
           print*, 'value of c after the parallel region', c
-	  
+	
           ! Delete the memory
           deallocate(a)
-          
+
         end program main
         ```
 
 ??? question "Questions"
 
      - What is the value of the variable `c` in the parallel region and after the parallel region?
-     - After the parallel region, has variable `c` been updated or not? 
+     - After the parallel region, has variable `c` been updated or not?
 
 
 #### <u>Lastprivate</u>
@@ -193,11 +193,11 @@
 ??? example "Examples: Lastprivate variable"
 
     === "(C/C++)"
-    
+
         ```c
         #include<iostream>
         #include<omp.h>
-        
+
         using namespace std;
 
         int main()
@@ -212,28 +212,28 @@
               cout << " lastprivate in the parallel region " << var << endl;
             } /*-- End of parallel region --*/
           cout << "lastprivate after the parallel region " << var <<endl;
-  
+
           return 0;
         }
         ```	
 
 
     === "(FORTRAN)"
-    
+
         ```c
         program main
           use omp_lib
           implicit none
-  
+
           ! Initialise the variable
           real(8) :: var
-          integer :: n, i  
+          integer :: n, i
           n = 10
           var = 5
-  
+
           call omp_set_num_threads(10)
-  
-          !$omp parallel 
+
+          !$omp parallel
           !$omp do lastprivate(var)
           do i = 1, n
              var  =  var + omp_get_thread_num()
@@ -243,14 +243,14 @@
           !$omp end parallel
 
           print*, 'lastprivate after the parallel region ', var
- 
+
         end program main
         ```
 
 ??? question "Questions"
 
      - What is the value of the variable `var` in the parallel region and after the parallel region?
-     - Do you think the initial value of variable `var` is considered within the parallel region? 
+     - Do you think the initial value of variable `var` is considered within the parallel region?
 
 
 #### <u>Firstprivate</u>
@@ -264,11 +264,11 @@
 ??? example "Examples: Firstprivate variable"
 
     === "(C/C++)"
-    
+
         ```c
         #include<iostream>
         #include<omp.h>
-        
+
         using namespace std;
 
         int main()
@@ -283,28 +283,28 @@
               cout << " lastprivate in the parallel region " << var << endl;
             } /*-- End of parallel region --*/
           cout << "lastprivate after the parallel region " << var <<endl;
-  
+
           return 0;
         }
         ```	
 
 
     === "(FORTRAN)"
-    
+
         ```c
         program main
           use omp_lib
           implicit none
-  
+
           ! Initialise the variable
           real(8) :: var
-          integer :: n, i  
+          integer :: n, i
           n = 10
           var = 5
-  
+
           call omp_set_num_threads(10)
-  
-          !$omp parallel 
+
+          !$omp parallel
           !$omp do firstprivate(var)
           do i = 1, n
              var  =  var + omp_get_thread_num()
@@ -314,7 +314,7 @@
           !$omp end parallel
 
           print*, 'lastprivate after the parallel region ', var
- 
+
         end program main
         ```
 

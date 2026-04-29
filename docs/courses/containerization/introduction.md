@@ -5,7 +5,7 @@ Environment management in shared computing resources like HPC systems and workst
 - multiple processes to share the same system without interfering with each other and with system processes with respect to resource usage, and
 - each processes can configure its own software environment without interfering with the other user space and operating system processes.
 
-The isolation methods can be categorized in methods using the  
+The isolation methods can be categorized in methods using the
 
 <figure markdown="span">
   ![Container architecture](resources/linux_interface.png){ align=left width="400" }

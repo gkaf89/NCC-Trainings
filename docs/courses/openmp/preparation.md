@@ -3,14 +3,14 @@
 - 1.2 [Please take a look if you are using Linux/Mac](https://docs.lxp.lu/first-steps/connecting/)
 
 #### 2. Use your username to connect to MeluXina
-- 2.1 For example, the below example shows the user of `u100490` 
+- 2.1 For example, the below example shows the user of `u100490`
   ```
   $ ssh u100490@login.lxp.lu -p 8822
   ### or
-  $ ssh meluxina 
+  $ ssh meluxina
   ```
 #### 3. Once you have logged in
-- 3.1 Once you have logged in, you will be in a default home directory 
+- 3.1 Once you have logged in, you will be in a default home directory
   ```
   [u100490@login02 ~]$ pwd
   /home/users/u100490
@@ -21,16 +21,16 @@
   [u100490@login02 p200898]$ pwd
   /project/home/p200898
   ```
-  
+
 #### 4. And please create your own working folder under the project directory
 - 4.1 For example, here is the user with `u100490`:
   ```
   [u100490@login02 p200898]$ mkdir $USER
-  ### or 
-  [u100490@login02 p200898]$ mkdir u100490  
+  ### or
+  [u100490@login02 p200898]$ mkdir u100490
   ```
 #### 5. Now it is time to move into your home directory
-- 5.1 For example, with user home directory `u100490` 
+- 5.1 For example, with user home directory `u100490`
   ```
   [u100490@login02 p200898]$cd u100490
   ```
@@ -50,11 +50,11 @@
   ...
   ```
 #### 7. Until now, you are in the login node; now it is time to do the dry run test
-- 7.1 Reserve the interactive node for running/testing OpenMP applications 
+- 7.1 Reserve the interactive node for running/testing OpenMP applications
   ```
   $ salloc -A p200898 --res ncc-openmp --partition=cpu --qos default -N 1 -t 01:00:00
   ```
-  
+
     ??? "check if your reservation is allocated"
         ```
         [u100490@login03 ~]$ salloc -A p200898 --res ncc-openmp --partition=cpu --qos default -N 1 -t 01:00:00
@@ -65,7 +65,7 @@
         salloc: Waiting for resource configuration
         salloc: Nodes mel2131 are ready for job
         ```
-        
+
  - 7.2 You can also check if you got the interactive node for your computations, for example, here with the user `u100490`:
  ```
  [u100490@mel2131 ~]$ squeue -u u100490
@@ -77,7 +77,7 @@
  - 8.1 Go to folder `Dry-run-test`
 ```
 [u100490@login03 OpenMP]$ cd Dry-run-test/
-[u100490@login03 Dry-run-test]$ ls 
+[u100490@login03 Dry-run-test]$ ls
 source.sh  Test.cc  Test.f90
 ```
 
@@ -90,7 +90,7 @@ source.sh  Test.cc  Test.f90
     ??? "check if the module is loaded properly"
         ```
         [u100490@mel2131 ~]$ module list
- 
+
         currently Loaded Modules:
         1) env/release/2022.1                (S)  19) libpciaccess/0.16-GCCcore-11.3.0    37) jbigkit/2.1-GCCcore-11.3.0        55) VTune/2022.3.0                          73) NSS/3.79-GCCcore-11.3.0
         2) lxp-tools/myquota/0.3.1           (S)  20) X11/20220504-GCCcore-11.3.0         38) gzip/1.12-GCCcore-11.3.0          56) numactl/2.0.14-GCCcore-11.3.0           74) snappy/1.1.9-GCCcore-11.3.0
@@ -103,7 +103,7 @@ source.sh  Test.cc  Test.f90
         ```
 
 
-#### 10. Please compile and test your OpenMP application 
+#### 10. Please compile and test your OpenMP application
  - 10.1 For example, Dry-run-test
  ```
  // compilation (C/C++)
@@ -116,9 +116,9 @@ source.sh  Test.cc  Test.f90
  $ ./a.out
 
  // output
- $ Hello world from the master thread 
-   Hello world from thread id Hello world from thread id Hello world from thread 
-   id Hello world from thread id Hello world from thread id 4 from the team size of 
+ $ Hello world from the master thread
+   Hello world from thread id Hello world from thread id Hello world from thread
+   id Hello world from thread id Hello world from thread id 4 from the team size of
    1 from the team size of 20 from the team size of  from the team size of 555
  ```
 
@@ -127,7 +127,7 @@ source.sh  Test.cc  Test.f90
   ```
   $ salloc -A p200898 --res ncc-openmp --partition=cpu --qos default -N 1 -t 02:30:00
   ```
-  
+
     ??? "check if your reservation is allocated"
         ```
         [u100490@login03 ~]$ salloc -A p200898 --res ncc-openmp --partition=cpu --qos default -N 1 -t 02:30:00

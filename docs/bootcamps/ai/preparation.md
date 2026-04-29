@@ -20,7 +20,7 @@ $ ssh u100490@login.lxp.lu -p 8822
 ### 3.1 Check your home directory
 
 Once you have logged in, you will be in a default home directory. Check with the following command.
- 
+
 ```
 [u100490@login02 ~]$ pwd
 /home/users/u100490
@@ -35,7 +35,7 @@ Change to the project directory for Nvidia Bootcamp activities.
 [u100490@login02 p200117]$ pwd
 /project/home/p200117
 ```
-  
+
 ## 4. Create a personal working folder in the bootcamp project directory
 
 Please create your own working folder under the project directory. For example, here it is the process for user with user name `u100490`.
@@ -88,7 +88,7 @@ Follow the in instruction below step-by-step.
   [u100490@login02 u100490]$ salloc -A p200117 --res gpudev -q dev -N 1 -t 01:00:0
   [u100490@mel2123 u100490]$ mkdir -p $PROJECT/$USER/workspace-climate
   [u100490@mel2123 u100490]$ module load Singularity-CE/3.10.2-GCCcore-11.3.0
-  
+
   [u100490@mel2123 u100490]$ singularity run --bind $PROJECT/$USER $PROJECT/$USER/climate.simg cp -rT /workspace $PROJECT/$USER/workspace-climate
   INFO:    Converting SIF file to temporary sandbox...
   INFO:    Cleaning up image...
@@ -125,7 +125,7 @@ Follow the in instruction below step-by-step.
   ```
 
 You should now have access to the service.
-  
+
 ## 6. For the afternoon session (9th and 10th February)
 
 If have missed the dry run session, then please go through the steps from 1-4.
@@ -134,24 +134,24 @@ If have missed the dry run session, then please go through the steps from 1-4.
   ```
   [u100490@login02 u100490]$ emacs(emacs -nw)/vim climate.sh
   #!/bin/bash -l
-  #SBATCH --partition=gpu 
+  #SBATCH --partition=gpu
   #SBATCH --ntasks=1
-  #SBATCH --nodes=1    
+  #SBATCH --nodes=1
   ############  day one ##########
   #######SBATCH --time=02:00:00         ## use this option for day one
   #######SBATCH --res ai_bootcamp_day1   ## use this option for day one
   ################################
-   
+
   ############  day two ##########
   #SBATCH --time=03:30:00         ## use this option for day two
   #SBATCH --res ai_bootcamp_day2  ## use this option for day two
   ################################
   #SBATCH -A p200117
   #SBATCH --qos default
-  
+
   mkdir -p $PROJECT/$USER/workspace-climate
   module load Singularity-CE/3.10.2-GCCcore-11.3.0
-  
+
   singularity run --bind $PROJECT/$USER $PROJECT/$USER/climate.simg cp -rT /workspace $PROJECT/$USER/workspace-climate
   singularity run --nv --bind $PROJECT/$USER $PROJECT/$USER/climate.simg jupyter lab --notebook-dir=$PROJECT/$USER/workspace-climate/python/jupyter_notebook --port=8888 --ip=0.0.0.0 --no-browser --NotebookApp.token=""
   ```
@@ -161,7 +161,7 @@ If have missed the dry run session, then please go through the steps from 1-4.
   ```
   [u100490@login03 u100490]$ sbatch climate.sh
   Submitted batch job 276009
-  [u100490@login03 u100490]$ squeue 
+  [u100490@login03 u100490]$ squeue
   JOBID PARTITION     NAME     USER    ACCOUNT    STATE       TIME   TIME_LIMIT  NODES NODELIST(REASON)
   276009       gpu climate.  u100490    p200117  RUNNING       0:16        20:00      1 mel2077
   ```
@@ -181,7 +181,7 @@ If have missed the dry run session, then please go through the steps from 1-4.
 - You can also check if everything is OK by executing the command below.
 
   ```
-  [u100490@login03 u100490]$ head -30 slurm-276009.out 
+  [u100490@login03 u100490]$ head -30 slurm-276009.out
   INFO:    Converting SIF file to temporary sandbox...
   INFO:    Cleaning up image...
   INFO:    Converting SIF file to temporary sandbox...

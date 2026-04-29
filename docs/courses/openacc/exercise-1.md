@@ -119,13 +119,13 @@ The following compilers provide support for the [OpenACC programming model](http
 - **[GNU Compiler Collection (GCC)](https://gcc.gnu.org/)**: This is an open-source compiler that supports both Nvidia and AMD CPUs, making it a versatile choice for developers looking to implement OpenACC.
 - **[Nvidia HPC SDK](https://www.intel.com/content/www/us/en/developer/tools/oneapi/dpc-compiler.html#gs.zd201n)**: Developed by Nvidia, this compiler is specifically optimized for Nvidia GPUs. It offers robust support for the OpenACC programming model, enabling efficient utilization of GPU resources.
 - **[HPE Compiler](https://buy.hpe.com/us/en/software/high-performance-computing-software/high-performance-computing-software/high-performance-computing-software/hpe-cray-programming-environment/p/1012707351)**: Currently, this compiler supports FORTRAN but does not have support for C/C++. It is designed for high-performance computing applications and works well with the OpenACC model.
-  
+
 
 !!! Info "Examples (GNU, Nvidia HPC SDK and HPE): Compilation"
 
     === "Nvidia HPC SDK"
         ```c
-        $ nvc -fast -acc=gpu -gpu=cc80 -Minfo=accel test.c 
+        $ nvc -fast -acc=gpu -gpu=cc80 -Minfo=accel test.c
         ```
 
 ### <u>Questions and Solutions</u>
@@ -151,8 +151,8 @@ The following compilers provide support for the [OpenACC programming model](http
         #include<stdio.h>
         #include<openacc.h>		
         int main()
-        { 
-        #pragma acc parallel                                                             
+        {
+        #pragma acc parallel
           printf("Hello World from GPU!\n");
           return 0;
         }
@@ -166,7 +166,7 @@ The following compilers provide support for the [OpenACC programming model](http
         #include<openacc.h>		
         int main()
         {
-        #pragma acc kernels                            
+        #pragma acc kernels
           printf("Hello World from GPU!\n");
           return 0;
         }
@@ -179,24 +179,24 @@ The following compilers provide support for the [OpenACC programming model](http
         ```c
         // compilation
         $ gcc Hello-world-CPU.c -o Hello-World-CPU
-        
-        // execution 
+
+        // execution
         $ ./Hello-World-CPU
-        
+
         // output
         $ Hello World from CPU!
         ```
-        
+
     === "OpenACC-version-parallel"
         ```c
         // compilation
         $ nvc -fast -acc=gpu -gpu=cc80 -Minfo=accel Hello-world-parallel.c -o Hello-World-GPU
         main:
         7, Generating NVIDIA GPU code
-        
+
         // execution
         $ ./Hello-World-GPU
-        
+
         // output
         $ Hello World from GPU!
         ```
@@ -209,10 +209,10 @@ The following compilers provide support for the [OpenACC programming model](http
         main:
         7, Accelerator serial kernel generated
            Generating NVIDIA GPU code
-         
+
         // execution
         $ ./Hello-World-GPU
-        
+
         // output
         $ Hello World from GPU!
         ```
@@ -224,13 +224,13 @@ In our second exercise, we will delve into the principles of loop parallelizatio
 
 To illustrate this concept, we will begin with a straightforward example: printing **`Hello World from GPU`** multiple times. This will serve as a basis for understanding how to implement loop parallelization effectively.
 
-It is important to note that simply adding directives such as **`#pragma acc parallel`** or **`#pragma acc kernels`** is insufficient for achieving parallel execution of computations. These directives are primarily designed to instruct the compiler to execute the computations on the device, but additional considerations and structure are required to fully exploit parallelization. Understanding how to appropriately organize and optimize loops for parallel execution is essential for maximizing performance in computational tasks. 
-    
+It is important to note that simply adding directives such as **`#pragma acc parallel`** or **`#pragma acc kernels`** is insufficient for achieving parallel execution of computations. These directives are primarily designed to instruct the compiler to execute the computations on the device, but additional considerations and structure are required to fully exploit parallelization. Understanding how to appropriately organize and optimize loops for parallel execution is essential for maximizing performance in computational tasks.
+
 <figure markdown>
 ![](figures/acc-loop.png){align=center width=500}
 </figure>
-    
-    
+
+
 !!! Info "Loop Constructs"
 
     === "C/C++"
@@ -244,7 +244,7 @@ It is important to note that simply adding directives such as **`#pragma acc par
         !$acc loop [clause-list]
            do loop
         ```
-        
+
 
 ??? "Available clauses for loop"
 
@@ -277,7 +277,7 @@ It is important to note that simply adding directives such as **`#pragma acc par
         int main()
         {
           for(int i = 0; i < 5; i++)
-            {         
+            {
               printf("Hello World from CPU!\n");
             }		
           return 0;
@@ -294,7 +294,7 @@ It is important to note that simply adding directives such as **`#pragma acc par
         {
         #pragma acc parallel loop
           for(int i = 0; i < 5; i++)
-            {                                
+            {
               printf("Hello World from GPU!\n");
             }
         return 0;
@@ -311,7 +311,7 @@ It is important to note that simply adding directives such as **`#pragma acc par
         {
         #pragma acc kernels loop
           for(int i = 0; i < 5; i++)
-            {                                
+            {
               printf("Hello World from GPU!\n");
             }
         return 0;
@@ -325,19 +325,19 @@ It is important to note that simply adding directives such as **`#pragma acc par
         ```c
         // compilation
         $ gcc Hello-world-CPU-loop.c -o Hello-World-CPU
-        
-        // execution 
+
+        // execution
         $ ./Hello-World-CPU
-        
+
         // output
         $ Hello World from CPU!
         $ Hello World from CPU!
         $ Hello World from CPU!
         $ Hello World from CPU!
-        $ Hello World from CPU!                                
+        $ Hello World from CPU!
         ```
-        
-        
+
+
     === "OpenACC-version-parallel-loop"
         ```c
         // compilation
@@ -345,16 +345,16 @@ It is important to note that simply adding directives such as **`#pragma acc par
         main:
         5, Generating NVIDIA GPU code
           7, #pragma acc loop gang /* blockIdx.x */
-        
+
         // execution
         $ ./Hello-World-GPU
-        
+
         // output
         $ Hello World from GPU!
         $ Hello World from GPU!
         $ Hello World from GPU!
         $ Hello World from GPU!
-        $ Hello World from GPU!                                
+        $ Hello World from GPU!
         ```
 
 
@@ -366,15 +366,15 @@ It is important to note that simply adding directives such as **`#pragma acc par
         7, Loop is parallelizable
            Generating NVIDIA GPU code
             7, #pragma acc loop gang, vector(32) /* blockIdx.x threadIdx.x */
-        
+
         // execution
         $ ./Hello-World-GPU
-        
+
         // output
         $ Hello World from GPU!
         $ Hello World from GPU!
         $ Hello World from GPU!
         $ Hello World from GPU!
-        $ Hello World from GPU!                                
+        $ Hello World from GPU!
         ```
 

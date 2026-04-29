@@ -1,10 +1,10 @@
 The NCC Supercompuing Luxembourg, in collaboration with NVIDIA  and OpenACC.org, is hosting online the AI for Science and Engineering Bootcamp during 2 half-days. The first part will be dedicated to theory, and the second part will focus on hands-on challenges on GPU accelerators of the MeluXina supercomputer.
 
-## For whom? 
+## For whom?
 
 Both current or prospective users of large hybrid CPU/GPU clusters, which develop HPC and AI applications and could benefit from GPU acceleration, are encouraged to participate!
 
-## What will you learn and how? 
+## What will you learn and how?
 
 During this online Bootcamp, participants will learn how to apply AI tools, techniques, and algorithms to real-life problems. Participants will be introduced to the critical concepts of Deep Neural Networks, how to build Deep Learning models, and how to measure and improve the accuracy of their models. Participants will also learn essential data pre-processing techniques to ensure a robust machine-learning pipeline. The Bootcamp is a hands-on learning experience where mentors guide participants.
 

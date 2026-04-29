@@ -70,7 +70,7 @@ The [Micromaba](https://mamba.readthedocs.io/en/latest/user_guide/micromamba.htm
 A complete guide regarding Micromamba installation can be found in the [official documentation](https://mamba.readthedocs.io/en/latest/micromamba-installation.html). To install micromamaba in the HPC clusters, log in to Aion or Iris. Working on a login node, run the installation script,
 ```bash
 "${SHELL}" <(curl -L micro.mamba.pm/install.sh)
-``` 
+```
 which will install the executable and setup the environment. There are 4 options to select during the installation of Micromamba:
 
 - The directory for the installation of the binary file:
@@ -150,7 +150,7 @@ Micromamba supports almost all the subcommands of Conda. For more details see th
         micromamba install conda-forge::python
         ```
         will install the Python interpreter (REPL)  and the components required to run simple Python scripts. More involved scripts may require functionality provided in various Python packages. Search Python packages in the conda-forge channel with the name with which they appear in [PyPI](https://pypi.org/). For instance the Conda package `numpy` provide the same functionality with the PyPI package `numpy`.
-           
+
     === "Environment for R"
         To install R, create an environment named for instance `R-project` and activate it:
         ```bash
@@ -166,7 +166,7 @@ Micromamba supports almost all the subcommands of Conda. For more details see th
         micromamba install conda-forge::r-base
         ```
         will install the R interpreter and the components required to run simple standalone R scripts. More involved scripts may required functionality provided in various R packages. The R packages in the conda-forge channel are prepended with a prefix 'r-'. Thus, `plm` becomes `r-plm` and so on.
-    
+
     Install any required package _while your environment is active_ with the `install` subcommand.
 
 ### Using environments in submission scripts
@@ -223,26 +223,26 @@ We can see that the Python environment (`python-project`) is pushed down the sta
     #SBATCH --time=0-02:00:00
     #SBATCH --partition batch
     #SBATCH --qos normal
-    
+
     micromamba activate R-project
-    
+
     echo "Launched at $(date)"
     echo "Job ID: ${SLURM_JOBID}"
     echo "Node list: ${SLURM_NODELIST}"
     echo "Submit dir.: ${SLURM_SUBMIT_DIR}"
     echo "Numb. of cores: ${SLURM_CPUS_PER_TASK}"
-    
+
     export SRUN_CPUS_PER_TASK="${SLURM_CPUS_PER_TASK}"
     export OMP_NUM_THREADS=1
     srun Rscript --no-save --no-restore script.R
-    
+
     micromamba deactivate
     ```
-    
+
     The `micromamba deactivate` command at the end of the script is optional, but it functions as a reminder that a Conda environment is active if you expand the script at a later date.
-    
+
     _Useful scripting resources_
-    
+
     - [Formatting submission scripts for R (and other systems)](https://hpc-docs.uni.lu/slurm/launchers/#serial-task-script-launcher)
 
 ### Exporting and importing environment specifications
@@ -348,7 +348,7 @@ where the flag `--yes` suppresses an interactive dialogue with details about the
 !!! tip "Updating environments to remove old package versions"
 
     As we create new environments, environments often install the latest version of each package. However, if the environments are not updated regularly, we may end up with different versions of the same package across multiple environments. If we have the same version of a package installed in all environments, we can save space by removing unused older versions.
-    
+
     To update a package across all environments, use the command
     ```bash
     for e in $(micromamba env list | awk 'FNR>2 {print $1}'); do micromamba update --yes --name $e <package name>; done
@@ -358,11 +358,11 @@ where the flag `--yes` suppresses an interactive dialogue with details about the
     for e in $(micromamba env list | awk 'FNR>2 {print $1}'); do micromamba update --yes --name $e --all; done
     ```
     where `FNR>2` removes the headers in the output of `micromamba env list`, and is thus sensitive to changes in the user interface of Micromamba.
-    
+
     After updating packages, the `clean` command can be called to removed the data of unused older package versions.
-    
+
     _Sources_
-    
+
     - [Oficial Conda `clean` documentation](https://docs.conda.io/projects/conda/en/latest/commands/clean.html)
     - [Understanding Conda `clean`](https://stackoverflow.com/questions/51960539/where-does-conda-clean-remove-packages-from)
 
@@ -383,7 +383,7 @@ total 1.3M
 ```
 Looking into the libraries of the `gaussian_regression` environment, there is a hard link to the MPFR library:
 ```
-gkaf@ulhpc-laptop:~/micromamba$ ls -lahFi envs/gaussian_regression/lib/libmpfr.so.6.2.1 
+gkaf@ulhpc-laptop:~/micromamba$ ls -lahFi envs/gaussian_regression/lib/libmpfr.so.6.2.1
 5286433 -rwxrwxr-x 7 gkaf gkaf 1.3M Oct 22 21:47 envs/gaussian_regression/lib/libmpfr.so.6.2.1*
 ```
 You can use the `-i` flag in `ls` to print the inode number of a file. Hard links have the same inode number, meaning that they are essentially the same file.
