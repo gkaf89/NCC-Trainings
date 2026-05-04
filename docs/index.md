@@ -36,6 +36,8 @@ Please follow the link below to register.
     end='<!--SCynergy_end-->'
 %}
 
+---
+
 </br>
 
 <div class="md-content-centered cards" markdown>
