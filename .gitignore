@@ -1,4 +1,10 @@
-docs/assets/**
 **/__pycache__/
 **/build
+docs/assets/
 site/
+# Editor caches
+*.DS_Store
+*.md.bak
+*.md-buffer
+*.css~
+*.yml~
