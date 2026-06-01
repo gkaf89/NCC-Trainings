@@ -1,4 +1,4 @@
-## 1. Setting up the connetion
+## 1. Setting up the connection
 
 Please read the [instructions](https://docs.lxp.lu/first-steps/quick_start/) on how to get access to the MeluXina machine.
 
@@ -47,7 +47,7 @@ For example, here is the process for user `u100490`.
 ```console
 [u100490@login02 p201030]$ mkdir ${USER}
 ```
-  
+
 Now move into the working directory. For example, for user `u100490`:
 
 ```console
