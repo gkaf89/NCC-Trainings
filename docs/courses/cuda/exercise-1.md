@@ -1,29 +1,25 @@
-## Hello World
+# Hello World
 
-Our first exercise would be to print out "Hello World" from the GPU.
-To do that, we need to do the following things:
+Our first exercise would be to print out "Hello World" from the GPU. To do that, we need to do the following things:
 
 - Run a part or the entire application on the GPU.
 - Call the CUDA function on a device.
-- It should be called using the function qualifier **`__global__`**.
+- It should be called using the function qualifier `__global__`.
 - Call the device function in the main program:
-- C/C++ example, **`c_function()`**.
-- CUDA example, **`cuda_function<<<1,1>>>()`** (just using 1 thread).
-- **`<<< >>>`**, specify the thread blocks within the brackets.
+- C/C++ example, `c_function()`.
+- CUDA example, `cuda_function<<<1,1>>>()` (just using 1 thread).
+- `<<< >>>`, specify the thread blocks within the brackets.
 - Ensure that the threads are synchronized.
-- **`__syncthreads()`** synchronizes all the threads within a thread block.
-- **`CudaDeviceSynchronize()`** synchronizes a kernel call on the host.
+- `__syncthreads()` synchronizes all the threads within a thread block.
+- `CudaDeviceSynchronize()` synchronizes a kernel call on the host.
 - Most of the CUDA APIs are synchronized calls by default, but sometimes it is good to call explicit synchronized calls to avoid errors in the computation.
 
-### Questions and Solutions
+## Questions and Solutions
 
 ??? example "Examples: Hello World"
 
-    === "Serial-version"
+    === "Serial-version: `Hello-world.c`"
         ```c
-        //-*-C++-*-
-        // Hello-world.c
-
         #include<stdio.h>
         #include<cuda.h>
 
@@ -39,11 +35,8 @@ To do that, we need to do the following things:
         }
         ```
 
-    === "CUDA-version"
+    === "CUDA-version: `Hello-world.cu`"
         ```c
-        //-*-C++-*-
-        // Hello-world.cu
-
         #include<stdio.h>
         #include<cuda.h>
 
@@ -76,9 +69,7 @@ To do that, we need to do the following things:
 
         # execution
         $ ./Hello-World-CPU
-
-        # output
-        $ Hello World from CPU!
+        Hello World from CPU!
         ```
 
     === "CUDA-version"
@@ -88,20 +79,15 @@ To do that, we need to do the following things:
 
         # execution
         $ ./Hello-World-GPU
-
-        # output
-        $ Hello World from GPU!
+        Hello World from GPU!
         ```
 
 ??? Question "Questions"
 
-    Right now, you are printing just one **`Hello World from GPU`**,
-    but what if you would like to print more **`Hello World from GPU`**? How can you do that?
+    Right now, you are printing just one `Hello World from GPU`, but what if you would like to print more `Hello World from GPU`? How can you do that?
 
-    === "Question"
-
+    === "Original program"
         ```c
-        //-*-C++-*-
         #include<stdio.h>
         #include<cuda.h>
 
@@ -121,9 +107,7 @@ To do that, we need to do the following things:
         ```
 
     === "Answer"
-
         ```c
-        //-*-C++-*-
         #include<stdio.h>
         #include<cuda.h>
 
@@ -143,7 +127,6 @@ To do that, we need to do the following things:
         ```
 
     === "Solution Output"
-
         ```console
         Hello World from GPU!
         Hello World from GPU!
@@ -155,4 +138,4 @@ To do that, we need to do the following things:
         Hello World from GPU!
         Hello World from GPU!
         Hello World from GPU!
-        ```
+       ```
