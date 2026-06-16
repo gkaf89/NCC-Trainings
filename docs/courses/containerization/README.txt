@@ -315,6 +315,8 @@ sudo mount -o remount,suid /srv/storage/ulhpc@storage1.luxembourg.grid5000.fr
   - Demo: https://asciinema.org/a/156490?speed=2
   - https://sci-f.github.io/
 
+- https://oneuptime.com/blog/post/2026-02-08-how-to-create-a-docker-image-from-a-tarball/view
+
 ## Virtual environments
 
 ### The `venv` in Python
